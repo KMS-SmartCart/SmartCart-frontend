@@ -1,6 +1,6 @@
 # SmartCart - Frontend
 
-<br>
+<br><br>
 <div align="center">
   <img src="https://github.com/user-attachments/assets/8d7b601b-3f10-4bdd-85ab-f2e08e56193b" width="200" height="200" />
   <h3 align="center">Smart Cart&nbsp;&nbsp;🛒</h3>
