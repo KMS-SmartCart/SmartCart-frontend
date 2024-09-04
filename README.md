@@ -38,9 +38,9 @@
 ```
 < Issue Title >
 [Issue_종류] 구현_주요내용
-ex-1) Feat: 로그인 페이지 UI 구현
-ex-2) Feat: 로그인 페이지 기능 구현
-ex-3) Fix: 로그인 연동로직 오류 수정
+ex-1) [Feat] 로그인 페이지 UI 구현
+ex-2) [Feat] 로그인 페이지 기능 구현
+ex-3) [Fix] 로그인 연동로직 오류 수정
 ```
 
 ### Commit

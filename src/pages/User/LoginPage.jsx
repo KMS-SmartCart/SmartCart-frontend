@@ -7,7 +7,7 @@ import '../../App.css';
 function LoginPage(props) {
 
     return (
-        <div>가나다라마바사</div>
+        <div>로그인 페이지 - 사현진 배포 성공!</div>
     );
 }
 
