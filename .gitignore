@@ -12,12 +12,12 @@
 /build
 
 # misc
-.env
+# .env
+# .env.development
+# .env.production
 .env.local
-.env.development
 .env.development.local
 .env.test.local
-.env.production
 .env.production.local
 
 npm-debug.log*
