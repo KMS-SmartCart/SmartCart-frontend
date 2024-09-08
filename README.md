@@ -30,7 +30,7 @@ Frontend|Backend|Security&nbsp;&nbsp;&&nbsp;&nbsp;DB|Deployment|Other|
 ### Branch
 - 반드시 "develop"에서 뻗어나와 develop으로 "merge" 되어야한다.
 - `main` : 출시 배포 CI/CD용 branch (미사용)
-- `develop` : 개발 개포 CI/CD용 branch
+- `develop` : 개발 배포 CI/CD용 branch
 - `feature` : 기능 구현용 branch
 - `Issue_종류/#Issue_번호` : branch 생성
 
