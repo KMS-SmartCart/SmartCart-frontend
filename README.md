@@ -1,4 +1,4 @@
-# SmartCart - Backend
+# SmartCart - Frontend
 
 <br><br>
 <div align="center">
@@ -27,7 +27,16 @@ Frontend|Backend|Security&nbsp;&nbsp;&&nbsp;&nbsp;DB|Deployment|Other|
 
 ## 🤝 Git Convention
 
-### Commit Prefix
+### Branch
+- 반드시 "develop"에서 뻗어나와 develop으로 "merge" 되어야한다.
+- `main` : 출시 배포 CI/CD용 branch (미사용)
+- `develop` : 개발 개포 CI/CD용 branch
+- `feature` : 기능 구현용 branch
+- `Issue_종류/#Issue_번호` : branch 생성
+
+### Issue
+`✨ Feat`  `🐛 Fix`  `♻️ Refactor`  `✅ Test`<br>
+`📁 File`  `📝 Docs`  `🔧 Chore`  `⚙️ Setting`
 
 | 종류             | 내용                                             |
 |----------------| ------------------------------------------------ |
@@ -41,9 +50,29 @@ Frontend|Backend|Security&nbsp;&nbsp;&&nbsp;&nbsp;DB|Deployment|Other|
 | ⚙️ Setting     | 빌드 및 패키지 등 프로젝트 설정                           |
 
 ```
+< Issue Title >
+[Issue_종류] 구현_주요내용
+ex-1) [Feat] 로그인 페이지 UI 구현
+ex-2) [Feat] 로그인 페이지 기능 구현
+ex-3) [Fix] 로그인 연동로직 오류 수정
+```
+
+### Commit
+```
 < Commit Message >
-Prefix_종류: 구현_내용
-ex) Feat: Security 및 OAuth2 구현
+[#Issue_번호] Issue_종류: 구현_내용
+ex-1) [#32] Feat: 로그인 안내모달 UI 구현
+ex-2) [#33] Feat: 로그인 기능 서버 연동
+ex-3) [#34] Fix: 로그인 연동 API Path 수정
+```
+
+### Pull Request
+- Pull Request만 날리고, 중요 Approve는 reviewer가 한다.
+- PR에 대해 최소 1명 이상의 승인이 있어야 Merge가 가능하다.
+```
+< PR Title >
+[#Issue_번호] Issue_종류: 이슈내용
+ex) [#32] Feat: 로그인 페이지 UI 구현
 ```
 <br>
 
