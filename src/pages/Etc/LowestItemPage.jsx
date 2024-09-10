@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import BottomNav from '../../Component/Navigation/BottomNav';
+import { useLocation } from 'react-router-dom'; 
 
 const Container = styled.div`
   display: flex;
@@ -108,14 +109,23 @@ const ModalButton = styled.button`
   }
 `;
 
+//gpt 연결 후 상태 변경 해야 함
 const options = [
-  { id: 1, name: '홈플러스', price: '1,700원', description: '해태 홈런볼 소금우유 49g' },
-  { id: 2, name: '이마트', price: '1,470원', description: '해태 홈런볼 소금우유 49g' },
-  { id: 3, name: '롯데마트', price: '1,500원', description: '해태 홈런볼 소금우유 49g' },
-  { id: 4, name: '오프라인', price: '1,000원', description: '해태 홈런볼 소금우유 49g' }
+  { id: 1, name: '홈플러스', product: '해태 홈런볼 소금우유', capacity:'49g', price: '1,500원' },
+  { id: 2, name: '이마트', product: '해태 홈런볼 소금우유', capacity:'49g', price: '1,600원' },
+  { id: 3, name: '롯데마트', product: '해태 홈런볼 소금우유', capacity:'49g', price: '1,700원' }
 ];
 
 const LowestItemPage = () => {
+  const location = useLocation(); // useLocation 훅으로 상태 가져오기
+  const { productName, price, capacity } = location.state || {}; // 전달된 상태
+
+  // 새로운 옵션 추가
+  const updatedOptions = [
+    ...options,
+    { id: 4, name: '오프라인', product: productName || '상품명 없음', capacity: capacity || '용량 없음', price: price || '가격 없음' }
+  ];
+
   const [selectedOption, setSelectedOption] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
 
@@ -137,14 +147,15 @@ const LowestItemPage = () => {
     <>
       <Container>
         <Title>지금 찍은 상품의 최저가</Title>
-        {options.map(option => (
+        {updatedOptions.map(option => (
           <Option 
             key={option.id} 
             selected={selectedOption === option.id}
             onClick={() => handleOptionClick(option.id)}
           >
             <div>{option.name}</div>
-            <div>{option.description}</div>
+            <div>{option.product}</div>
+            <div>{option.capacity}</div>
             <div>{option.price}</div>
           </Option>
         ))}
@@ -157,7 +168,7 @@ const LowestItemPage = () => {
       {isModalOpen && (
         <ModalOverlay>
           <ModalContent>
-            <h3>장바구니에 담겼어요😊</h3>
+            <h3>장바구니에 담겼어요.😊</h3>
             <ModalButton onClick={handleCloseModal}>확인</ModalButton>
           </ModalContent>
         </ModalOverlay>

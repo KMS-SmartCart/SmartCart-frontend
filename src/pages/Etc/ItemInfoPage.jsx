@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom'; 
 import BottomNav from '../../Component/Navigation/BottomNav';
+import { useLocation } from 'react-router-dom';
 
 const Container = styled.div`
   width: 100%;
@@ -61,13 +63,20 @@ const SubmitButton = styled.button`
 `;
 
 function ItemInfoPage() {
+  const location = useLocation();
+  const navigate = useNavigate(); // useNavigate 훅 호출
+  const { imageUrl } = location.state || {}; // 카메라에서 전달받은 이미지 URL
+
   const [productName, setProductName] = useState('');
   const [price, setPrice] = useState('');
-  const [quantity, setQuantity] = useState('');
+  const [capacity, setCapacity] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`상품명: ${productName}, 가격: ${price}, 용량: ${quantity}`);
+    // LowestItemPage로 상품 정보 전달
+    navigate('/Lowest', {
+      state: { productName, price, capacity }
+    });
   };
 
   return (
@@ -75,7 +84,7 @@ function ItemInfoPage() {
       {/* 상단 이미지 */}
       <ImageContainer>
         <ProductImage 
-          src="#" 
+          src={imageUrl || '#'} 
           alt="Product" 
         />
       </ImageContainer>
@@ -104,8 +113,8 @@ function ItemInfoPage() {
           <InputLabel>용량:</InputLabel>
           <InputField 
             type="text" 
-            value={quantity} 
-            onChange={(e) => setQuantity(e.target.value)} 
+            value={capacity} 
+            onChange={(e) => setCapacity(e.target.value)} 
           />
         </InputContainer>
 
