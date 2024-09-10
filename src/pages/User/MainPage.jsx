@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useLocation, useNavigate } from "react-router-dom";
 import { IoTrashOutline } from "react-icons/io5";
+import { CheckToken } from "../../utils/CheckToken";
 
 // 전체 컨테이너
 const Container = styled.div`
@@ -114,6 +116,9 @@ const RecommendedMenu = styled.div`
 
 
 function MainPage() {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
   const [items, setItems] = useState([{ id: 1, text: '새송이 버섯' }]);
   const [newItem, setNewItem] = useState('');
 
@@ -127,6 +132,19 @@ function MainPage() {
   const removeItem = (id) => {
     setItems(items.filter((item) => item.id !== id));
   };
+
+  useEffect(() => {
+    const accessToken = searchParams.get('accessToken');
+    const refreshToken = searchParams.get('refreshToken');
+
+    if (accessToken && refreshToken) {
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+    }
+    else {
+      CheckToken();
+    }
+  }, []);
 
   return (
     <Container>
