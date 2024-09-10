@@ -11,6 +11,7 @@
 </div>
 <br>
 
+
 ## 💡 Tech Stack
 Frontend|Backend|Security&nbsp;&nbsp;&&nbsp;&nbsp;DB|Deployment|Other|
 |:------:|:------:|:------:|:------:|:------:|
@@ -24,6 +25,18 @@ Frontend|Backend|Security&nbsp;&nbsp;&&nbsp;&nbsp;DB|Deployment|Other|
 - Documentation : Notion, Swagger
 ```
 <br>
+
+
+## 💻 Architecture
+
+### System
+![smartcart_architecture drawio](https://github.com/user-attachments/assets/f213288e-a42f-493a-9910-666b62f56de0)
+
+### Network
+![smartcart_network_architecture drawio](https://github.com/user-attachments/assets/a4faeb21-c58f-477a-86ff-910c570f78ea)
+
+<br>
+
 
 ## 🤝 Git Convention
 
@@ -75,6 +88,7 @@ ex-3) [#34] Fix: 로그인 연동 API Path 수정
 ex) [#32] Feat: 로그인 페이지 UI 구현
 ```
 <br>
+
 
 ## 👨‍👩‍👧‍👧 Team
 | [사현진](https://github.com/tkguswls1106) | [김희원](https://github.com/Joygarden425) | [목경민](https://github.com/mkm0630) |
