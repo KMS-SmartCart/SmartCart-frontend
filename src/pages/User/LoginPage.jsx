@@ -73,13 +73,13 @@ function LoginPage(props) {
             <LoginMethodText>로그인 방법 선택</LoginMethodText>
 
             <SocialLoginContainer>
-                <SocialButton href="/oauth2/authorization/google">
+                <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/google`}>
                     <img src="src/assets/images/google.png" alt="Google" />
                 </SocialButton>
-                <SocialButton href="/oauth2/authorization/naver">
+                <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/naver`}>
                     <img src="src/assets/images/naver.png" alt="Naver" />
                 </SocialButton>
-                <SocialButton href="/oauth2/authorization/kakao">
+                <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/kakao`}>
                     <img src="src/assets/images/kakao.png" alt="Kakao" />
                 </SocialButton>
             </SocialLoginContainer>
