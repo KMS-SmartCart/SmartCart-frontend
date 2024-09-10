@@ -78,7 +78,7 @@ function LoginPage(props) {
                 알아서 비교해 드립니다.
             </Description>
 
-            <ImageSeparator src="src/assets/images/carticon192.png" alt="Separator" />
+            <ImageSeparator src="./src/assets/images/carticon192.png" alt="Separator" />
 
             <LoginMethodText>로그인 방법 선택</LoginMethodText>
 
