@@ -109,22 +109,32 @@ const ModalButton = styled.button`
   }
 `;
 
-//gpt 연결 후 상태 변경 해야 함
 const options = [
-  { id: 1, name: '홈플러스', product: '해태 홈런볼 소금우유', capacity:'49g', price: '1,500원' },
-  { id: 2, name: '이마트', product: '해태 홈런볼 소금우유', capacity:'49g', price: '1,600원' },
-  { id: 3, name: '롯데마트', product: '해태 홈런볼 소금우유', capacity:'49g', price: '1,700원' }
+  { id: 1, name: '홈플러스', product: '해태 홈런볼 소금우유', capacity: '49g', price: '1,500원' },
+  { id: 2, name: '이마트', product: '해태 홈런볼 소금우유', capacity: '49g', price: '1,600원' },
+  { id: 3, name: '롯데마트', product: '해태 홈런볼 소금우유', capacity: '49g', price: '1,700원' }
 ];
 
 const LowestItemPage = () => {
   const location = useLocation(); // useLocation 훅으로 상태 가져오기
   const { productName, price, capacity } = location.state || {}; // 전달된 상태
 
+  // 기존 옵션에 product와 capacity를 결합한 새로운 배열 생성
+  const updatedOptions = options.map(option => ({
+    ...option,
+    product: `${option.product} (${option.capacity})` // 상품명과 용량 결합
+  }));
+
   // 새로운 옵션 추가
-  const updatedOptions = [
-    ...options,
-    { id: 4, name: '오프라인', product: productName || '상품명 없음', capacity: capacity || '용량 없음', price: price || '가격 없음' }
-  ];
+  const newOption = { 
+    id: 4, 
+    name: '오프라인', 
+    product: `${productName || '상품명 없음'} (${capacity || '용량 없음'})`, // 상품명과 용량 결합
+    price: price || '가격 없음' 
+  };
+
+  // 업데이트된 옵션에 새로운 옵션 추가
+  const updatedOptionsWithNew = [...updatedOptions, newOption];
 
   const [selectedOption, setSelectedOption] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
@@ -147,15 +157,14 @@ const LowestItemPage = () => {
     <>
       <Container>
         <Title>지금 찍은 상품의 최저가</Title>
-        {updatedOptions.map(option => (
+        {updatedOptionsWithNew.map(option => (
           <Option 
             key={option.id} 
             selected={selectedOption === option.id}
             onClick={() => handleOptionClick(option.id)}
           >
             <div>{option.name}</div>
-            <div>{option.product}</div>
-            <div>{option.capacity}</div>
+            <div>{option.product}</div> {/* 결합된 상품명과 용량 */}
             <div>{option.price}</div>
           </Option>
         ))}
