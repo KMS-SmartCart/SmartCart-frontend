@@ -59,6 +59,16 @@ const SocialButton = styled.a`
 `;
 
 function LoginPage(props) {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const storedAccessToken = localStorage.getItem("accessToken");
+        const storedRefreshToken = localStorage.getItem("refreshToken");
+
+        if (storedAccessToken && storedRefreshToken) {
+            navigate(`/main`);
+        }
+    }, []);
 
     return (
         <Container>
