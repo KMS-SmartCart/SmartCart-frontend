@@ -15,14 +15,13 @@ function App(props) {
   return (
     <BrowserRouter>
         <Routes>
-          {/* <Route index element={<LoginPage />} />
-          <Route path="login" element={<LoginPage />} /> */}
-          <Route index element={<LowestItemPage />} />
-          <Route path="iteminfo" element={<ItemInfoPage />} />
+          <Route index element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/iteminfo" element={<ItemInfoPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/camera" element={<CameraPage />} />
-          <Route path="Lowest" element={<LowestItemPage />}/>
+          <Route path="/Lowest" element={<LowestItemPage />}/>
         </Routes>
     </BrowserRouter>
   );
