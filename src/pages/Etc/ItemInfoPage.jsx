@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom'; 
 import BottomNav from '../../Component/Navigation/BottomNav';
 import { useLocation } from 'react-router-dom';
+import Apis from "../../apis/Api";
 
 const Container = styled.div`
   width: 100%;
@@ -69,13 +70,13 @@ function ItemInfoPage() {
 
   const [productName, setProductName] = useState('');
   const [price, setPrice] = useState('');
-  const [capacity, setCapacity] = useState('');
+  const [amount, setamount] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // LowestItemPage로 상품 정보 전달
     navigate('/Lowest', {
-      state: { productName, price, capacity }
+      state: { productName, price, amount }
     });
   };
 
@@ -113,8 +114,8 @@ function ItemInfoPage() {
           <InputLabel>용량:</InputLabel>
           <InputField 
             type="text" 
-            value={capacity} 
-            onChange={(e) => setCapacity(e.target.value)} 
+            value={amount} 
+            onChange={(e) => setamount(e.target.value)} 
           />
         </InputContainer>
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import BottomNav from '../../Component/Navigation/BottomNav';
+import Apis from "../../apis/Api";
 
 // 전체 컨테이너
 const Container = styled.div`

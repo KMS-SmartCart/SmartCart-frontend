@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import Apis from "../../apis/Api";
 
 // 스타일 버튼 컴포넌트
 const Button = styled.button`
