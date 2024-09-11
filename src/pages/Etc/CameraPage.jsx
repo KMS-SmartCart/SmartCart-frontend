@@ -2,6 +2,34 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+// 스타일 버튼 컴포넌트
+const Button = styled.button`
+  width: 15%;
+  padding: 10px;
+  background-color: #5271FF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #C7CCDF;
+    color: black;
+  }
+`;
+
+// 전체 컨테이너 스타일
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: white;
+  padding: 20px;
+`;
+
 const CameraPage = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -31,22 +59,6 @@ const CameraPage = () => {
     };
   }, []);
 
-  const Button = styled.button`
-  width: 15%;
-  padding: 10px;
-  background-color: #5271FF;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 18px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #C7CCDF;
-    color: black;
-  }
-`;
-
   const takePicture = () => {
     const canvas = canvasRef.current;
     const video = videoRef.current;
@@ -65,14 +77,13 @@ const CameraPage = () => {
     }
   };
 
-
   return (
-    <div>
+    <Container>
       <h3>가격표를 찍어주세요.😊</h3>
-      <video ref={videoRef} autoPlay playsInline style={{ width: '70%' }} />
+      <video ref={videoRef} autoPlay playsInline style={{ width: '50%' }} />
       <Button onClick={takePicture}>사진 촬영</Button>
       <canvas ref={canvasRef} style={{ display: 'none' }} />
-    </div>
+    </Container>
   );
 };
 

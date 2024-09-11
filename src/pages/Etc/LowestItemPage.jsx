@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import BottomNav from '../../Component/Navigation/BottomNav';
-import { useLocation } from 'react-router-dom'; 
+import { useLocation, useNavigate } from 'react-router-dom'; 
 
 const Container = styled.div`
   display: flex;
@@ -117,6 +117,7 @@ const options = [
 
 const LowestItemPage = () => {
   const location = useLocation(); // useLocation 훅으로 상태 가져오기
+  const navigate = useNavigate(); // useNavigate 훅으로 페이지 이동
   const { productName, price, capacity } = location.state || {}; // 전달된 상태
 
   // 기존 옵션에 product와 capacity를 결합한 새로운 배열 생성
@@ -151,6 +152,7 @@ const LowestItemPage = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false); // 모달 닫기
+    navigate('/cart'); // CartPage로 이동
   };
 
   return (
