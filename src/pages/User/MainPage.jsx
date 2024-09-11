@@ -5,6 +5,7 @@ import { IoTrashOutline } from "react-icons/io5";
 import { PiNotePencil } from "react-icons/pi";
 import { CheckToken } from "../../utils/CheckToken";
 import Apis from "../../apis/Api";
+import BottomNav from '../../Component/Navigation/BottomNav';
 
 // 전체 컨테이너
 const Container = styled.div`
@@ -14,7 +15,7 @@ const Container = styled.div`
   justify-content: flex-start;
   padding: 20px;
   height: 100vh;
-  background-color: #f5f5f5;
+  background-color: white;
 `;
 
 // 로고 스타일
@@ -316,6 +317,8 @@ function MainPage() {
         <p>Chat GPT 사용</p>
         <p>→ 장바구니에 담긴 메뉴로 추천 레시피</p>
       </RecommendedMenu>
+
+      <BottomNav />
     </Container>
   );
 }
