@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useLocation, useNavigate } from "react-router-dom";
 import { IoTrashOutline } from "react-icons/io5";
 import { CheckToken } from "../../utils/CheckToken";
+import Apis from "../../apis/Api";
 
 // 전체 컨테이너
 const Container = styled.div`
@@ -119,49 +120,86 @@ function MainPage() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
-  const [items, setItems] = useState([{ id: 1, text: '새송이 버섯' }]);
-  const [newItem, setNewItem] = useState('');
+  const [items, setItems] = useState([]);
+  const [newItem, setNewItem] = useState("");
 
-  const addItem = () => {
-    if (newItem.trim()) {
-      setItems([...items, { id: items.length + 1, text: newItem }]);
-      setNewItem('');
-    }
+  // 체크리스트 조회 API
+  async function getCheckList() {
+    await Apis.get(`/checkitems`)
+      .then((response) => {
+        setItems(response.data.data);
+
+        // 경민아, 명세서에서 보다시피 각 item에 추가적인 속성으로,
+        // isCheck 라는 체킹(체크리스트 줄긋는거) 여부도 보여줘야해. 추가 부탁해!
+      })
+      .catch((error) => {
+        //console.log(error);
+      });
+  }
+
+  // 체크리스트 항목 추가 API
+  const handleAddClick = async (e) => {
+    await Apis.post("/checkitems", {
+      checkitemName: newItem,
+    })
+      .then((response) => {
+        // 백엔드 DB 내 항목 추가 완료.
+        getCheckList(); // 재로딩
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
   };
 
-  const removeItem = (id) => {
-    setItems(items.filter((item) => item.id !== id));
+  // 체크리스트 항목 삭제 API
+  const handleDeleteClick = async (id, e) => {
+    await Apis.delete(`/checkitems/${id}`)
+      .then((response) => {
+        // 백엔드 DB 내 항목 삭제 완료.
+        getCheckList(); // 프론트엔드 체크리스트 재로딩
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
   };
 
   useEffect(() => {
-    const accessToken = searchParams.get('accessToken');
-    const refreshToken = searchParams.get('refreshToken');
+    const accessToken = searchParams.get("accessToken");
+    const refreshToken = searchParams.get("refreshToken");
 
     if (accessToken && refreshToken) {
-      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
-    }
-    else {
+    } else {
       CheckToken();
     }
+
+    getCheckList(); // 페이지 첫 로딩시, 체크리스트 조회 API 호출.
   }, []);
 
   return (
     <Container>
-      <LogoImage src='./assets/images/smartcartlogo.png' alt="Logo" />
+      <LogoImage src="./assets/images/smartcartlogo.png" alt="Logo" />
       <Header>Hello, MKM KHW✋</Header>
 
       <InputContainer>
         <ChecklistWrapper>
-            {items.map((item) => (
-            <ChecklistItem key={item.id}>
-                <span>{item.text}</span>
-                <button onClick={() => removeItem(item.id)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+          {items.map((item) => (
+            <ChecklistItem key={item.checkitemId}>
+              <span>{item.checkitemName}</span>
+              <button
+                onClick={() => handleDeleteClick(item.checkitemId)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
                 {/* 🗑️ */}
-                <IoTrashOutline size={20}/>
-                </button>
+                <IoTrashOutline size={20} />
+              </button>
             </ChecklistItem>
-            ))}
+          ))}
         </ChecklistWrapper>
         <InputWrapper>
           <Input
@@ -170,10 +208,10 @@ function MainPage() {
             value={newItem}
             onChange={(e) => setNewItem(e.target.value)}
           />
-          <InputButton onClick={addItem}>추가</InputButton>
+          <InputButton onClick={handleAddClick}>추가</InputButton>
         </InputWrapper>
       </InputContainer>
-    
+
       <h3>추천 메뉴</h3>
       <RecommendedMenu>
         <p>Chat GPT 사용</p>

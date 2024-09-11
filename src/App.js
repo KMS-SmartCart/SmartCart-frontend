@@ -18,12 +18,12 @@ function App(props) {
         <Routes>
           <Route index element={<LoginPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/main" element={<MainPage />} />
           <Route path="/iteminfo" element={<ItemInfoPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/camera" element={<CameraPage />} />
           <Route path="/Lowest" element={<LowestItemPage />}/>
-          <Route path="/main" element={<MainPage />} />
         </Routes>
     </BrowserRouter>
   );
