@@ -111,9 +111,9 @@ const ModalButton = styled.button`
 `;
 
 const options = [
-  { id: 1, name: '홈플러스', product: '해태 홈런볼 소금우유', amount: '49g', price: '1,500원' },
-  { id: 2, name: '이마트', product: '해태 홈런볼 소금우유', amount: '49g', price: '1,600원' },
-  { id: 3, name: '롯데마트', product: '해태 홈런볼 소금우유', amount: '49g', price: '1,700원' }
+  { id: 1, name: '홈플러스', product: '해태 홈런볼 소금우유', amount: '49g', price: 1500 },
+  { id: 2, name: '이마트', product: '해태 홈런볼 소금우유', amount: '49g', price: 1600 },
+  { id: 3, name: '롯데마트', product: '해태 홈런볼 소금우유', amount: '49g', price: 1700 }
 ];
 
 const LowestItemPage = () => {
@@ -132,7 +132,7 @@ const LowestItemPage = () => {
     id: 4, 
     name: '오프라인', 
     product: `${productName || '상품명 없음'} (${amount || '용량 없음'})`, // 상품명과 용량 결합
-    price: price || '가격 없음' 
+    price: price 
   };
 
   // 업데이트된 옵션에 새로운 옵션 추가
@@ -168,7 +168,7 @@ const LowestItemPage = () => {
           >
             <div>{option.name}</div>
             <div>{option.product}</div> {/* 결합된 상품명과 용량 */}
-            <div>{option.price}</div>
+            <div>{option.price}원</div> {/* 가격을 숫자로 표시 */}
           </Option>
         ))}
         <ConfirmButton onClick={handleConfirm} disabled={!selectedOption}>

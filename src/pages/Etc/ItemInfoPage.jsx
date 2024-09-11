@@ -69,7 +69,7 @@ function ItemInfoPage() {
   const { imageUrl } = location.state || {}; // 카메라에서 전달받은 이미지 URL
 
   const [productName, setProductName] = useState('');
-  const [price, setPrice] = useState('');
+  const [price, setPrice] = useState(0);
   const [amount, setamount] = useState('');
 
   const handleSubmit = (e) => {
@@ -104,9 +104,9 @@ function ItemInfoPage() {
         <InputContainer>
           <InputLabel>가격:</InputLabel>
           <InputField 
-            type="text" 
+            type="number" 
             value={price} 
-            onChange={(e) => setPrice(e.target.value)} 
+            onChange={(e) => setPrice(Number(e.target.value))}
           />
         </InputContainer>
 
