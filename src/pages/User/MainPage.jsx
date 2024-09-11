@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from "react-router-dom";
 import { IoTrashOutline } from "react-icons/io5";
+import { PiNotePencil } from "react-icons/pi";
 import { CheckToken } from "../../utils/CheckToken";
 import Apis from "../../apis/Api";
 
@@ -67,6 +68,7 @@ const ChecklistItem = styled.div`
   border-radius: 10px;
   margin-bottom: 10px;
   font-size: 14px;
+  text-decoration: ${({ isChecked, isEditing }) => (isEditing ? 'none' : isChecked ? 'line-through' : 'none')}; // 체크 여부와 수정 여부에 따라 취소선 적용
 `;
 
 // 입력 필드와 버튼을 담는 래퍼 (고정된 영역)
@@ -105,6 +107,33 @@ const InputButton = styled.button`
   margin-right: 10px;
 `;
 
+// 수정 버튼 스타일
+const EditButton = styled.button`
+  background-color: #E8E6F0;
+  border: none;
+  cursor: pointer;
+  font-size: 10px;
+  margin-right: 10px; /* 수정 버튼과 삭제 버튼 사이의 간격 */
+`;
+
+// 완료 버튼 스타일
+const DoneButton = styled.button`
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 11px;
+  cursor: pointer;
+  font-size: 10px;
+`;
+
+// 삭제 버튼 스타일
+const DeleteButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+`;
+
 const RecommendedMenu = styled.div`
   background-color: #E6EBF1;
   border-radius: 20px;
@@ -122,6 +151,8 @@ function MainPage() {
 
   const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState("");
+  const [editItemId, setEditItemId] = useState(null); // 수정 중인 아이템의 ID
+  const [editItemName, setEditItemName] = useState(''); // 수정 중인 이름
 
   // 체크리스트 조회 API
   async function getCheckList() {
@@ -145,6 +176,7 @@ function MainPage() {
       .then((response) => {
         // 백엔드 DB 내 항목 추가 완료.
         getCheckList(); // 재로딩
+        setNewItem(""); // 입력 필드 초기화
       })
       .catch((error) => {
         // console.log(error)
@@ -162,6 +194,50 @@ function MainPage() {
         // console.log(error)
       });
   };
+
+  // 체크리스트 항목 업데이트 API (체크 상태 토글)
+  const handleCheckChange = async (item) => {
+    const updatedCheckState = item.isCheck === 1 ? 0 : 1;
+
+    await Apis.put(`/checkitems/${item.checkitemId}`, {
+      checkitemName: null,
+      isCheck: updatedCheckState
+    })
+    .then((response) => {
+      getCheckList(); // 프론트엔드 체크리스트 재로딩
+    })
+    .catch((error) => {
+      // console.log(error)
+    });
+  };
+
+  // 항목 이름 수정 모드로 변경
+  const handleEditClick = (item) => {
+    setEditItemId(item.checkitemId);
+    setEditItemName(item.checkitemName);
+  };
+
+  
+  // 수정 완료 처리
+  const handleEditSubmit = async () => {
+    if (editItemName.trim() === '') {
+      // 빈 이름을 방지
+      alert("항목 이름을 입력하세요.");
+      return;
+    }
+
+    await Apis.put(`/checkitems/${editItemId}`, {
+      checkitemName: editItemName,
+      isCheck: null,
+    }).then(() => {
+      setEditItemId(null); // 수정 모드 종료
+      setEditItemName(''); // 입력 필드 초기화
+      getCheckList();
+    }).catch((error) => {
+      console.error(error);
+    });
+  };
+
 
   useEffect(() => {
     const accessToken = searchParams.get("accessToken");
@@ -185,19 +261,42 @@ function MainPage() {
       <InputContainer>
         <ChecklistWrapper>
           {items.map((item) => (
-            <ChecklistItem key={item.checkitemId}>
-              <span>{item.checkitemName}</span>
-              <button
-                onClick={() => handleDeleteClick(item.checkitemId)}
-                style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-              >
-                {/* 🗑️ */}
-                <IoTrashOutline size={20} />
-              </button>
+            <ChecklistItem
+              key={item.checkitemId}
+              isChecked={item.isCheck === 1}
+              isEditing={editItemId === item.checkitemId} // 수정 중인지 여부를 전달
+            >
+              {editItemId === item.checkitemId ? (
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Input
+                    type="text"
+                    value={editItemName}
+                    onChange={(e) => setEditItemName(e.target.value)}
+                    onBlur={handleEditSubmit} // 수정 완료
+                  />
+                  <DoneButton onClick={handleEditSubmit}>완료</DoneButton>
+                </div>
+              ) : (
+                <div style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <input
+                      type="checkbox"
+                      checked={item.isCheck === 1}
+                      onChange={() => handleCheckChange(item)}
+                      style={{ marginRight: '10px' }}
+                    />
+                    <span>{item.checkitemName}</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <EditButton onClick={() => handleEditClick(item)}>
+                      <PiNotePencil size={20} />
+                    </EditButton>
+                    <DeleteButton onClick={() => handleDeleteClick(item.checkitemId)}>
+                      <IoTrashOutline size={20} />
+                    </DeleteButton>
+                  </div>
+                </div>
+              )}
             </ChecklistItem>
           ))}
         </ChecklistWrapper>
