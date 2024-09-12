@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom'; 
 import BottomNav from '../../Component/Navigation/BottomNav';
@@ -64,16 +64,22 @@ const SubmitButton = styled.button`
 
 function ItemInfoPage() {
   const location = useLocation();
-  const navigate = useNavigate(); // useNavigate 훅 호출
-  const { imageUrl } = location.state || {}; // 카메라에서 전달받은 이미지 URL
+  const navigate = useNavigate();
+  const { imageUrl, productName: initialProductName, price: initialPrice, amount: initialAmount } = location.state || {};
 
   const [productName, setProductName] = useState('');
   const [price, setPrice] = useState(0);
-  const [amount, setamount] = useState('');
+  const [amount, setAmount] = useState('');
+
+  // 초기값 설정
+  useEffect(() => {
+    if (initialProductName) setProductName(initialProductName);
+    if (initialPrice) setPrice(initialPrice);
+    if (initialAmount) setAmount(initialAmount);
+  }, [initialProductName, initialPrice, initialAmount]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // LowestItemPage로 상품 정보 전달
     navigate('/Lowest', {
       state: { productName, price, amount }
     });
@@ -81,15 +87,10 @@ function ItemInfoPage() {
 
   return (
     <Container>
-      {/* 상단 이미지 */}
       <ImageContainer>
-        <ProductImage 
-          src={imageUrl || '#'} 
-          alt="Product" 
-        />
+        <ProductImage src={imageUrl || '#'} alt="Product" />
       </ImageContainer>
-      
-      {/* 입력 폼 */}
+
       <form onSubmit={handleSubmit}>
         <InputContainer>
           <InputLabel>상품명:</InputLabel>
@@ -114,7 +115,7 @@ function ItemInfoPage() {
           <InputField 
             type="text" 
             value={amount} 
-            onChange={(e) => setamount(e.target.value)} 
+            onChange={(e) => setAmount(e.target.value)} 
           />
         </InputContainer>
 
