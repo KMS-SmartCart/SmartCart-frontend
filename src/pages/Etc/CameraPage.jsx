@@ -98,19 +98,15 @@ const CameraPage = () => {
         // 파일 확인
         console.log(formData.get('imageFile'));
 
-        // 저장된 토큰 가져오기
-        const accessToken = localStorage.getItem('accessToken');
-        if (!accessToken) {
-          throw new Error("No access token found");
-        }
-
         // API 호출 시 토큰을 헤더에 포함
         const response = await Apis.post('/products/image-processing', formData, {
           headers: {
-            'Authorization': `Bearer ${accessToken}`,  // 인증 토큰 추가
             'Content-Type': 'multipart/form-data'
           }
         });
+
+        // API 응답 데이터 확인
+        console.log(response.data.data);
 
         const { productName, price, amount } = response.data.data;
         
