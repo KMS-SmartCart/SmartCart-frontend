@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom'; 
 import BottomNav from '../../Component/Navigation/BottomNav';
 import { useLocation } from 'react-router-dom';
-import Apis from "../../apis/Api";
 
 const Container = styled.div`
   width: 100%;

@@ -1,9 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Apis from "../../apis/Api";
+import Apis from "../../apis/Api"; 
 
-// 스타일 버튼 컴포넌트
 const Button = styled.button`
   width: 15%;
   padding: 10px;
@@ -20,7 +19,6 @@ const Button = styled.button`
   }
 `;
 
-// 전체 컨테이너 스타일
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -30,6 +28,21 @@ const Container = styled.div`
   background-color: white;
   padding: 20px;
 `;
+
+// dataURL을 File 객체로 변환하는 함수
+const dataURLtoFile = (dataURL, filename) => {
+  const arr = dataURL.split(',');
+  const mime = arr[0].match(/:(.*?);/)[1];
+  const bstr = atob(arr[1]);
+  const n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  
+  for (let i = 0; i < n; i++) {
+    u8arr[i] = bstr.charCodeAt(i);
+  }
+  
+  return new File([u8arr], filename, { type: mime });
+};
 
 const CameraPage = () => {
   const videoRef = useRef(null);
@@ -60,7 +73,8 @@ const CameraPage = () => {
     };
   }, []);
 
-  const takePicture = () => {
+  const takePicture = async () => {
+    console.log("사진 촬영 버튼 클릭 확인"); 
     const canvas = canvasRef.current;
     const video = videoRef.current;
 
@@ -73,8 +87,40 @@ const CameraPage = () => {
       const imageUrl = canvas.toDataURL('image/png');
       setCapturedImage(imageUrl);
 
-      // ItemInfo 페이지로 이미지 전달
-      navigate('/iteminfo', { state: { imageUrl } });
+      // dataURL을 File 객체로 변환
+      const file = dataURLtoFile(imageUrl, 'photo.png');
+
+      // API 호출하여 이미지 처리
+      try {
+        const formData = new FormData();
+        formData.append('imageFile', file); 
+        
+        // 파일 확인
+        console.log(formData.get('imageFile'));
+
+        // 저장된 토큰 가져오기
+        const accessToken = localStorage.getItem('accessToken');
+        if (!accessToken) {
+          throw new Error("No access token found");
+        }
+
+        // API 호출 시 토큰을 헤더에 포함
+        const response = await Apis.post('/products/image-processing', formData, {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,  // 인증 토큰 추가
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+
+        const { productName, price, amount } = response.data.data;
+        
+        // ItemInfo 페이지로 상품 정보 전달
+        navigate('/iteminfo', { state: { productName, price, amount } });
+      } catch (error) {
+        console.error("Error processing image: ", error);
+      }
+    } else {
+      console.log("Canvas or video element가 존재하지 않음");
     }
   };
 
