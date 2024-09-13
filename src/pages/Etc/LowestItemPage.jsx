@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import BottomNav from '../../Component/Navigation/BottomNav';
 import { useLocation, useNavigate } from 'react-router-dom'; 
-import Apis from "../../apis/Api"; // API 호출을 위한 import
+import Apis from "../../apis/Api";
 
 const Container = styled.div`
   display: flex;
@@ -28,8 +28,7 @@ const Title = styled.h3`
   @media (max-width: 600px) {
     font-size: 18px;
   }
-  `
-;
+`;
 
 const Option = styled.div`
   background-color: ${(props) => (props.selected ? '#5271FF' : '#f0f0f0')};
@@ -46,8 +45,7 @@ const Option = styled.div`
     padding: 8px;
     margin-bottom: 8px;
   }
-  `
-;
+`;
 
 const OptionLink = styled.a`
   color: ${(props) => (props.selected ? 'white' : '#5271FF')};
@@ -57,8 +55,7 @@ const OptionLink = styled.a`
   &:hover {
     text-decoration: underline;
   }
-  `
-;
+`;
 
 const ConfirmButton = styled.button`
   background-color: #5271FF;
@@ -79,8 +76,7 @@ const ConfirmButton = styled.button`
     padding: 8px 16px;
     margin-top: 15px;
   }
-  `
-;
+`;
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -88,12 +84,11 @@ const ModalOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  `
-;
+`;
 
 const ModalContent = styled.div`
   background-color: white;
@@ -104,8 +99,7 @@ const ModalContent = styled.div`
   @media (max-width: 600px) {
     padding: 20px 15px;
   }
-  `
-;
+`;
 
 const ModalButton = styled.button`
   background-color: #5271FF;
@@ -124,19 +118,17 @@ const ModalButton = styled.button`
     padding: 8px 16px;
     margin-top: 15px;
   }
-   `
-;
+`;
 
 const LowestItemPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { productName, amount, price } = location.state || {}; // 전달된 상품명, 용량, 가격
+  const { productName, amount, price } = location.state || {};
 
-  const [options, setOptions] = useState([]); // API로 가져온 옵션 저장
+  const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // 상품명과 용량을 API로 보내서 최저가 조회
   useEffect(() => {
     const fetchLowestPrices = async () => {
       try {
@@ -146,7 +138,6 @@ const LowestItemPage = () => {
         });
 
         const { data } = response.data;
-        // API 응답으로 받은 데이터를 옵션으로 설정
         setOptions(data);
       } catch (error) {
         console.error("최저가 데이터를 가져오는 중 오류 발생: ", error);
@@ -158,45 +149,86 @@ const LowestItemPage = () => {
     }
   }, [productName, amount]);
 
-  // 새로운 옵션 추가 (오프라인 데이터)
-  const newOption = { 
+  const offlineOption = { 
     mallName: '오프라인', 
     productName: productName || '상품명 없음', 
     amount: amount || '용량 없음', 
     price: price || 0 
   };
 
-  // 최저가 API 데이터와 오프라인 데이터 결합
-  const updatedOptionsWithNew = [...options, newOption];
+  const updatedOptionsWithOffline = [...options, offlineOption];
 
   const handleOptionClick = (id) => {
     setSelectedOption(id);
   };
 
   const handleConfirm = () => {
-    if (selectedOption) {
+    if (selectedOption !== null) {
+      const selectedProduct = updatedOptionsWithOffline[selectedOption];
+      const isSelectedOffline = selectedProduct.mallName === '오프라인';
+      
+      let cartItems = [];
+
+      if (isSelectedOffline) {
+        // 오프라인 상품 선택 시
+        const onlineLowestPrice = Math.min(...options.map(option => option.price));
+        const onlineLowestPriceProduct = options.find(option => option.price === onlineLowestPrice);
+
+        cartItems = [
+          {
+            id: Date.now(),
+            productName: selectedProduct.productName,
+            price: selectedProduct.price,
+            isOnline: false
+          },
+          {
+            id: Date.now() + 1,
+            productName: onlineLowestPriceProduct.productName,
+            price: onlineLowestPriceProduct.price,
+            isOnline: true
+          }
+        ];
+      } else {
+        // 온라인 상품 선택 시
+        cartItems = [
+          {
+            id: Date.now(),
+            productName: selectedProduct.productName,
+            price: selectedProduct.price,
+            isOnline: true
+          },
+          {
+            id: Date.now() + 1,
+            productName: offlineOption.productName,
+            price: offlineOption.price,
+            isOnline: false
+          }
+        ];
+      }
+
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
       setIsModalOpen(true);
     }
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    navigate('/cart'); // CartPage로 이동
+    navigate('/cart');
   };
 
   return (
     <>
       <Container>
         <Title>지금 찍은 상품의 최저가</Title>
-        {updatedOptionsWithNew.map((option, index) => (
+        {updatedOptionsWithOffline.map((option, index) => (
           <Option 
             key={index} 
             selected={selectedOption === index}
             onClick={() => handleOptionClick(index)}
           >
-            <div>{option.mallName}</div> {/* 쇼핑몰 이름 */}
-            <div>{option.productName} {option.amount}</div> {/* 상품명과 용량 */}
-            <div>{option.price}원</div> {/* 가격 */}
+            <div>{option.mallName}</div>
+            <div>{option.productName} {option.amount}</div>
+            <div>{option.price}원</div>
             {option.link && (
               <OptionLink href={option.link} target="_blank" selected={selectedOption === index}>
                 상세보기

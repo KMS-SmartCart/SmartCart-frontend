@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import BottomNav from '../../Component/Navigation/BottomNav';
-import Apis from "../../apis/Api";
 
-// 전체 컨테이너
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -13,18 +11,17 @@ const Container = styled.div`
   height: 100vh;
   background-color: white;
   position: relative; 
-  padding-bottom: 100px; /* 하단바 높이만큼 공간 확보 */
+  padding-bottom: 100px;
 `;
 
-// 섹션을 감싸는 컨테이너
 const SectionContainer = styled.div`
   display: flex;
   gap: 20px;
   flex-grow: 1; 
   width: 100%;
   max-width: 600px;
-  height: calc(100vh - 150px); /* 전체 높이에서 버튼과 여백을 제외한 높이 */
-  overflow-y: auto; /* 스크롤 추가 */
+  height: calc(100vh - 150px);
+  overflow-y: auto;
 `;
 
 const Title = styled.h2`
@@ -97,7 +94,7 @@ const StyledButton = styled.button`
   color: white;
   border: none;
   cursor: pointer;
-  margin-bottom: 150px; /* 추가: 버튼이 하단바와 겹치지 않도록 */
+  margin-bottom: 150px;
   
   &:hover {
     background-color: #c7ccdf;
@@ -106,19 +103,21 @@ const StyledButton = styled.button`
 `;
 
 const CartPage = () => {
-  const [offlineProducts, setOfflineProducts] = useState([
-    { id: 1, productName: "상품 A", price: 10000, checked: false },
-    { id: 2, productName: "상품 B", price: 7500, checked: false },
-  ]);
-
-  const [onlineProducts, setOnlineProducts] = useState([
-    { id: 3, productName: "상품 C", price: 9000, checked: false },
-    { id: 4, productName: "상품 D", price: 6900, checked: false },
-  ]);
-
+  const [offlineProducts, setOfflineProducts] = useState([]);
+  const [onlineProducts, setOnlineProducts] = useState([]);
   const [offlineTotal, setOfflineTotal] = useState(0);
   const [onlineTotal, setOnlineTotal] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
+
+  useEffect(() => {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    
+    const offline = cartItems.filter(item => !item.isOnline);
+    const online = cartItems.filter(item => item.isOnline);
+
+    setOfflineProducts(offline.map(item => ({ ...item, checked: false })));
+    setOnlineProducts(online.map(item => ({ ...item, checked: false })));
+  }, []);
 
   useEffect(() => {
     const newOfflineTotal = offlineProducts.reduce(
