@@ -107,13 +107,13 @@ const StyledButton = styled.button`
 
 const CartPage = () => {
   const [offlineProducts, setOfflineProducts] = useState([
-    { id: 1, name: "상품 A", price: 10000, checked: false },
-    { id: 2, name: "상품 B", price: 7500, checked: false },
+    { id: 1, productName: "상품 A", price: 10000, checked: false },
+    { id: 2, productName: "상품 B", price: 7500, checked: false },
   ]);
 
   const [onlineProducts, setOnlineProducts] = useState([
-    { id: 3, name: "상품 C", price: 9000, checked: false },
-    { id: 4, name: "상품 D", price: 6900, checked: false },
+    { id: 3, productName: "상품 C", price: 9000, checked: false },
+    { id: 4, productName: "상품 D", price: 6900, checked: false },
   ]);
 
   const [offlineTotal, setOfflineTotal] = useState(0);
@@ -155,7 +155,7 @@ const CartPage = () => {
             <CheckBox onClick={() => handleToggle(isOnline, product.id)}>
               {product.checked && '✔'}
             </CheckBox>
-            <ProductName>{product.name}</ProductName>
+            <ProductName>{product.productName}</ProductName>
           </div>
           <span>{product.price.toLocaleString()}원</span>
         </Product>

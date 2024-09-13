@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import BottomNav from '../../Component/Navigation/BottomNav';
 import { useLocation, useNavigate } from 'react-router-dom'; 
-import Apis from "../../apis/Api";
+import Apis from "../../apis/Api"; // API 호출을 위한 import
 
 const Container = styled.div`
   display: flex;
@@ -28,7 +28,8 @@ const Title = styled.h3`
   @media (max-width: 600px) {
     font-size: 18px;
   }
-`;
+  `
+;
 
 const Option = styled.div`
   background-color: ${(props) => (props.selected ? '#5271FF' : '#f0f0f0')};
@@ -45,7 +46,19 @@ const Option = styled.div`
     padding: 8px;
     margin-bottom: 8px;
   }
-`;
+  `
+;
+
+const OptionLink = styled.a`
+  color: ${(props) => (props.selected ? 'white' : '#5271FF')};
+  text-decoration: none;
+  font-weight: bold;
+
+  &:hover {
+    text-decoration: underline;
+  }
+  `
+;
 
 const ConfirmButton = styled.button`
   background-color: #5271FF;
@@ -66,7 +79,8 @@ const ConfirmButton = styled.button`
     padding: 8px 16px;
     margin-top: 15px;
   }
-`;
+  `
+;
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -78,7 +92,8 @@ const ModalOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
+  `
+;
 
 const ModalContent = styled.div`
   background-color: white;
@@ -89,7 +104,8 @@ const ModalContent = styled.div`
   @media (max-width: 600px) {
     padding: 20px 15px;
   }
-`;
+  `
+;
 
 const ModalButton = styled.button`
   background-color: #5271FF;
@@ -108,38 +124,50 @@ const ModalButton = styled.button`
     padding: 8px 16px;
     margin-top: 15px;
   }
-`;
-
-const options = [
-  { id: 1, name: '홈플러스', product: '해태 홈런볼 소금우유', amount: '49g', price: 1500 },
-  { id: 2, name: '이마트', product: '해태 홈런볼 소금우유', amount: '49g', price: 1600 },
-  { id: 3, name: '롯데마트', product: '해태 홈런볼 소금우유', amount: '49g', price: 1700 }
-];
+   `
+;
 
 const LowestItemPage = () => {
-  const location = useLocation(); // useLocation 훅으로 상태 가져오기
-  const navigate = useNavigate(); // useNavigate 훅으로 페이지 이동
-  const { productName, price, amount } = location.state || {}; // 전달된 상태
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { productName, amount, price } = location.state || {}; // 전달된 상품명, 용량, 가격
 
-  // 기존 옵션에 product와 amount를 결합한 새로운 배열 생성
-  const updatedOptions = options.map(option => ({
-    ...option,
-    product: `${option.product} (${option.amount})` // 상품명과 용량 결합
-  }));
+  const [options, setOptions] = useState([]); // API로 가져온 옵션 저장
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // 새로운 옵션 추가
+  // 상품명과 용량을 API로 보내서 최저가 조회
+  useEffect(() => {
+    const fetchLowestPrices = async () => {
+      try {
+        const response = await Apis.post('/products/lowest-price', {
+          productName,
+          amount
+        });
+
+        const { data } = response.data;
+        // API 응답으로 받은 데이터를 옵션으로 설정
+        setOptions(data);
+      } catch (error) {
+        console.error("최저가 데이터를 가져오는 중 오류 발생: ", error);
+      }
+    };
+
+    if (productName && amount) {
+      fetchLowestPrices();
+    }
+  }, [productName, amount]);
+
+  // 새로운 옵션 추가 (오프라인 데이터)
   const newOption = { 
-    id: 4, 
-    name: '오프라인', 
-    product: `${productName || '상품명 없음'} (${amount || '용량 없음'})`, // 상품명과 용량 결합
-    price: price 
+    mallName: '오프라인', 
+    productName: productName || '상품명 없음', 
+    amount: amount || '용량 없음', 
+    price: price || 0 
   };
 
-  // 업데이트된 옵션에 새로운 옵션 추가
-  const updatedOptionsWithNew = [...updatedOptions, newOption];
-
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
+  // 최저가 API 데이터와 오프라인 데이터 결합
+  const updatedOptionsWithNew = [...options, newOption];
 
   const handleOptionClick = (id) => {
     setSelectedOption(id);
@@ -147,12 +175,12 @@ const LowestItemPage = () => {
 
   const handleConfirm = () => {
     if (selectedOption) {
-      setIsModalOpen(true); // 모달 열기
+      setIsModalOpen(true);
     }
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false); // 모달 닫기
+    setIsModalOpen(false);
     navigate('/cart'); // CartPage로 이동
   };
 
@@ -160,18 +188,23 @@ const LowestItemPage = () => {
     <>
       <Container>
         <Title>지금 찍은 상품의 최저가</Title>
-        {updatedOptionsWithNew.map(option => (
+        {updatedOptionsWithNew.map((option, index) => (
           <Option 
-            key={option.id} 
-            selected={selectedOption === option.id}
-            onClick={() => handleOptionClick(option.id)}
+            key={index} 
+            selected={selectedOption === index}
+            onClick={() => handleOptionClick(index)}
           >
-            <div>{option.name}</div>
-            <div>{option.product}</div> {/* 결합된 상품명과 용량 */}
-            <div>{option.price}원</div> {/* 가격을 숫자로 표시 */}
+            <div>{option.mallName}</div> {/* 쇼핑몰 이름 */}
+            <div>{option.productName} {option.amount}</div> {/* 상품명과 용량 */}
+            <div>{option.price}원</div> {/* 가격 */}
+            {option.link && (
+              <OptionLink href={option.link} target="_blank" selected={selectedOption === index}>
+                상세보기
+              </OptionLink>
+            )}
           </Option>
         ))}
-        <ConfirmButton onClick={handleConfirm} disabled={!selectedOption}>
+        <ConfirmButton onClick={handleConfirm} disabled={selectedOption === null}>
           확인
         </ConfirmButton>
         <BottomNav />
