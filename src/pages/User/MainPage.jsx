@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useLocation, useNavigate } from "react-router-dom";
 import { IoTrashOutline } from "react-icons/io5";
 import { PiNotePencil } from "react-icons/pi";
+import { IoMdCheckboxOutline } from "react-icons/io";
 import { CheckToken } from "../../utils/CheckToken";
 import Apis from "../../apis/Api";
 import BottomNav from '../../Component/Navigation/BottomNav';
@@ -16,7 +17,38 @@ const Container = styled.div`
   padding: 20px;
   height: 100vh;
   background-color: white;
+  position: relative; 
+  padding-bottom: 100px; /* 하단바 높이만큼 공간 확보 */
+
+  @media (max-width: 1024px) {
+    width: 60%; /* 태블릿 크기에서 너비 조정 */
+  }
+
+  @media (max-width: 768px) {
+    width: 80%; /* 작은 태블릿 및 큰 스마트폰에서 너비 조정 */
+  }
+
+  @media (max-width: 480px) {
+    width: 100%; /* 작은 스마트폰에서는 전체 너비로 변경 */
+  }
 `;
+// const Container = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   padding: 20px;
+//   width: 30%;
+//   margin: 0 auto;
+//   background-color: white;
+//   border-radius: 10px;
+//   // height: calc(100vh - 60px);  /* 하단 바 높이를 제외한 전체 높이 */
+//   overflow-y: auto;  /* 나머지 콘텐츠가 스크롤되도록 설정 */
+
+//   @media (max-width: 600px) {
+//     max-width: 100%;
+//     padding: 10px;
+//   }
+// `;
 
 // 로고 스타일
 const LogoImage = styled.img`
@@ -49,7 +81,6 @@ const InputContainer = styled.div`
   position: relative; /*부모 요소에 대해 inputwrapper를 절대적으로 위치시킴 */
   height: 300px;      /* 고정된 높이 */
   overflow-y: auto;   /* 내용이 많아지면 스크롤 처리 */
-//   margin-bottom: 20px;
 `;
 
 // 체크리스트 스타일 (내용이 스크롤되는 영역)
@@ -65,9 +96,9 @@ const ChecklistItem = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: none;
-  padding: 10px;
+  padding: 2px;
   border-radius: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   font-size: 14px;
   text-decoration: ${({ isChecked, isEditing }) => (isEditing ? 'none' : isChecked ? 'line-through' : 'none')}; // 체크 여부와 수정 여부에 따라 취소선 적용
 `;
@@ -83,7 +114,6 @@ const InputWrapper = styled.div`
   width: 90%;
   background-color: #CDD3EE;
   border-radius: 20px;
-//   margin-top: 210px;
 `;
 
 // 입력 필드 스타일
@@ -110,22 +140,30 @@ const InputButton = styled.button`
 
 // 수정 버튼 스타일
 const EditButton = styled.button`
-  background-color: #E8E6F0;
+  background: none;
   border: none;
   cursor: pointer;
-  font-size: 10px;
   margin-right: 10px; /* 수정 버튼과 삭제 버튼 사이의 간격 */
+`;
+
+// 수정 입력 필드 스타일
+const EditInput = styled.input`
+  border: none;
+  background-color: transparent;
+  font-size: 14px;
+  flex-grow: 1;
+  outline: none;
+  padding: 0;
+  line-height: 1;
+  font-family: inherit;
+  margin-left: 27px;
 `;
 
 // 완료 버튼 스타일
 const DoneButton = styled.button`
-  background-color: #4CAF50;
-  color: white;
+  background: none;
   border: none;
-  padding: 5px 10px;
-  border-radius: 11px;
   cursor: pointer;
-  font-size: 10px;
 `;
 
 // 삭제 버튼 스타일
@@ -160,9 +198,6 @@ function MainPage() {
     await Apis.get(`/checkitems`)
       .then((response) => {
         setItems(response.data.data);
-
-        // 경민아, 명세서에서 보다시피 각 item에 추가적인 속성으로,
-        // isCheck 라는 체킹(체크리스트 줄긋는거) 여부도 보여줘야해. 추가 부탁해!
       })
       .catch((error) => {
         //console.log(error);
@@ -256,7 +291,7 @@ function MainPage() {
 
   return (
     <Container>
-      <LogoImage src="./assets/images/smartcartlogo.png" alt="Logo" />
+      <LogoImage src="../../assets/images/logo.png" alt="Logo" />
       <Header>Hello, MKM KHW✋</Header>
 
       <InputContainer>
@@ -268,14 +303,14 @@ function MainPage() {
               isEditing={editItemId === item.checkitemId} // 수정 중인지 여부를 전달
             >
               {editItemId === item.checkitemId ? (
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <Input
+                <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                  <EditInput
                     type="text"
                     value={editItemName}
                     onChange={(e) => setEditItemName(e.target.value)}
                     onBlur={handleEditSubmit} // 수정 완료
                   />
-                  <DoneButton onClick={handleEditSubmit}>완료</DoneButton>
+                  <DoneButton onClick={handleEditSubmit}><IoMdCheckboxOutline size={20}/></DoneButton>
                 </div>
               ) : (
                 <div style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
@@ -317,7 +352,6 @@ function MainPage() {
         <p>Chat GPT 사용</p>
         <p>→ 장바구니에 담긴 메뉴로 추천 레시피</p>
       </RecommendedMenu>
-
       <BottomNav />
     </Container>
   );
