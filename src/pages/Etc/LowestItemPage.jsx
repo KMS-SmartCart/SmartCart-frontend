@@ -8,24 +8,54 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   padding: 20px;
-  width: 30%;
-  margin: 0 auto;
+  height: 100vh;
   background-color: white;
-  border-radius: 10px;
+  position: relative; 
+  padding-bottom: 100px; /* 하단바 높이만큼 공간 확보 */
 
-  @media (max-width: 600px) {
-    max-width: 100%;
-    padding: 10px;
+  @media (max-width: 1024px) {
+    width: 60%; /* 태블릿 크기에서 너비 조정 */
+  }
+
+  @media (max-width: 768px) {
+    width: 80%; /* 작은 태블릿 및 큰 스마트폰에서 너비 조정 */
+  }
+
+  @media (max-width: 480px) {
+    width: 100%; 
   }
 `;
 
+const LogoContainer = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    top: 5px;
+    right: 5px;
+  }
+`;
+
+const LogoImage = styled.img`
+  width: 80px;
+  height: auto;
+
+  @media (max-width: 768px) {
+    width: 60px;
+  }
+`;
+
+
 const Title = styled.h3`
-  text-align: left;
+  text-align: center;
   width: 100%;
   font-size: 20px;
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     font-size: 18px;
   }
 `;
@@ -37,13 +67,14 @@ const Option = styled.div`
   margin-bottom: 10px;
   border-radius: 10px;
   width: 100%;
+  max-width: 500px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     padding: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
 `;
 
@@ -65,15 +96,15 @@ const ConfirmButton = styled.button`
   padding: 15px 35px;
   cursor: pointer;
   font-size: 15px;
-  margin-top: 10%;
+  margin-top: 20px;
 
   &:disabled {
     background-color: #ccc;
     cursor: not-allowed;
   }
 
-  @media (max-width: 600px) {
-    padding: 8px 16px;
+  @media (max-width: 768px) {
+    padding: 12px;
     margin-top: 15px;
   }
 `;
@@ -128,6 +159,10 @@ const LowestItemPage = () => {
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleLogoClick = () => {
+    navigate('/main');
+  };
 
   useEffect(() => {
     const fetchLowestPrices = async () => {
@@ -207,6 +242,10 @@ const LowestItemPage = () => {
   return (
     <>
       <Container>
+      <LogoContainer onClick={handleLogoClick}>
+        <LogoImage src="./assets/images/smartcartlogo.png" alt="Logo" />
+      </LogoContainer>
+      
         <Title>지금 찍은 상품의 최저가💘</Title>
         {updatedOptionsWithOffline.map((option, index) => (
           <Option 

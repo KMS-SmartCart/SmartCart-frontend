@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import BottomNav from '../../Component/Navigation/BottomNav';
 import Apis from "../../apis/Api";
 
@@ -12,7 +13,40 @@ const Container = styled.div`
   height: 100vh;
   background-color: white;
   position: relative; 
-  padding-bottom: 100px;
+  padding-bottom: 100px; /* 하단바 높이만큼 공간 확보 */
+
+  @media (max-width: 1024px) {
+    width: 60%; /* 태블릿 크기에서 너비 조정 */
+  }
+
+  @media (max-width: 768px) {
+    width: 80%; /* 작은 태블릿 및 큰 스마트폰에서 너비 조정 */
+  }
+
+  @media (max-width: 480px) {
+    width: 100%; /* 작은 스마트폰에서는 전체 너비로 변경 */
+  }
+`;
+
+const LogoContainer = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    top: 5px;
+    right: 5px;
+  }
+`;
+
+const LogoImage = styled.img`
+  width: 80px;
+  height: auto;
+
+  @media (max-width: 768px) {
+    width: 60px;
+  }
 `;
 
 const SectionContainer = styled.div`
@@ -23,6 +57,12 @@ const SectionContainer = styled.div`
   max-width: 600px;
   height: calc(100vh - 150px);
   overflow-y: auto;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 10px;
+    height: auto;
+  }
 `;
 
 const Title = styled.h2`
@@ -30,6 +70,11 @@ const Title = styled.h2`
   font-weight: bold;
   text-align: center;
   margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
 `;
 
 const Section = styled.div`
@@ -40,18 +85,31 @@ const Section = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
 `;
 
 const SectionTitle = styled.h3`
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
 `;
 
 const ProductList = styled.div`
   flex-grow: 1;
   overflow-y: auto;  
   margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 15px;
+  }
 `;
 
 const Product = styled.div`
@@ -59,6 +117,11 @@ const Product = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
 `;
 
 const ProductName = styled.span`
@@ -69,6 +132,11 @@ const TotalAmount = styled.div`
   padding: 15px;
   border-radius: 10px;
   font-size: 18px;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    padding: 10px;
+  }
 `;
 
 const StyledButton = styled.button`
@@ -87,6 +155,12 @@ const StyledButton = styled.button`
     background-color: #c7ccdf;
     color: black;
   }
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    padding: 8px;
+    margin-bottom: 100px;
+  }
 `;
 
 const SavedMoney = styled.div`
@@ -97,6 +171,11 @@ const SavedMoney = styled.div`
   font-weight: bold;
   text-align: center;
   margin-bottom: 15px;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
 `;
 
 const ModalOverlay = styled.div`
@@ -117,7 +196,7 @@ const ModalContent = styled.div`
   border-radius: 10px;
   text-align: center;
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     padding: 20px 15px;
   }
 `;
@@ -135,7 +214,7 @@ const ModalButton = styled.button`
     background-color: #405bbd;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     padding: 8px 16px;
     margin-top: 15px;
   }
@@ -156,7 +235,9 @@ const Modal = ({ isOpen, onClose, actionText }) => {
   );
 };
 
+
 const CartPage = () => {
+  const navigate = useNavigate();
   const [offlineProducts, setOfflineProducts] = useState([]);
   const [onlineProducts, setOnlineProducts] = useState([]);
   const [offlinePriceSum, setOfflinePriceSum] = useState(0);
@@ -164,6 +245,10 @@ const CartPage = () => {
   const [allPriceSum, setAllPriceSum] = useState(0);
   const [savedMoneySum, setSavedMoneySum] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleLogoClick = () => {
+    navigate('/main');
+  };
 
   // 장바구니 데이터 가져오기
   const fetchCartData = async () => {
@@ -225,6 +310,10 @@ const CartPage = () => {
 
   return (
     <Container>
+      <LogoContainer onClick={handleLogoClick}>
+        <LogoImage src="./assets/images/smartcartlogo.png" alt="Logo" />
+      </LogoContainer>
+
       <Title>ON, OFF 한눈에 비교💘</Title>
       <SectionContainer>
         <Section online>
