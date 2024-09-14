@@ -7,20 +7,21 @@ const NavContainer = styled.div`
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 40%; /* 기본 너비 */
+  width: 100%; /* 전체 너비로 확장 */
+  max-width: 600px; /* 최대 너비 제한 */
   background-color: white;
   border-top: 1px solid #ccc;
   display: flex;
   justify-content: space-around;
   padding: 10px 0;
-  box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
+  // box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
 
   @media (max-width: 1024px) {
-    width: 60%; /* 태블릿 크기에서 너비 조정 */
+    width: 80%; /* 태블릿 크기에서 너비 조정 */
   }
 
   @media (max-width: 768px) {
-    width: 80%; /* 작은 태블릿 및 큰 스마트폰에서 너비 조정 */
+    width: 90%; /* 작은 태블릿 및 큰 스마트폰에서 너비 조정 */
   }
 
   @media (max-width: 480px) {
@@ -33,6 +34,7 @@ const NavItem = styled.div`
   color: #888;
   font-size: 14px;
   cursor: pointer;
+  flex: 1;
 
   &:hover {
     color: #5271FF;
@@ -40,6 +42,18 @@ const NavItem = styled.div`
 
   div {
     margin-top: 5px;
+  }
+`;
+
+const LensItem = styled(NavItem)`
+  svg {
+    width: 50px;
+    height: 50px;
+  }
+
+  div {
+    font-size: 16px;
+    font-weight: bold;
   }
 `;
 
@@ -72,10 +86,10 @@ const BottomNav = () => {
         <div>장바구니</div>
       </NavItem>
 
-      <NavItem onClick={handleLensClick}>
+      <LensItem onClick={handleLensClick}>
         <BsUpcScan size={50} />
         <div>스마트 렌즈</div>
-      </NavItem>
+      </LensItem>
 
       <NavItem onClick={handleProfileClick}>
         {isProfileActive ? (

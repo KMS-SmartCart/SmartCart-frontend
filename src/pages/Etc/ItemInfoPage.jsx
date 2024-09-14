@@ -1,20 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate, useLocation } from 'react-router-dom';
 import BottomNav from '../../Component/Navigation/BottomNav';
-import { useLocation } from 'react-router-dom';
 
 const Container = styled.div`
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   padding: 20px;
+  min-height: 100vh;
+  background-color: white;
+  position: relative; 
+  padding-bottom: 100px; /* 하단바 높이만큼 공간 확보 */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   box-sizing: border-box;
+
+  @media (max-width: 1024px) {
+    width: 60%;
+    padding: 15px;
+  }
+
+  @media (max-width: 768px) {
+    width: 80%;
+    padding: 10px;
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    padding: 10px 5px;
+  }
+`;
+
+const LogoContainer = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    top: 5px;
+    right: 5px;
+  }
+`;
+
+const LogoImage = styled.img`
+  width: 80px;
+  height: auto;
+
+  @media (max-width: 768px) {
+    width: 60px;
+  }
 `;
 
 const ImageContainer = styled.div`
   margin-bottom: 20px;
+  width: 100%;
+  max-width: 500px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 15px;
+  }
 `;
 
 const ProductImage = styled.img`
@@ -23,9 +71,18 @@ const ProductImage = styled.img`
   border-radius: 10px;
 `;
 
+const FormContainer = styled.form`
+  width: 100%;
+  max-width: 500px;
+`;
+
 const InputContainer = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   text-align: left;
+
+  @media (max-width: 768px) {
+    margin-bottom: 10px;
+  }
 `;
 
 const InputLabel = styled.label`
@@ -33,6 +90,11 @@ const InputLabel = styled.label`
   font-size: 16px;
   color: #888;
   margin-bottom: 5px;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
 `;
 
 const InputField = styled.input`
@@ -43,6 +105,11 @@ const InputField = styled.input`
   border-radius: 5px;
   box-sizing: border-box;
   background-color: #E6EBF1;
+
+  @media (max-width: 768px) {
+    padding: 8px;
+    font-size: 14px;
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -60,37 +127,51 @@ const SubmitButton = styled.button`
     background-color: #C7CCDF;
     color: black;
   }
+
+  @media (max-width: 768px) {
+    padding: 12px;
+    font-size: 16px;
+    margin-top: 15px;
+  }
 `;
 
 function ItemInfoPage() {
   const location = useLocation();
-  const navigate = useNavigate(); // useNavigate 훅 호출
-  const { imageUrl } = location.state || {}; // 카메라에서 전달받은 이미지 URL
+  const navigate = useNavigate();
+  const { imageUrl, productName: initialProductName, price: initialPrice, amount: initialAmount } = location.state || {};
 
   const [productName, setProductName] = useState('');
-  const [price, setPrice] = useState('');
-  const [capacity, setCapacity] = useState('');
+  const [price, setPrice] = useState(0);
+  const [amount, setAmount] = useState('');
+
+  useEffect(() => {
+    if (initialProductName) setProductName(initialProductName);
+    if (initialPrice) setPrice(initialPrice);
+    if (initialAmount) setAmount(initialAmount);
+  }, [initialProductName, initialPrice, initialAmount]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // LowestItemPage로 상품 정보 전달
     navigate('/Lowest', {
-      state: { productName, price, capacity }
+      state: { productName, price, amount }
     });
+  };
+
+  const handleLogoClick = () => {
+    navigate('/main');
   };
 
   return (
     <Container>
-      {/* 상단 이미지 */}
+      <LogoContainer onClick={handleLogoClick}>
+        <LogoImage src="./assets/images/smartcartlogo.png" alt="Logo" />
+      </LogoContainer>
+
       <ImageContainer>
-        <ProductImage 
-          src={imageUrl || '#'} 
-          alt="Product" 
-        />
+        <ProductImage src={imageUrl || '#'} alt="Product" />
       </ImageContainer>
-      
-      {/* 입력 폼 */}
-      <form onSubmit={handleSubmit}>
+
+      <FormContainer onSubmit={handleSubmit}>
         <InputContainer>
           <InputLabel>상품명:</InputLabel>
           <InputField 
@@ -103,9 +184,9 @@ function ItemInfoPage() {
         <InputContainer>
           <InputLabel>가격:</InputLabel>
           <InputField 
-            type="text" 
+            type="number" 
             value={price} 
-            onChange={(e) => setPrice(e.target.value)} 
+            onChange={(e) => setPrice(Number(e.target.value))}
           />
         </InputContainer>
 
@@ -113,13 +194,13 @@ function ItemInfoPage() {
           <InputLabel>용량:</InputLabel>
           <InputField 
             type="text" 
-            value={capacity} 
-            onChange={(e) => setCapacity(e.target.value)} 
+            value={amount} 
+            onChange={(e) => setAmount(e.target.value)} 
           />
         </InputContainer>
 
         <SubmitButton type="submit">확인</SubmitButton>
-      </form>
+      </FormContainer>
 
       <BottomNav />
     </Container>
