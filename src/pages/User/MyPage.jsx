@@ -43,10 +43,19 @@ const Logo = styled.img`
   margin-right: 10px;
 `;
 
+const Header = styled.text`
+  font-size: 20px;
+  color: black;
+  text-align: left;
+  margin-top: 10px;
+  width: 100%;
+`;
+
 const UserInfoCard = styled.div`
   background-color: #eef2f6;
   border-radius: 20px;
   padding-top: 60px;
+  margin-top: 40px;
   width: 100%;
   max-width: 350px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -90,10 +99,11 @@ const ProfileWrapper = styled.div`
 `;
 
 const GoogleAndLeave = styled.div`
-  margin: 18px 0;
+  margin: 15px 0;
   display: flex;
   flex-direction: column; /* 세로 정렬 */
   align-items: center; /* 수평 가운데 정렬 */
+  margin-bottom: 30px;
 `;
 
 const UserName = styled.h2`
@@ -122,7 +132,7 @@ const LeaveButton = styled.button`
   justify-content: center;
   margin: 0 auto; /* 버튼을 가운데로 */
   margin-top: 15px;
-  margin-bottom: 40px;
+  
   padding: 8px 15px;
   background-color: #7582B0;
   color: white;
@@ -139,7 +149,7 @@ const LeaveButton = styled.button`
 
 const AccumulatedAmount = styled.div`
   margin-top: 30px;
-  font-size: 20px;
+  font-size: 18px;
   color: #555;
   text-align: center;
 `;
@@ -225,9 +235,10 @@ const MyPage = () => {
 
   return (
     <Container>
-      
-        <Logo onClick={handlelogoClick} src={logo} alt="SmartCart" />
-      
+      <Logo onClick={handlelogoClick} src={logo} alt="SmartCart" />
+      <Header>{userName}님💙</Header>
+      <hr style={{border: 'solid 1px black', width: '100%'}}></hr>
+
       <UserInfoCard>
         <EditButton onClick={toggleEdit}>
           {isEditing ? <IoMdCheckboxOutline size={20} /> : <FiEdit size={18}/>}

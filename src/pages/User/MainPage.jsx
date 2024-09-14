@@ -309,7 +309,7 @@ function MainPage() {
   return (
     <Container>
       <LogoImage src={logo} alt="Logo" />
-      <Header>Hello, {userName}</Header>
+      <Header>Hello, {userName}✋</Header>
 
       <InputContainer>
         <ChecklistWrapper>
