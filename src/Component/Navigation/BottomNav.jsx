@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import { BsCart, BsCartFill, BsPerson, BsFillPersonFill, BsUpcScan } from "react-icons/bs"; 
 
@@ -44,21 +45,23 @@ const NavItem = styled.div`
 `;
 
 const BottomNav = () => {
+  const navigate = useNavigate();
+  
   const [isCartActive, setIsCartActive] = useState(false); 
   const [isProfileActive, setIsProfileActive] = useState(false); 
 
   const handleCartClick = () => {
-    setIsCartActive(true); 
-    window.location.href = '/cart'; 
+    setIsCartActive(true);
+    navigate("/cart");
   };
 
   const handleProfileClick = () => {
     setIsProfileActive(true); 
-    window.location.href = '/mypage'; 
+    navigate("/mypage");
   };
 
   const handleLensClick = () => {
-    window.location.href = '/camera';
+    navigate("/camera");
   };
 
   return (

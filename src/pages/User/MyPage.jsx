@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import { FaUserAlt } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
@@ -157,12 +158,13 @@ const Amount = styled.p`
 `;
 
 const MyPage = () => {
+  const navigate = useNavigate();
+  
   // 상태 관리
   const [userName, setUserName] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [editNickName, setEditNickName] = useState(''); // 수정 중인 이름
   const [showModal, setShowModal] = useState(false); // 모달 상태 관리
-
 
   // 사용자 조회 API
   useEffect(() => {
@@ -203,7 +205,8 @@ const MyPage = () => {
   const handleDeleteUser = async () => {
     await Apis.delete(`/users`)
       .then((response) => {
-        window.location.href = '/login';  // 로그인 페이지로 이동
+        localStorage.clear();  // 이때는 모두 비워주도록함.
+        navigate("/login");  // 로그인 페이지로 이동
       })
       .catch((error) => {
         // console.log(error)
@@ -221,7 +224,7 @@ const MyPage = () => {
   };
   
   const handlelogoClick = () => {
-    window.location.href = '/main';
+    navigate("/main");
   };
 
   return (
