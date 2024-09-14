@@ -171,11 +171,7 @@ const LowestItemPage = () => {
       
       try {
         // 오프라인 상품
-        const offlineProduct = {
-          productName: offlineOption.productName,
-          price: offlineOption.price,
-          amount: offlineOption.amount
-        };
+        const offlineProduct = offlineOption;
 
         // 온라인 상품 (선택된 상품 또는 최저가 상품)
         const onlineProduct = isSelectedOffline
@@ -184,22 +180,17 @@ const LowestItemPage = () => {
 
         const postData = {
           selectType: selectType,
-          savedMoney: Math.max(0, Number(offlineProduct.price) - Number(onlineProduct.price)),
+          savedMoney: Math.max(0, offlineProduct.price - onlineProduct.price),
           offlineProductName: offlineProduct.productName,
-          offlinePrice: Number(offlineProduct.price),
+          offlinePrice: offlineProduct.price,
           offlineAmount: offlineProduct.amount,
           onlineProductName: onlineProduct.productName,
-          onlinePrice: Number(onlineProduct.price),
+          onlinePrice: onlineProduct.price,
           onlineAmount: onlineProduct.amount
         };
 
-        console.log("savedMoney:",postData.savedMoney);
-
         await Apis.post("/products", postData);
         
-        // selectType을 localStorage에 저장
-        localStorage.setItem('selectType', selectType.toString());
-
         setIsModalOpen(true);
       } catch (error) {
         console.error("장바구니에 상품을 추가하는 중 오류 발생: ", error);

@@ -156,25 +156,35 @@ const Modal = ({ isOpen, onClose, actionText }) => {
   );
 };
 
-// CartPage 컴포넌트 정의
 const CartPage = () => {
   const [offlineProducts, setOfflineProducts] = useState([]);
   const [onlineProducts, setOnlineProducts] = useState([]);
-  const [offlineTotal, setOfflineTotal] = useState(0);
-  const [onlineTotal, setOnlineTotal] = useState(0);
-  const [totalAmount, setTotalAmount] = useState(0);
-  const [selectType, setSelectType] = useState(null);
-  const [savedMoney, setSavedMoney] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [offlinePriceSum, setOfflinePriceSum] = useState(0);
+  const [onlinePriceSum, setOnlinePriceSum] = useState(0);
+  const [allPriceSum, setAllPriceSum] = useState(0);
+  const [savedMoneySum, setSavedMoneySum] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 장바구니 데이터 가져오기
   const fetchCartData = async () => {
     try {
       const response = await Apis.get("/products");
       if (response.data && response.data.data) {
-        const { offlineList, onlineList } = response.data.data;
-        setOfflineProducts(offlineList.map(item => ({ ...item, checked: item.isSelect === 1 })));
-        setOnlineProducts(onlineList.map(item => ({ ...item, checked: item.isSelect === 1 })));
+        const { 
+          offlineList, 
+          onlineList, 
+          offlinePriceSum, 
+          onlinePriceSum, 
+          allPriceSum, 
+          savedMoneySum 
+        } = response.data.data;
+        
+        setOfflineProducts(offlineList);
+        setOnlineProducts(onlineList);
+        setOfflinePriceSum(offlinePriceSum);
+        setOnlinePriceSum(onlinePriceSum);
+        setAllPriceSum(allPriceSum);
+        setSavedMoneySum(savedMoneySum);
       }
     } catch (error) {
       console.error("장바구니 데이터 로딩 중 오류 발생:", error);
@@ -184,72 +194,7 @@ const CartPage = () => {
 
   useEffect(() => {
     fetchCartData();
-    const storedSelectType = localStorage.getItem('selectType');
-    setSelectType(storedSelectType ? Number(storedSelectType) : null);
   }, []);
-
-  useEffect(() => {
-    const newOfflineTotal = offlineProducts.reduce(
-      (sum, product) => (product.checked ? sum + product.price : sum),
-      0
-    );
-    const newOnlineTotal = onlineProducts.reduce(
-      (sum, product) => (product.checked ? sum + product.price : sum),
-      0
-    );
-    setOfflineTotal(newOfflineTotal);
-    setOnlineTotal(newOnlineTotal);
-    setTotalAmount(newOfflineTotal + newOnlineTotal);
-    
-    calculateSavedMoney();
-  }, [offlineProducts, onlineProducts, selectType]);
-
-  // 절약 금액 계산
-  const calculateSavedMoney = () => {
-    let newSavedMoney = 0;
-    const selectedOfflineProduct = offlineProducts.find(p => p.checked);
-    const selectedOnlineProduct = onlineProducts.find(p => p.checked);
-    const lowestOnlinePrice = Math.min(...onlineProducts.map(p => p.price));
-
-    if (selectType === 0) { // 오프라인 
-      if (selectedOfflineProduct) {
-        if (selectedOfflineProduct.price < lowestOnlinePrice) {
-          newSavedMoney = lowestOnlinePrice - selectedOfflineProduct.price;
-        } else {
-          newSavedMoney = 0;
-        }
-      }
-    } else if (selectType === 1) { // 온라인
-      if (selectedOnlineProduct && selectedOfflineProduct) {
-        if (selectedOnlineProduct.price < selectedOfflineProduct.price) {
-          newSavedMoney = selectedOfflineProduct.price - selectedOnlineProduct.price;
-        } else {
-          newSavedMoney = 0;
-        }
-      }
-    }
-
-    setSavedMoney(newSavedMoney);
-  };
-
-  const handleToggle = async (isOnline, productId) => {
-    try {
-      await Apis.put(`/products/${productId}/select`);
-      
-      const updateProducts = (products) =>
-        products.map((product) =>
-          product.productId === productId ? { ...product, checked: !product.checked } : product
-        );
-
-      if (isOnline) {
-        setOnlineProducts(updateProducts);
-      } else {
-        setOfflineProducts(updateProducts);
-      }
-    } catch (error) {
-      console.error("상품 선택 상태 업데이트 중 오류 발생:", error);
-    }
-  };
 
   // 결제하기 버튼 클릭 시 장바구니 비우기
   const handleCheckout = async () => {
@@ -268,33 +213,33 @@ const CartPage = () => {
     setIsModalOpen(false);
   };
 
-const renderProducts = (products) => (
+  const renderProducts = (products) => (
     products.map((product) => (
       <Product key={product.productId}>
         {product.isSelect === 1 && <span>✔</span>}
         <ProductName>{product.printName}</ProductName>
-        <span>{product.printPrice}</span>
+        <span>{product.price}원</span>
       </Product>
     ))
   );
 
   return (
     <Container>
-      <Title>OFF, ON 한눈에 비교💘</Title>
+      <Title>ON, OFF 한눈에 비교💘</Title>
       <SectionContainer>
-        <Section>
-          <SectionTitle>OFF</SectionTitle>
-          <ProductList>{renderProducts(offlineProducts, false)}</ProductList>
-          <TotalAmount>합계: {offlineTotal}원</TotalAmount>
-        </Section>
         <Section online>
           <SectionTitle>ON</SectionTitle>
-          <ProductList>{renderProducts(onlineProducts, true)}</ProductList>
-          <TotalAmount>합계: {onlineTotal}원</TotalAmount>
+          <ProductList>{renderProducts(onlineProducts)}</ProductList>
+          <TotalAmount>합계: {onlinePriceSum}원</TotalAmount>
+        </Section>
+        <Section>
+          <SectionTitle>OFF</SectionTitle>
+          <ProductList>{renderProducts(offlineProducts)}</ProductList>
+          <TotalAmount>합계: {offlinePriceSum}원</TotalAmount>
         </Section>
       </SectionContainer>
-      <TotalAmount>총합: {totalAmount}원</TotalAmount>
-      <SavedMoney>SMARTCART로 절약했어요💘: {savedMoney}원</SavedMoney>
+      <TotalAmount>총합: {allPriceSum}원</TotalAmount>
+      <SavedMoney>SMARTCART로 절약했어요💘: {savedMoneySum}원</SavedMoney>
       <StyledButton onClick={handleCheckout}>결제하기</StyledButton>
       <BottomNav />
       <Modal
