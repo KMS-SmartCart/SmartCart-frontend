@@ -217,7 +217,7 @@ const CartPage = () => {
     products.map((product) => (
       <Product key={product.productId}>
         {product.isSelect === 1 && <span>✔</span>}
-        <ProductName>{product.printName}</ProductName>
+        <ProductName>{product.productName} {product.amount} </ProductName>
         <span>{product.price}원</span>
       </Product>
     ))

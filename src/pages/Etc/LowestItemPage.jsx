@@ -207,7 +207,7 @@ const LowestItemPage = () => {
   return (
     <>
       <Container>
-        <Title>지금 찍은 상품의 최저가</Title>
+        <Title>지금 찍은 상품의 최저가💘</Title>
         {updatedOptionsWithOffline.map((option, index) => (
           <Option 
             key={index} 
