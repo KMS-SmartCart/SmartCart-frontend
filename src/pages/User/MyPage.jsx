@@ -6,6 +6,7 @@ import { FaGoogle } from "react-icons/fa";
 import { IoMdCheckboxOutline } from "react-icons/io";
 import BottomNav from '../../Component/Navigation/BottomNav';
 import Apis from "../../apis/Api";
+import Modal from '../../Component/Modal/DeleteUser';
 
 // 스타일 정의
 const Container = styled.div`
@@ -160,6 +161,7 @@ const MyPage = () => {
   const [userName, setUserName] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [editNickName, setEditNickName] = useState(''); // 수정 중인 이름
+  const [showModal, setShowModal] = useState(false); // 모달 상태 관리
 
 
   // 사용자 조회 API
@@ -197,10 +199,35 @@ const MyPage = () => {
     }
   };
 
+  // 회원 탈퇴 API
+  const handleDeleteUser = async () => {
+    await Apis.delete(`/users`)
+      .then((response) => {
+        window.location.href = '/login';  // 로그인 페이지로 이동
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
+  };
+ 
+  // 모달창 열기
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  // 모달창 닫기
+  const closeModal = () => {
+    setShowModal(false);
+  };
+  
+  const handlelogoClick = () => {
+    window.location.href = '/main';
+  };
+
   return (
     <Container>
       <Header>
-        <Logo src="/smartcart_logo.png" alt="SmartCart" />
+        <Logo onClick={handlelogoClick} src="../../assets/images/carticon192.png" alt="SmartCart" />
       </Header>
       <UserInfoCard>
         <EditButton onClick={toggleEdit}>
@@ -223,7 +250,7 @@ const MyPage = () => {
 
           <GoogleAndLeave>
             <FaGoogle size={25} />
-            <LeaveButton>회원탈퇴</LeaveButton>
+            <LeaveButton onClick={openModal}>회원탈퇴</LeaveButton>
           </GoogleAndLeave>
         </ContentWrapper>
       </UserInfoCard>
@@ -234,6 +261,16 @@ const MyPage = () => {
       </AccumulatedAmount>
 
       <BottomNav />
+
+      {/* 모달 렌더링 */}
+      {showModal && (
+        <Modal
+          message="회원 탈퇴 하시겠습니까?"
+          onConfirm={handleDeleteUser}
+          onCancel={closeModal}
+        />
+      )}
+
     </Container>
   );
 };

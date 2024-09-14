@@ -78,19 +78,19 @@ function LoginPage(props) {
                 알아서 비교해 드립니다.
             </Description>
 
-            <ImageSeparator src="./src/assets/images/carticon192.png" alt="Separator" />
+            <ImageSeparator src="../../assets/images/carticon192.png" alt="Separator" />
 
             <LoginMethodText>로그인 방법 선택</LoginMethodText>
 
             <SocialLoginContainer>
                 <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/google`}>
-                    <img src="src/assets/images/google.png" alt="Google" />
+                    <img src="../../assets/images/google.png" alt="Google" />
                 </SocialButton>
                 <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/naver`}>
-                    <img src="src/assets/images/naver.png" alt="Naver" />
+                    <img src="../../assets/images/naver.png" alt="Naver" />
                 </SocialButton>
                 <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/kakao`}>
-                    <img src="src/assets/images/kakao.png" alt="Kakao" />
+                    <img src="../../assets/images/kakao.png" alt="Kakao" />
                 </SocialButton>
             </SocialLoginContainer>
         </Container>
