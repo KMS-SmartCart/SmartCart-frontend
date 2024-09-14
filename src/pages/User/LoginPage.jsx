@@ -3,21 +3,40 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Apis from "../../apis/Api";
 import '../../App.css';
+import cartIcon from "../../assets/images/carticon192.png";
+import google from "../../assets/images/google.png";
+import naver from "../../assets/images/naver.png";
+import kakao from "../../assets/images/kakao.png";
 
 const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  height: 100vh;
+  background-color: white;
+  position: relative; 
+
+  @media (max-width: 1024px) {
+    width: 60%; /* 태블릿 크기에서 너비 조정 */
+  }
+
+  @media (max-width: 768px) {
+    width: 80%; /* 작은 태블릿 및 큰 스마트폰에서 너비 조정 */
+  }
+
+  @media (max-width: 480px) {
+    width: 100%; /* 작은 스마트폰에서는 전체 너비로 변경 */
+  }
 `;
 
 const Header = styled.h2`
     text-align: left;      /* 왼쪽 정렬 */
     width: 100%;           /* 전체 너비를 사용하도록 설정 */
     max-width: 200px;      /* 최대 너비 설정 (필요시 조정) */
-    margin: 0;
+    margin: 20px;
+    font-size: 18px;
 `;
 
 const Description = styled.p`
@@ -27,10 +46,11 @@ const Description = styled.p`
     width: 100%;           /* 전체 너비를 사용하도록 설정 */
     max-width: 200px;      /* 최대 너비 설정 (필요시 조정) */
     font-weight: bold;     /* 두껍게 설정 */
+    font-size: 16px;
 `;
 
 const ImageSeparator = styled.img`
-    width: 100px; /* 이미지 크기 조정 */
+    width: 100% /* 이미지 크기 조정 */
     height: auto; /* 비율 유지 */
     margin: 20px 0; /* 위아래 여백 추가 */
 `;
@@ -38,7 +58,7 @@ const ImageSeparator = styled.img`
 const LoginMethodText = styled.p`
     margin: 20px 0; /* 여백 조정 */
     text-align: center; /* 중앙 정렬 */
-    font-size: 12px; /* 글씨 크기 조정 (원하는 크기로 변경) */
+    font-size: 14px; /* 글씨 크기 조정 (원하는 크기로 변경) */
 `;
 
 const SocialLoginContainer = styled.div`
@@ -78,19 +98,19 @@ function LoginPage(props) {
                 알아서 비교해 드립니다.
             </Description>
 
-            <ImageSeparator src="./src/assets/images/carticon192.png" alt="Separator" />
+            <ImageSeparator src={cartIcon} alt="Separator" />
 
             <LoginMethodText>로그인 방법 선택</LoginMethodText>
 
             <SocialLoginContainer>
                 <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/google`}>
-                    <img src="src/assets/images/google.png" alt="Google" />
+                    <img src={google} alt="Google" />
                 </SocialButton>
                 <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/naver`}>
-                    <img src="src/assets/images/naver.png" alt="Naver" />
+                    <img src={naver} alt="Naver" />
                 </SocialButton>
                 <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/kakao`}>
-                    <img src="src/assets/images/kakao.png" alt="Kakao" />
+                    <img src={kakao} alt="Kakao" />
                 </SocialButton>
             </SocialLoginContainer>
         </Container>
