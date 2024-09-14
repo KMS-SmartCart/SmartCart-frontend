@@ -193,6 +193,8 @@ const LowestItemPage = () => {
           onlineAmount: onlineProduct.amount
         };
 
+        console.log("savedMoney:",postData.savedMoney);
+
         await Apis.post("/products", postData);
         
         // selectType을 localStorage에 저장
