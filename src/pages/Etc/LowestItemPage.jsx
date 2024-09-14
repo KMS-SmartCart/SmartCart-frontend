@@ -153,7 +153,7 @@ const LowestItemPage = () => {
     mallName: '오프라인', 
     productName: productName || '상품명 없음', 
     amount: amount || '용량 없음', 
-    price: price || 0 
+    price: Number(price) || 0 
   };
 
   const updatedOptionsWithOffline = [...options, offlineOption];
@@ -162,52 +162,47 @@ const LowestItemPage = () => {
     setSelectedOption(id);
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (selectedOption !== null) {
       const selectedProduct = updatedOptionsWithOffline[selectedOption];
       const isSelectedOffline = selectedProduct.mallName === '오프라인';
       
-      let cartItems = [];
+      const selectType = isSelectedOffline ? 0 : 1;
+      
+      try {
+        // 오프라인 상품
+        const offlineProduct = {
+          productName: offlineOption.productName,
+          price: offlineOption.price,
+          amount: offlineOption.amount
+        };
 
-      if (isSelectedOffline) {
-        // 오프라인 상품 선택 시
-        const onlineLowestPrice = Math.min(...options.map(option => option.price));
-        const onlineLowestPriceProduct = options.find(option => option.price === onlineLowestPrice);
+        // 온라인 상품 (선택된 상품 또는 최저가 상품)
+        const onlineProduct = isSelectedOffline
+          ? options.reduce((min, option) => option.price < min.price ? option : min)
+          : selectedProduct;
 
-        cartItems = [
-          {
-            id: Date.now(),
-            productName: selectedProduct.productName,
-            price: selectedProduct.price,
-            isOnline: false
-          },
-          {
-            id: Date.now() + 1,
-            productName: onlineLowestPriceProduct.productName,
-            price: onlineLowestPriceProduct.price,
-            isOnline: true
-          }
-        ];
-      } else {
-        // 온라인 상품 선택 시
-        cartItems = [
-          {
-            id: Date.now(),
-            productName: selectedProduct.productName,
-            price: selectedProduct.price,
-            isOnline: true
-          },
-          {
-            id: Date.now() + 1,
-            productName: offlineOption.productName,
-            price: offlineOption.price,
-            isOnline: false
-          }
-        ];
+        const postData = {
+          selectType: selectType,
+          savedMoney: Math.max(0, Number(offlineProduct.price) - Number(onlineProduct.price)),
+          offlineProductName: offlineProduct.productName,
+          offlinePrice: Number(offlineProduct.price),
+          offlineAmount: offlineProduct.amount,
+          onlineProductName: onlineProduct.productName,
+          onlinePrice: Number(onlineProduct.price),
+          onlineAmount: onlineProduct.amount
+        };
+
+        await Apis.post("/products", postData);
+        
+        // selectType을 localStorage에 저장
+        localStorage.setItem('selectType', selectType.toString());
+
+        setIsModalOpen(true);
+      } catch (error) {
+        console.error("장바구니에 상품을 추가하는 중 오류 발생: ", error);
+        alert("장바구니에 상품을 추가하는데 실패했습니다. 다시 시도해주세요.");
       }
-
-      localStorage.setItem('cartItems', JSON.stringify(cartItems));
-      setIsModalOpen(true);
     }
   };
 
