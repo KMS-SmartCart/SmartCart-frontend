@@ -7,6 +7,8 @@ import { IoMdCheckboxOutline } from "react-icons/io";
 import { CheckToken } from "../../utils/CheckToken";
 import Apis from "../../apis/Api";
 import BottomNav from '../../Component/Navigation/BottomNav';
+//import logo from "../../assets/images/smartcartlogo.png"
+import logo from "../../assets/images/google.png"
 
 // 전체 컨테이너
 const Container = styled.div`
@@ -188,10 +190,25 @@ function MainPage() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
+  const [userName, setUserName] = useState('');
   const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState("");
   const [editItemId, setEditItemId] = useState(null); // 수정 중인 아이템의 ID
   const [editItemName, setEditItemName] = useState(''); // 수정 중인 이름
+
+  // 사용자 조회 API
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
+  async function getUserInfo() {
+    try {
+      const response = await Apis.get('/users');
+      setUserName(response.data.data.nickname);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   // 체크리스트 조회 API
   async function getCheckList() {
@@ -291,8 +308,8 @@ function MainPage() {
 
   return (
     <Container>
-      <LogoImage src="../../assets/images/logo.png" alt="Logo" />
-      <Header>Hello, MKM KHW✋</Header>
+      <LogoImage src={logo} alt="Logo" />
+      <Header>Hello, {userName}</Header>
 
       <InputContainer>
         <ChecklistWrapper>

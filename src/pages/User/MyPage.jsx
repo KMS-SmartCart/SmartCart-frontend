@@ -8,6 +8,8 @@ import { IoMdCheckboxOutline } from "react-icons/io";
 import BottomNav from '../../Component/Navigation/BottomNav';
 import Apis from "../../apis/Api";
 import Modal from '../../Component/Modal/DeleteUser';
+//import logo from "../../assets/images/smartcartlogo.png"
+import logo from "../../assets/images/google.png"
 
 // 스타일 정의
 const Container = styled.div`
@@ -32,14 +34,6 @@ const Container = styled.div`
   @media (max-width: 480px) {
     width: 100%; /* 작은 스마트폰에서는 전체 너비로 변경 */
   }
-`;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  font-size: 14px;
 `;
 
 const Logo = styled.img`
@@ -162,6 +156,7 @@ const MyPage = () => {
   
   // 상태 관리
   const [userName, setUserName] = useState('');
+  const [saveMoney, setSaveMoney] = useState(''); // 아낀 금액
   const [isEditing, setIsEditing] = useState(false);
   const [editNickName, setEditNickName] = useState(''); // 수정 중인 이름
   const [showModal, setShowModal] = useState(false); // 모달 상태 관리
@@ -175,6 +170,7 @@ const MyPage = () => {
     try {
       const response = await Apis.get('/users');
       setUserName(response.data.data.nickname);
+      setSaveMoney(response.data.data.saveMoney);
       setEditNickName(response.data.data.nickname);
     } catch (error) {
       console.error(error);
@@ -229,9 +225,9 @@ const MyPage = () => {
 
   return (
     <Container>
-      <Header>
-        <Logo onClick={handlelogoClick} src="../../assets/images/carticon192.png" alt="SmartCart" />
-      </Header>
+      
+        <Logo onClick={handlelogoClick} src={logo} alt="SmartCart" />
+      
       <UserInfoCard>
         <EditButton onClick={toggleEdit}>
           {isEditing ? <IoMdCheckboxOutline size={20} /> : <FiEdit size={18}/>}
@@ -260,7 +256,7 @@ const MyPage = () => {
 
       <AccumulatedAmount>
         그동안 SMARTCART로 절약한 금액
-        <Amount>SMARTCART로 190원 절약했어요!💸</Amount>
+        <Amount>SMARTCART로 {saveMoney}원 절약했어요!💸</Amount>
       </AccumulatedAmount>
 
       <BottomNav />
