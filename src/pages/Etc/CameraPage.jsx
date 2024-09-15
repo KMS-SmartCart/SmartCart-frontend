@@ -142,6 +142,12 @@ const CameraPage = () => {
       } catch (error) {
         console.error("Error processing image: ", error);
       }
+
+      if (video && video.srcObject) {
+        const stream = video.srcObject;
+        const tracks = stream.getTracks();
+        tracks.forEach(track => track.stop()); 
+      }
     }
   };
 

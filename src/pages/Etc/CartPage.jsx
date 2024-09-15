@@ -49,15 +49,18 @@ const LogoImage = styled.img`
 const SectionContainer = styled.div`
   display: flex;
   gap: 10px;
-  width: 100%;
   max-width: 360px;
   height: calc(100vh - 370px);
   margin-bottom: 20px;
 
   @media (max-width: 390px) {
-    flex-direction: column;
-    height: calc(100vh - 300px);
+    height: calc(100vh - 330px);
     gap: 8px;
+  }
+
+   @media (max-width: 360px) {
+     height: calc(100vh - 300px);
+     gap: 8px;
   }
 `;
 
@@ -75,16 +78,18 @@ const Title = styled.h2`
 
 const Section = styled.div`
   background-color: ${(props) => (props.online ? '#CFD5EE' : '#E8E6F0')};
-  padding: 10px;
+  padding: 8px;
   border-radius: 10px;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
+
   @media (max-width: 390px) {
     padding: 8px;
   }
+
 `;
 
 const SectionTitle = styled.h3`
@@ -105,6 +110,12 @@ const ProductList = styled.div`
 
   @media (max-width: 390px) {
     max-height: 150px;
+    flex-grow: 1;
+  }
+
+  @media (max-width: 360px) {
+    max-height: 130px;
+    flex-grow: 1;
   }
 `;
 
@@ -115,13 +126,24 @@ const Product = styled.div`
   font-size: 14px;
 
   @media (max-width: 390px) {
+    display: flex;
+    justify-content: space-between;
     font-size: 13px;
     margin-bottom: 12px;
   }
 `;
 
 const ProductName = styled.span`
-  margin-left: 8px;
+  margin-left: 5px;
+  width: 95px;
+`;
+
+const StyledCheck = styled.span`
+  width: 10px; 
+  text-align: center;
+  flex-shrink: 0; 
+  visibility: ${props => (props.checked ? 'visible' : 'hidden')}; /* 체크 여부에 따라 표시 숨기기 */
+  
 `;
 
 const TotalAmount = styled.div`
@@ -221,6 +243,8 @@ const ModalButton = styled.button`
   }
 `;
 
+
+
 // Modal 컴포넌트
 const Modal = ({ isOpen, onClose, actionText }) => {
   if (!isOpen) return null;
@@ -302,8 +326,8 @@ const CartPage = () => {
   const renderProducts = (products) => (
     products.map((product) => (
       <Product key={product.productId}>
-        {product.isSelect === 1 && <span>✔</span>}
-        <ProductName>{product.productName} {product.amount} </ProductName>
+        <StyledCheck checked={product.isSelect === 1}>✔</StyledCheck>
+        <ProductName>{product.printName} </ProductName>
         <span>{product.price}원</span>
       </Product>
     ))

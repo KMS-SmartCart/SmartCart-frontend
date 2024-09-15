@@ -113,7 +113,7 @@ const ConfirmButton = styled.button`
   padding: 15px 35px;
   cursor: pointer;
   font-size: 16px;
-  margin-top: 20px;
+  // margin-top: 20px;
 
   &:disabled {
     background-color: #ccc;
@@ -123,13 +123,11 @@ const ConfirmButton = styled.button`
   @media (max-width: 375px) {
     padding: 12px 30px;
     font-size: 14px;
-    margin-top: 15px;
   }
 
   @media (max-width: 360px) {
     padding: 9px 25px;
     font-size: 13px;
-    margin-top: 10px;
   }
 `;
 
@@ -216,7 +214,8 @@ const LowestItemPage = () => {
     mallName: '오프라인', 
     productName: productName || '상품명 없음', 
     amount: amount || '용량 없음', 
-    price: Number(price) || 0 
+    price: Number(price) || 0 ,
+    printName: productName+amount || '상품명 없음'
   };
 
   const updatedOptionsWithOffline = [...options, offlineOption];
@@ -282,7 +281,7 @@ const LowestItemPage = () => {
             onClick={() => handleOptionClick(index)}
           >
             <div>{option.mallName}</div>
-            <div>{option.productName} {option.amount}</div>
+            <div>{option.printName}</div>
             <div>{option.price}원</div>
             {option.link && (
               <OptionLink href={option.link} target="_blank" selected={selectedOption === index}>
