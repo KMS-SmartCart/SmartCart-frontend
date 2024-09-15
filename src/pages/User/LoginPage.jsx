@@ -48,7 +48,7 @@ const Header = styled.h2`
 `;
 
 const Description = styled.p`
-    ext-align: left;
+    text-align: left;
     margin: 10px 0 20px;
     white-space: pre-line;
     width: 100%;
@@ -115,17 +115,15 @@ const SocialLoginContainer = styled.div`
   display: flex;
   justify-content: space-around;
   padding: 8px 0;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   box-sizing: border-box;
 
   @media (max-width: 390px) {  /* iPhone SE에서 아이콘 크기 조정 */
     padding: 6px 0;
-    margin-bottom: 20px;
   }
 
   @media (max-width: 360px) { /* Galaxy S8에서 여백 조정 */
     padding: 5px 0;
-    margin-bottom: 30px;
   }
 `;
 

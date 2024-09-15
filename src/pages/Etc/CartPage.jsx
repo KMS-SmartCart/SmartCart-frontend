@@ -89,7 +89,6 @@ const Section = styled.div`
   @media (max-width: 390px) {
     padding: 8px;
   }
-
 `;
 
 const SectionTitle = styled.h3`
@@ -99,22 +98,18 @@ const SectionTitle = styled.h3`
 
   @media (max-width: 390px) {
     font-size: 15px;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
   }
 `;
 
 const ProductList = styled.div`
+  min-width: 145px;
   flex-grow: 1;
   overflow-y: auto;
   margin-bottom: 15px;
 
   @media (max-width: 390px) {
-    max-height: 150px;
-    flex-grow: 1;
-  }
-
-  @media (max-width: 360px) {
-    max-height: 130px;
+    max-height: 400px;
     flex-grow: 1;
   }
 `;
@@ -135,7 +130,9 @@ const Product = styled.div`
 
 const ProductName = styled.span`
   margin-left: 5px;
-  width: 95px;
+  margin-right: 2px;
+  width: 80px;
+  font-size: 12px;
 `;
 
 const StyledCheck = styled.span`
@@ -143,7 +140,6 @@ const StyledCheck = styled.span`
   text-align: center;
   flex-shrink: 0; 
   visibility: ${props => (props.checked ? 'visible' : 'hidden')}; /* 체크 여부에 따라 표시 숨기기 */
-  
 `;
 
 const TotalAmount = styled.div`
@@ -328,7 +324,7 @@ const CartPage = () => {
       <Product key={product.productId}>
         <StyledCheck checked={product.isSelect === 1}>✔</StyledCheck>
         <ProductName>{product.printName} </ProductName>
-        <span>{product.price}원</span>
+        <span style={{ fontSize: "11px" }}><strong>{product.price}원</strong></span>
       </Product>
     ))
   );
