@@ -37,7 +37,7 @@ const LogoImage = styled.img`
   
 
   @media (max-width: 390px) {
-    width: 55px;
+    width: 50px;
   }
 
   @media (max-width: 360px) {

@@ -43,11 +43,11 @@ const LogoImage = styled.img`
   
 
   @media (max-width: 390px) {
-    width: 45px;
+    width: 50px;
   }
 
   @media (max-width: 360px) {
-    width: 55px;
+    width: 45px;
   }
 `;
 
