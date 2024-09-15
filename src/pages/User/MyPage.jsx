@@ -17,7 +17,8 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 20px;
+  padding: 10px;
+  margin: 20px;
   min-height: 100vh;
   background-color: white;
   position: relative; 
@@ -25,11 +26,13 @@ const Container = styled.div`
   box-sizing: border-box;
 
   @media (max-width: 390px) {
-    padding: 15px;
+    padding: 10px;
+    margin: 20px;
   }
 
   @media (max-width: 360px) {
     padding: 10px;
+    margin: 20px;
   }
 `;
 
@@ -47,7 +50,7 @@ const Header = styled.h1`
   margin: 0;
   font-weight: bold;
 
-  @media (max-width: 375px) {
+  @media (max-width: 390px) {
     font-size: 20px;
   }
 
@@ -61,7 +64,7 @@ const LogoContainer = styled.div`
 `;
 
 const LogoImage = styled.img`
-  width: 65px;
+  width: 60px;
   height: auto;
 
   @media (max-width: 390px) {
@@ -69,7 +72,7 @@ const LogoImage = styled.img`
   }
 
   @media (max-width: 360px) {
-    width: 45px;
+    width: 50px;
   }
 `;
 
@@ -77,34 +80,33 @@ const UserInfoCard = styled.div`
   background-color: #E6EBF1;
   border-radius: 20px;
   padding-top: 60px;
+  margin: 15px;
   width: 100%;
   max-width: 350px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   position: relative;
-  height: 300px;
+  height: 52vh;
   overflow-y: auto;
   align-items: center;
 
   @media (max-width: 390px) {
-    height: 280px;
+    height: 45vh;
     padding-top: 50px;
-  }
-
-  @media (max-width: 375px) {
-    height: 260px;
+    margin: 10px;
   }
 
   @media (max-width: 360px) {
-    height: 240px;
+    height: 55vh;
     padding-top: 40px;
+    margin: 15px;
   }
 `;
 
 const LogOutButton = styled.button`
   position: absolute;
-  top: 18px;
+  top: 20px;
   left: 18px;
   background: none;
   border: none;
@@ -112,24 +114,34 @@ const LogOutButton = styled.button`
   color: #333;
   transform: scaleX(-1);
 
+  @media (max-width: 390px) {
+    top: 18px;
+    left: 15px;
+  }
+
   @media (max-width: 360px) {
-    top: 12px;
-    left: 12px;
+    top: 20px;
+    left: 15px;
   }
 `;
 
 const EditButton = styled.button`
   position: absolute;
-  top: 18px;
+  top: 20px;
   right: 18px;
   background: none;
   border: none;
   cursor: pointer;
   color: #333;
 
+  @media (max-width: 390px) {
+    top: 18px;
+    right: 15px;
+  }
+
   @media (max-width: 360px) {
-    top: 12px;
-    right: 12px;
+    top: 20px;
+    right: 15px;
   }
 `;
 
@@ -142,80 +154,79 @@ const ContentWrapper = styled.div`
 `;
 
 const UserInfoComment = styled.text`
-  font-size: 18px;
-  margin-bottom: 15px;
+  font-size: 22px;
+  margin: 20px;
   font-weight: bold;
 
-  @media (max-width: 375px) {
-    font-size: 16px;
-    margin-bottom: 12px;
+  @media (max-width: 390px) {
+    font-size: 18px;
+    margin: 5px;
   }
 
   @media (max-width: 360px) {
-    font-size: 15px;
-    margin-bottom: 9px;
+    font-size: 20px;
+    margin: 20px;
   }
 `;
 
 const ProfileWrapper = styled.div`
-  margin: 15px 0;
+  margin: 30px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  @media (max-width: 375px) {
-    margin: 12px 0;
+  @media (max-width: 390px) {
+    margin: 20px 0;
   }
 
   @media (max-width: 360px) {
-    margin: 9px 0;
+    margin: 30px 0;
   }
 `;
 
 const GoogleAndLeave = styled.div`
-  margin: 15px 0;
+  margin: 30px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 30px;
 
-  @media (max-width: 375px) {
-    margin-bottom: 25px;
+  @media (max-width: 390px) {
+    margin: 5px;
   }
 
   @media (max-width: 360px) {
-    margin-bottom: 20px;
+    margin: 25px;
   }
 `;
 
 const UserName = styled.text`
-  margin: 10px 0;
-  // color: white;
-  font-size: 18px;
+  margin: 15px 0;
+  font-size: 22px;
   text-align: center;
   background-color: #C7CCDF;
   padding: 5px 30px;
   border-radius: 10px;
   display: inline-block;
-  // font-weight: bold;
 
-  @media (max-width: 375px) {
+  @media (max-width: 390px) {
     font-size: 16px;
-    padding: 4px 25px;
+    padding: 5px 30px;
+    margin: 10px 0;
   }
 
   @media (max-width: 360px) {
-    font-size: 15px;
-    padding: 3px 20px;
+    font-size: 19px;
+    padding: 5px 30px;
+    margin: 15px 0;
   }
 `;
 
 const UserNameInput = styled.input`
-  margin: 10px 0;
+  margin: 15px 0;
   border: none;
   border-radius: 10px;
   background-color: white;
-  font-size: 18px;
+  font-size: 22px;
   text-align: center;
   flex-grow: 1;
   outline: none;
@@ -223,14 +234,14 @@ const UserNameInput = styled.input`
   line-height: 1;
   font-family: inherit;
 
-  @media (max-width: 375px) {
+  @media (max-width: 390px) {
     font-size: 16px;
-    padding: 4px;
+    margin: 10px 0;
   }
 
   @media (max-width: 360px) {
-    font-size: 15px;
-    padding: 3px;
+    font-size: 19px;
+    margin: 15px 0;
   }
 `;
 
@@ -238,59 +249,62 @@ const LeaveButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 15px auto 0;
-  padding: 8px 15px;
+  margin: 20px auto 0;
+  padding: 8px 16px;
   background-color: #7582B0;
   color: white;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   width: fit-content;
+  font-size: 16px;
 
   svg {
     margin-right: 10px;
   }
 
-  @media (max-width: 375px) {
-    padding: 7px 12px;
-    font-size: 14px;
+  @media (max-width: 390px) {
+    padding: 7px 15px;
+    font-size: 12px;
+    margin: 10px auto 0;
   }
 
   @media (max-width: 360px) {
-    padding: 6px 10px;
-    font-size: 13px;
+    padding: 7px 15px;
+    font-size: 16px;
+    margin: 20px auto 0;  
   }
 `;
 
 const AccumulatedAmount = styled.div`
-  margin-top: 30px;
-  font-size: 18px;
+  margin-top: 45px;
+  font-size: 20px;
   color: #555;
   text-align: center;
 
-  @media (max-width: 375px) {
+  @media (max-width: 390px) {
     font-size: 16px;
-    margin-top: 25px;
+    margin-top: 35px;
   }
 
   @media (max-width: 360px) {
-    font-size: 15px;
-    margin-top: 20px;
+    font-size: 18px;
+    margin-top: 25px;
   }
 `;
 
 const Amount = styled.p`
-  font-size: 16px;
+  font-size: 18px;
   color: #007aff;
   margin-top: 5px;
   text-align: center;
 
-  @media (max-width: 375px) {
+  @media (max-width: 390px) {
     font-size: 15px;
   }
 
   @media (max-width: 360px) {
-    font-size: 14px;
+    font-size: 16px;
   }
 `;
 
@@ -385,15 +399,15 @@ const MyPage = () => {
     
       <UserInfoCard>
         <LogOutButton onClick={handleLogout}>
-          <MdLogout size={20} />
+          <MdLogout size={22} />
         </LogOutButton>
         <EditButton onClick={toggleEdit}>
-          {isEditing ? <IoMdCheckboxOutline size={20} /> : <FiEdit size={18}/>}
+          {isEditing ? <IoMdCheckboxOutline size={22}/> : <FiEdit size={20}/>}
         </EditButton>
         <ContentWrapper>
           <UserInfoComment>회원 정보</UserInfoComment>
           <ProfileWrapper>
-            <FiUser size={50} />
+            <FiUser size={55} />
             {isEditing ? (
               <UserNameInput
                 type="text"
@@ -406,7 +420,7 @@ const MyPage = () => {
           </ProfileWrapper>
 
           <GoogleAndLeave>
-            <FaGoogle size={22} />
+            <FaGoogle size={26} />
             <LeaveButton onClick={openModal}>회원탈퇴</LeaveButton>
           </GoogleAndLeave>
         </ContentWrapper>
