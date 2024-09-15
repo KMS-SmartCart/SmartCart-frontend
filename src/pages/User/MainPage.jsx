@@ -15,19 +15,22 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 20px;
+  padding: 10px;
+  margin: 35px;
   min-height: 100vh;
   background-color: white;
-  position: relative;
+  position: relative; 
   padding-bottom: 100px;
   box-sizing: border-box;
 
   @media (max-width: 390px) {
-    padding: 15px;
+    padding: 10px;
+    margin: 25px;
   }
 
   @media (max-width: 360px) {
     padding: 10px;
+    margin: 25px;
   }
 `;
 
@@ -36,21 +39,21 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 `;
 
 const Header = styled.h1`
-  font-size: 22px;
+  font-size: 23px;
   color: black;
   margin: 0;
   font-weight: bold;
 
-  @media (max-width: 375px) {
+  @media (max-width: 390px) {
     font-size: 20px;
   }
 
   @media (max-width: 360px) {
-    font-size: 18px;
+    font-size: 20px;
   }
 `;
 
@@ -63,46 +66,50 @@ const LogoImage = styled.img`
   height: auto;
 
   @media (max-width: 390px) {
-    width: 50px;
+    width: 60px;
   }
 
   @media (max-width: 360px) {
-    width: 45px;
+    width: 60px;
   }
 `;
 
 const InputContainer = styled.div`
   background-color: #E8E6F0;
   border-radius: 20px;
-  padding: 15px;
+  padding: 20px;
   width: 100%;
   max-width: 350px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   position: relative;
-  height: 280px;
+  height: 50vh; /* 화면 높이의 2/3 */
   overflow-y: auto;
 
   @media (max-width: 390px) {
-    height: 260px;
     padding: 12px;
-  }
-
-  @media (max-width: 375px) {
-    height: 240px;
+    height: 45vh; /* 작은 화면에서는 조금 더 줄여서 */
   }
 
   @media (max-width: 360px) {
-    height: 220px;
     padding: 10px;
+    height: 53vh;
   }
 `;
 
 const ChecklistWrapper = styled.div`
   flex-grow: 1;
   overflow-y: auto;
-  margin-bottom: 10px;
+  margin-bottom: 50px;
+
+  @media (max-width: 390px) {
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 360px) {
+    margin-bottom: 50px;
+  }
 `;
 
 const ChecklistItem = styled.div`
@@ -113,15 +120,15 @@ const ChecklistItem = styled.div`
   padding: 2px;
   border-radius: 10px;
   margin-bottom: 5px;
-  font-size: 14px;
+  font-size: 18px;
   text-decoration: ${({ isChecked, isEditing }) => (isEditing ? 'none' : isChecked ? 'line-through' : 'none')};
 
-  @media (max-width: 375px) {
+  @media (max-width: 390px) {
     font-size: 13px;
   }
 
   @media (max-width: 360px) {
-    font-size: 12px;
+    font-size: 16px;
   }
 `;
 
@@ -136,15 +143,15 @@ const InputWrapper = styled.div`
   background-color: #CDD3EE;
   border-radius: 20px;
 
-  @media (max-width: 375px) {
+  @media (max-width: 390px) {
     bottom: 8px;
-    left: 12px;
+    left: 14px;
     right: 12px;
   }
 
   @media (max-width: 360px) {
     bottom: 6px;
-    left: 10px;
+    left: 13px;
     right: 10px;
   }
 `;
@@ -152,19 +159,19 @@ const InputWrapper = styled.div`
 const Input = styled.input`
   border: none;
   background-color: transparent;
-  font-size: 12px;
+  font-size: 15px;
   flex-grow: 1;
   outline: none;
-  padding: 10px;
+  padding: 15px;
 
-  @media (max-width: 375px) {
-    font-size: 11px;
-    padding: 8px;
+  @media (max-width: 390px) {
+    font-size: 12px;
+    padding: 11px;
   }
 
   @media (max-width: 360px) {
-    font-size: 10px;
-    padding: 6px;
+    font-size: 14px;
+    padding: 13px;
   }
 `;
 
@@ -172,20 +179,20 @@ const InputButton = styled.button`
   background-color: #7582B0;
   color: white;
   border: none;
-  padding: 5px 10px;
+  padding: 6px 12px;
   border-radius: 11px;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 12px;
   margin-right: 10px;
 
-  @media (max-width: 375px) {
-    font-size: 9px;
+  @media (max-width: 390px) {
+    font-size: 10px;
     padding: 4px 8px;
   }
 
   @media (max-width: 360px) {
-    font-size: 8px;
-    padding: 3px 6px;
+    font-size: 11px;
+    padding: 5px 11px;
   }
 `;
 
@@ -200,7 +207,7 @@ const EditInput = styled.input`
   font-family: inherit;
   margin-left: 27px;
 
-  @media (max-width: 375px) {
+  @media (max-width: 390px) {
     font-size: 13px;
     margin-left: 22px;
   }
@@ -217,27 +224,36 @@ const ActionButton = styled.button`
   cursor: pointer;
   padding: 5px;
 
-  @media (max-width: 360px) {
-    padding: 3px;
+  @media (max-width: 390px) { /* iPhone SE */
+    padding: 5px;
+  }
+
+  @media (max-width: 360px) { /* S8  */
+    padding: 5px;
   }
 `;
 
 const RecommendedMenu = styled.div`
   background-color: #E6EBF1;
   border-radius: 20px;
-  padding: 15px;
+  padding: 20px;
   width: 100%;
   max-width: 350px;
   text-align: center;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
+  height: 13vh;
 
-  @media (max-width: 375px) {
+  @media (max-width: 390px) { /* iPhone SE */
     padding: 12px;
+    margin-top: 20px;
+    height: 13vh;
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 360px) { /* S8  */
     padding: 10px;
+    margin-top: 20px;
+    height: 13vh;
   }
 `;
 
@@ -365,7 +381,7 @@ function MainPage() {
   return (
     <Container>
       <HeaderContainer>
-        <Header>Hello, {userName.length > 5 ? <>{userName}</> : userName}✋</Header>
+        <Header>Hello, {userName.length > 5 ? <><br/>{userName}</> : userName}✋</Header>
         <LogoContainer>
           <LogoImage src={logo} alt="Logo" />
         </LogoContainer>
