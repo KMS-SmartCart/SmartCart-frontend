@@ -32,16 +32,16 @@ const LogoContainer = styled.div`
 `;
 
 const LogoImage = styled.img`
-  width: 70px;
+  width: 65px;
   height: auto;
   
 
   @media (max-width: 390px) {
-    width: 100px;
+    width: 50px;
   }
 
   @media (max-width: 360px) {
-    width: 80px;
+    width: 45px;
   }
 `;
 
