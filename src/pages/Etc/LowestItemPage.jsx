@@ -89,7 +89,8 @@ const OptionLink = styled.a`
   color: ${(props) => (props.selected ? 'white' : '#5271FF')};
   text-decoration: none;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 15px;
+  width: 25%;
 
   &:hover {
     text-decoration: underline;
@@ -289,6 +290,7 @@ const LowestItemPage = () => {
               </OptionLink>
             )}
           </Option>
+          
         ))}
         <ConfirmButton onClick={handleConfirm} disabled={selectedOption === null}>
           확인

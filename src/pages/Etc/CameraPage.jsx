@@ -138,7 +138,7 @@ const CameraPage = () => {
 
         const { productName, price, amount } = response.data.data;
 
-        navigate('/iteminfo', { state: { productName, price, amount } });
+        navigate('/iteminfo', { state: { imageUrl, productName, price, amount } });
       } catch (error) {
         console.error("Error processing image: ", error);
       }
