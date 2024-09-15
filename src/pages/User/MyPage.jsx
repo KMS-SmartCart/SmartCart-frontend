@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
-import { FaUserAlt } from 'react-icons/fa';
+import { FiUser } from "react-icons/fi";
 import { FiEdit } from 'react-icons/fi';
 import { FaGoogle } from "react-icons/fa";
 import { IoMdCheckboxOutline } from "react-icons/io";
@@ -18,21 +18,18 @@ const Container = styled.div`
   align-items: center;
   justify-content: flex-start;
   padding: 20px;
-  height: 100vh;
+  min-height: 100vh;
   background-color: white;
   position: relative; 
-  padding-bottom: 100px; /* 하단바 높이만큼 공간 확보 */
+  padding-bottom: 100px;
+  box-sizing: border-box;
 
-  @media (max-width: 1024px) {
-    width: 60%; /* 태블릿 크기에서 너비 조정 */
+  @media (max-width: 390px) {
+    padding: 15px;
   }
 
-  @media (max-width: 768px) {
-    width: 80%; /* 작은 태블릿 및 큰 스마트폰에서 너비 조정 */
-  }
-
-  @media (max-width: 480px) {
-    width: 100%; /* 작은 스마트폰에서는 전체 너비로 변경 */
+  @media (max-width: 360px) {
+    padding: 10px;
   }
 `;
 
@@ -41,7 +38,7 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  // padding: 10px;
+  margin-bottom: 20px;
 `;
 
 const Header = styled.h1`
@@ -49,6 +46,14 @@ const Header = styled.h1`
   color: black;
   margin: 0;
   font-weight: bold;
+
+  @media (max-width: 375px) {
+    font-size: 20px;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 18px;
+  }
 `;
 
 const LogoContainer = styled.div`
@@ -56,11 +61,15 @@ const LogoContainer = styled.div`
 `;
 
 const LogoImage = styled.img`
-  width: 150px;
+  width: 120px;
   height: auto;
 
-  @media (max-width: 768px) {
-    width: 60px;
+  @media (max-width: 390px) {
+    width: 100px;
+  }
+
+  @media (max-width: 360px) {
+    width: 80px;
   }
 `;
 
@@ -73,30 +82,55 @@ const UserInfoCard = styled.div`
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  position: relative; /* 부모 요소에 대해 inputwrapper를 절대적으로 위치시킴 */
-  height: 320px;      /* 고정된 높이 */
-  overflow-y: auto;   /* 내용이 많아지면 스크롤 처리 */
+  position: relative;
+  height: 300px;
+  overflow-y: auto;
   align-items: center;
+
+  @media (max-width: 390px) {
+    height: 280px;
+    padding-top: 50px;
+  }
+
+  @media (max-width: 375px) {
+    height: 260px;
+  }
+
+  @media (max-width: 360px) {
+    height: 240px;
+    padding-top: 40px;
+  }
 `;
 
 const LogOutButton = styled.button`
   position: absolute;
-  top: 15px;
-  left: 15px;
+  top: 18px;
+  left: 18px;
   background: none;
   border: none;
   cursor: pointer;
   color: #333;
   transform: scaleX(-1);
+
+  @media (max-width: 360px) {
+    top: 12px;
+    left: 12px;
+  }
 `;
+
 const EditButton = styled.button`
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 18px;
+  right: 18px;
   background: none;
   border: none;
   cursor: pointer;
   color: #333;
+
+  @media (max-width: 360px) {
+    top: 12px;
+    right: 12px;
+  }
 `;
 
 const ContentWrapper = styled.div`
@@ -105,39 +139,75 @@ const ContentWrapper = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-//   flex-grow: 1;
 `;
 
 const UserInfoComment = styled.text`
   font-size: 18px;
-  margin-bottom: 18px;
+  margin-bottom: 15px;
   font-weight: bold;
+
+  @media (max-width: 375px) {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 15px;
+    margin-bottom: 9px;
+  }
 `;
 
 const ProfileWrapper = styled.div`
-  margin: 18px 0;
+  margin: 15px 0;
   display: flex;
   flex-direction: column;
-  align-items: center; /* 수평 가운데 정렬 */
+  align-items: center;
+
+  @media (max-width: 375px) {
+    margin: 12px 0;
+  }
+
+  @media (max-width: 360px) {
+    margin: 9px 0;
+  }
 `;
 
 const GoogleAndLeave = styled.div`
   margin: 15px 0;
   display: flex;
-  flex-direction: column; /* 세로 정렬 */
-  align-items: center; /* 수평 가운데 정렬 */
+  flex-direction: column;
+  align-items: center;
   margin-bottom: 30px;
+
+  @media (max-width: 375px) {
+    margin-bottom: 25px;
+  }
+
+  @media (max-width: 360px) {
+    margin-bottom: 20px;
+  }
 `;
 
 const UserName = styled.text`
   margin: 10px 0;
+  // color: white;
   font-size: 18px;
   text-align: center;
-  background-color: #C7CCDF; /* 배경색 추가 */
-  padding: 5px 30px; /* 텍스트 양쪽에 패딩 추가 */
-  border-radius: 10px; /* 모서리를 둥글게 */
-  display: inline-block; /* 컨텐츠 크기에 맞춰서 배경길이 조절 */
-  font-weight: bold;
+  background-color: #C7CCDF;
+  padding: 5px 30px;
+  border-radius: 10px;
+  display: inline-block;
+  // font-weight: bold;
+
+  @media (max-width: 375px) {
+    font-size: 16px;
+    padding: 4px 25px;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 15px;
+    padding: 3px 20px;
+  }
 `;
 
 const UserNameInput = styled.input`
@@ -152,19 +222,26 @@ const UserNameInput = styled.input`
   padding: 5px;
   line-height: 1;
   font-family: inherit;
+
+  @media (max-width: 375px) {
+    font-size: 16px;
+    padding: 4px;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 15px;
+    padding: 3px;
+  }
 `;
 
 const LeaveButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto; /* 버튼을 가운데로 */
-  margin-top: 15px;
-  
+  margin: 15px auto 0;
   padding: 8px 15px;
   background-color: #7582B0;
   color: white;
-//   font-weight: bold;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -173,6 +250,16 @@ const LeaveButton = styled.button`
   svg {
     margin-right: 10px;
   }
+
+  @media (max-width: 375px) {
+    padding: 7px 12px;
+    font-size: 14px;
+  }
+
+  @media (max-width: 360px) {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
 `;
 
 const AccumulatedAmount = styled.div`
@@ -180,6 +267,16 @@ const AccumulatedAmount = styled.div`
   font-size: 18px;
   color: #555;
   text-align: center;
+
+  @media (max-width: 375px) {
+    font-size: 16px;
+    margin-top: 25px;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 15px;
+    margin-top: 20px;
+  }
 `;
 
 const Amount = styled.p`
@@ -187,6 +284,14 @@ const Amount = styled.p`
   color: #007aff;
   margin-top: 5px;
   text-align: center;
+
+  @media (max-width: 375px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 14px;
+  }
 `;
 
 const MyPage = () => {
@@ -288,7 +393,7 @@ const MyPage = () => {
         <ContentWrapper>
           <UserInfoComment>회원 정보</UserInfoComment>
           <ProfileWrapper>
-            <FaUserAlt size={45} />
+            <FiUser size={50} />
             {isEditing ? (
               <UserNameInput
                 type="text"
@@ -301,7 +406,7 @@ const MyPage = () => {
           </ProfileWrapper>
 
           <GoogleAndLeave>
-            <FaGoogle size={25} />
+            <FaGoogle size={22} />
             <LeaveButton onClick={openModal}>회원탈퇴</LeaveButton>
           </GoogleAndLeave>
         </ContentWrapper>
@@ -310,12 +415,10 @@ const MyPage = () => {
       <AccumulatedAmount>
         그동안 SMARTCART로 절약한 금액
         <Amount>SMARTCART로 {savedMoney}원 절약했어요!💘</Amount>
-
       </AccumulatedAmount>
 
       <BottomNav />
 
-      {/* 모달 렌더링 */}
       {showModal && (
         <Modal
           message="회원 탈퇴 하시겠습니까?"
@@ -323,7 +426,6 @@ const MyPage = () => {
           onCancel={closeModal}
         />
       )}
-
     </Container>
   );
 };

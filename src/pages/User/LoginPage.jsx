@@ -14,20 +14,17 @@ const Container = styled.div`
   align-items: center;
   justify-content: flex-start;
   padding: 20px;
-  height: 100vh;
+  min-height: 100vh;
   background-color: white;
   position: relative; 
+  box-sizing: border-box;
 
-  @media (max-width: 1024px) {
-    width: 60%; /* 태블릿 크기에서 너비 조정 */
+  @media (max-width: 390px) {
+    padding: 15px;
   }
 
-  @media (max-width: 768px) {
-    width: 80%; /* 작은 태블릿 및 큰 스마트폰에서 너비 조정 */
-  }
-
-  @media (max-width: 480px) {
-    width: 100%; /* 작은 스마트폰에서는 전체 너비로 변경 */
+  @media (max-width: 360px) {
+    padding: 10px;
   }
 `;
 

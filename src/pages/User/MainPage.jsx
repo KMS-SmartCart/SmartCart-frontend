@@ -9,56 +9,34 @@ import Apis from "../../apis/Api";
 import BottomNav from '../../Component/Navigation/BottomNav';
 import logo from "../../assets/images/smartcartlogo.png"
 
-// 전체 컨테이너
+// 스타일 정의
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   padding: 20px;
-  height: 100vh;
+  min-height: 100vh;
   background-color: white;
-  position: relative; 
-  padding-bottom: 100px; /* 하단바 높이만큼 공간 확보 */
+  position: relative;
+  padding-bottom: 100px;
+  box-sizing: border-box;
 
-  @media (max-width: 1024px) {
-    width: 60%; /* 태블릿 크기에서 너비 조정 */
+  @media (max-width: 390px) {
+    padding: 15px;
   }
 
-  @media (max-width: 768px) {
-    width: 80%; /* 작은 태블릿 및 큰 스마트폰에서 너비 조정 */
-  }
-
-  @media (max-width: 480px) {
-    width: 100%; /* 작은 스마트폰에서는 전체 너비로 변경 */
+  @media (max-width: 360px) {
+    padding: 10px;
   }
 `;
-
-// // 로고 스타일
-// const LogoImage = styled.img`
-//   width: 150px;
-//   height: auto;
-//   align-self: flex-end; /* 오른쪽 상단에 배치 */
-//   margin-right: 10px;
-// `;
-
-// // 인사말 텍스트 스타일
-// const Header = styled.text`
-//   font-size: 22px;
-//   color: black;
-//   text-align: left;
-//   margin-top: 10px;
-//   margin-bottom: 20px;
-//   width: 100%;
-//   font-weight: bold;
-// `;
 
 const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  // padding: 10px;
+  // margin-bottom: 20px;
 `;
 
 const Header = styled.h1`
@@ -66,6 +44,14 @@ const Header = styled.h1`
   color: black;
   margin: 0;
   font-weight: bold;
+
+  @media (max-width: 375px) {
+    font-size: 20px;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 18px;
+  }
 `;
 
 const LogoContainer = styled.div`
@@ -73,37 +59,52 @@ const LogoContainer = styled.div`
 `;
 
 const LogoImage = styled.img`
-  width: 150px;
+  width: 120px;
   height: auto;
 
-  @media (max-width: 768px) {
-    width: 60px;
+  @media (max-width: 390px) {
+    width: 100px;
+  }
+
+  @media (max-width: 360px) {
+    width: 80px;
   }
 `;
 
-// 입력창 컨테이너
 const InputContainer = styled.div`
   background-color: #E8E6F0;
   border-radius: 20px;
-  padding: 20px;
+  padding: 15px;
   width: 100%;
-  max-width: 400px;
+  max-width: 350px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  position: relative; /*부모 요소에 대해 inputwrapper를 절대적으로 위치시킴 */
-  height: 300px;      /* 고정된 높이 */
-  overflow-y: auto;   /* 내용이 많아지면 스크롤 처리 */
+  position: relative;
+  height: 280px;
+  overflow-y: auto;
+
+  @media (max-width: 390px) {
+    height: 260px;
+    padding: 12px;
+  }
+
+  @media (max-width: 375px) {
+    height: 240px;
+  }
+
+  @media (max-width: 360px) {
+    height: 220px;
+    padding: 10px;
+  }
 `;
 
-// 체크리스트 스타일 (내용이 스크롤되는 영역)
 const ChecklistWrapper = styled.div`
-  flex-grow: 1; /* 스크롤 가능 영역 확장 */
-  overflow-y: auto; /* 리스트가 길어질 때 스크롤 */
-  margin-bottom: 10px; /* 아래쪽 여백 */
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 10px;
 `;
 
-// 체크리스트 아이템 스타일
 const ChecklistItem = styled.div`
   display: flex;
   justify-content: space-between;
@@ -113,33 +114,60 @@ const ChecklistItem = styled.div`
   border-radius: 10px;
   margin-bottom: 5px;
   font-size: 14px;
-  text-decoration: ${({ isChecked, isEditing }) => (isEditing ? 'none' : isChecked ? 'line-through' : 'none')}; // 체크 여부와 수정 여부에 따라 취소선 적용
+  text-decoration: ${({ isChecked, isEditing }) => (isEditing ? 'none' : isChecked ? 'line-through' : 'none')};
+
+  @media (max-width: 375px) {
+    font-size: 13px;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 12px;
+  }
 `;
 
-// 입력 필드와 버튼을 담는 래퍼 (고정된 영역)
 const InputWrapper = styled.div`
   position: absolute;
-  bottom: 15px;     /* InputContainer의 하단에 고정 */
-  left: 20px;
+  bottom: 10px;
+  left: 15px;
   right: 15px;
   display: flex;
   align-items: center;
-  width: 90%;
+  width: calc(100% - 30px);
   background-color: #CDD3EE;
   border-radius: 20px;
+
+  @media (max-width: 375px) {
+    bottom: 8px;
+    left: 12px;
+    right: 12px;
+  }
+
+  @media (max-width: 360px) {
+    bottom: 6px;
+    left: 10px;
+    right: 10px;
+  }
 `;
 
-// 입력 필드 스타일
 const Input = styled.input`
   border: none;
   background-color: transparent;
   font-size: 12px;
   flex-grow: 1;
   outline: none;
-  padding: 12px;
+  padding: 10px;
+
+  @media (max-width: 375px) {
+    font-size: 11px;
+    padding: 8px;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 10px;
+    padding: 6px;
+  }
 `;
 
-// 버튼 스타일
 const InputButton = styled.button`
   background-color: #7582B0;
   color: white;
@@ -149,17 +177,18 @@ const InputButton = styled.button`
   cursor: pointer;
   font-size: 10px;
   margin-right: 10px;
+
+  @media (max-width: 375px) {
+    font-size: 9px;
+    padding: 4px 8px;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 8px;
+    padding: 3px 6px;
+  }
 `;
 
-// 수정 버튼 스타일
-const EditButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  margin-right: 10px; /* 수정 버튼과 삭제 버튼 사이의 간격 */
-`;
-
-// 수정 입력 필드 스타일
 const EditInput = styled.input`
   border: none;
   background-color: transparent;
@@ -170,30 +199,46 @@ const EditInput = styled.input`
   line-height: 1;
   font-family: inherit;
   margin-left: 27px;
+
+  @media (max-width: 375px) {
+    font-size: 13px;
+    margin-left: 22px;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 12px;
+    margin-left: 18px;
+  }
 `;
 
-// 완료 버튼 스타일
-const DoneButton = styled.button`
+const ActionButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-`;
+  padding: 5px;
 
-// 삭제 버튼 스타일
-const DeleteButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
+  @media (max-width: 360px) {
+    padding: 3px;
+  }
 `;
 
 const RecommendedMenu = styled.div`
   background-color: #E6EBF1;
   border-radius: 20px;
-  padding: 20px;
+  padding: 15px;
   width: 100%;
-  max-width: 400px;
+  max-width: 350px;
   text-align: center;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+
+  @media (max-width: 375px) {
+    padding: 12px;
+  }
+
+  @media (max-width: 360px) {
+    padding: 10px;
+  }
 `;
 
 
@@ -320,7 +365,7 @@ function MainPage() {
   return (
     <Container>
       <HeaderContainer>
-        <Header>Hello, {userName.length > 5 ? <><br/>{userName}</> : userName}✋</Header>
+        <Header>Hello, {userName.length > 5 ? <>{userName}</> : userName}✋</Header>
         <LogoContainer>
           <LogoImage src={logo} alt="Logo" />
         </LogoContainer>
@@ -332,7 +377,7 @@ function MainPage() {
             <ChecklistItem
               key={item.checkitemId}
               isChecked={item.isCheck === 1}
-              isEditing={editItemId === item.checkitemId} // 수정 중인지 여부를 전달
+              isEditing={editItemId === item.checkitemId}
             >
               {editItemId === item.checkitemId ? (
                 <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
@@ -340,9 +385,9 @@ function MainPage() {
                     type="text"
                     value={editItemName}
                     onChange={(e) => setEditItemName(e.target.value)}
-                    onBlur={handleEditSubmit} // 수정 완료
+                    onBlur={handleEditSubmit}
                   />
-                  <DoneButton onClick={handleEditSubmit}><IoMdCheckboxOutline size={20}/></DoneButton>
+                  <ActionButton onClick={handleEditSubmit}><IoMdCheckboxOutline size={18}/></ActionButton>
                 </div>
               ) : (
                 <div style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
@@ -356,12 +401,12 @@ function MainPage() {
                     <span>{item.checkitemName}</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <EditButton onClick={() => handleEditClick(item)}>
-                      <PiNotePencil size={20} />
-                    </EditButton>
-                    <DeleteButton onClick={() => handleDeleteClick(item.checkitemId)}>
-                      <IoTrashOutline size={20} />
-                    </DeleteButton>
+                    <ActionButton onClick={() => handleEditClick(item)}>
+                      <PiNotePencil size={18} />
+                    </ActionButton>
+                    <ActionButton onClick={() => handleDeleteClick(item.checkitemId)}>
+                      <IoTrashOutline size={18} />
+                    </ActionButton>
                   </div>
                 </div>
               )}
@@ -379,10 +424,10 @@ function MainPage() {
         </InputWrapper>
       </InputContainer>
 
-      <h3>추천 메뉴</h3>
       <RecommendedMenu>
-        <p>Chat GPT 사용</p>
-        <p>→ 장바구니에 담긴 메뉴로 추천 레시피</p>
+        <h3 style={{ marginTop: 0, marginBottom: 10, fontSize: '16px' }}>추천 메뉴</h3>
+        <p style={{ margin: 0, fontSize: '14px' }}>Chat GPT 사용</p>
+        <p style={{ margin: 5, fontSize: '14px' }}>→ 장바구니에 담긴 메뉴로 추천 레시피</p>
       </RecommendedMenu>
       <BottomNav />
     </Container>
