@@ -8,32 +8,28 @@ const NavContainer = styled.div`
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%; /* 전체 너비로 확장 */
-  max-width: 600px; /* 최대 너비 제한 */
+  width: 100%;
+  max-width: 390px;
   background-color: white;
   border-top: 1px solid #ccc;
   display: flex;
   justify-content: space-around;
-  padding: 10px 0;
-  // box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
+  padding: 8px 0;
+  box-sizing: border-box;
 
-  @media (max-width: 1024px) {
-    width: 80%; /* 태블릿 크기에서 너비 조정 */
+  @media (max-width: 375px) {
+    padding: 6px 0;
   }
 
-  @media (max-width: 768px) {
-    width: 90%; /* 작은 태블릿 및 큰 스마트폰에서 너비 조정 */
-  }
-
-  @media (max-width: 480px) {
-    width: 100%; /* 작은 스마트폰에서는 전체 너비로 변경 */
+  @media (max-width: 360px) {
+    padding: 5px 0;
   }
 `;
 
 const NavItem = styled.div`
   text-align: center;
   color: #888;
-  font-size: 14px;
+  font-size: 12px;
   cursor: pointer;
   flex: 1;
 
@@ -42,19 +38,47 @@ const NavItem = styled.div`
   }
 
   div {
-    margin-top: 5px;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 375px) {
+    font-size: 11px;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 10px;
   }
 `;
 
 const LensItem = styled(NavItem)`
   svg {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
   }
 
   div {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
+  }
+
+  @media (max-width: 375px) {
+    svg {
+      width: 36px;
+      height: 36px;
+    }
+    div {
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    svg {
+      width: 32px;
+      height: 32px;
+    }
+    div {
+      font-size: 12px;
+    }
   }
 `;
 
@@ -82,23 +106,23 @@ const BottomNav = () => {
     <NavContainer>
       <NavItem onClick={handleCartClick}>
         {isCartActive ? (
-          <BsCartFill size={24} />
+          <BsCartFill size={20} />
         ) : (
-          <BsCart size={24} />
+          <BsCart size={20} />
         )}
         <div>장바구니</div>
       </NavItem>
 
       <LensItem onClick={handleLensClick}>
-        <BsUpcScan size={50} />
+        <BsUpcScan />
         <div>스마트 렌즈</div>
       </LensItem>
 
       <NavItem onClick={handleProfileClick}>
         {isProfileActive ? (
-          <BsFillPersonFill size={24} />
+          <BsFillPersonFill size={20} />
         ) : (
-          <BsPerson size={24} />
+          <BsPerson size={20} />
         )}
         <div>내 정보</div>
       </NavItem>

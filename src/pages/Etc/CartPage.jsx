@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import BottomNav from '../../Component/Navigation/BottomNav';
 import Apis from "../../apis/Api";
+import logo from "../../assets/images/smartcartlogo.png"
 
 const Container = styled.div`
   display: flex;
@@ -10,68 +11,63 @@ const Container = styled.div`
   align-items: center;
   justify-content: flex-start;
   padding: 20px;
-  height: 100vh;
+  min-height: 100vh;
   background-color: white;
   position: relative; 
-  padding-bottom: 100px; /* 하단바 높이만큼 공간 확보 */
+  padding-bottom: 100px;
+  box-sizing: border-box;
 
-  @media (max-width: 1024px) {
-    width: 60%; /* 태블릿 크기에서 너비 조정 */
+  @media (max-width: 390px) {
+    padding: 15px;
   }
 
-  @media (max-width: 768px) {
-    width: 80%; /* 작은 태블릿 및 큰 스마트폰에서 너비 조정 */
-  }
-
-  @media (max-width: 480px) {
-    width: 100%; /* 작은 스마트폰에서는 전체 너비로 변경 */
+  @media (max-width: 360px) {
+    padding: 10px;
   }
 `;
 
 const LogoContainer = styled.div`
-  position: absolute;
-  top: 10px;
-  right: 10px;
   cursor: pointer;
-
-  @media (max-width: 768px) {
-    top: 5px;
-    right: 5px;
-  }
+  position: relative;
+  right: -130px;
 `;
 
 const LogoImage = styled.img`
-  width: 80px;
+  width: 70px;
   height: auto;
+  
 
-  @media (max-width: 768px) {
-    width: 60px;
+  @media (max-width: 390px) {
+    width: 100px;
+  }
+
+  @media (max-width: 360px) {
+    width: 80px;
   }
 `;
 
 const SectionContainer = styled.div`
   display: flex;
-  gap: 20px;
-  flex-grow: 1; 
+  gap: 10px;
   width: 100%;
-  max-width: 600px;
-  height: calc(100vh - 150px);
-  overflow-y: auto;
+  max-width: 360px;
+  height: calc(100vh - 350px);
+  margin-bottom: 20px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 390px) {
     flex-direction: column;
-    gap: 10px;
-    height: auto;
+    height: calc(100vh - 300px);
+    gap: 8px;
   }
 `;
 
 const Title = styled.h2`
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   text-align: center;
   margin-bottom: 20px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 390px) {
     font-size: 20px;
     margin-bottom: 15px;
   }
@@ -79,87 +75,87 @@ const Title = styled.h2`
 
 const Section = styled.div`
   background-color: ${(props) => (props.online ? '#CFD5EE' : '#E8E6F0')};
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
-  @media (max-width: 768px) {
-    padding: 15px;
+  @media (max-width: 390px) {
+    padding: 8px;
   }
 `;
 
 const SectionTitle = styled.h3`
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   margin-bottom: 10px;
 
-  @media (max-width: 768px) {
-    font-size: 16px;
+  @media (max-width: 390px) {
+    font-size: 15px;
     margin-bottom: 8px;
   }
 `;
 
 const ProductList = styled.div`
   flex-grow: 1;
-  overflow-y: auto;  
-  margin-bottom: 20px;
+  overflow-y: auto;
+  margin-bottom: 15px;
 
-  @media (max-width: 768px) {
-    margin-bottom: 15px;
+  @media (max-width: 390px) {
+    max-height: 150px;
   }
 `;
 
 const Product = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  font-size: 14px;
 
-  @media (max-width: 768px) {
-    font-size: 14px;
-    margin-bottom: 8px;
+  @media (max-width: 390px) {
+    font-size: 13px;
+    margin-bottom: 12px;
   }
 `;
 
 const ProductName = styled.span`
-  margin-left: 10px;
+  margin-left: 8px;
 `;
 
 const TotalAmount = styled.div`
-  padding: 15px;
-  border-radius: 10px;
-  font-size: 18px;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 16px;
 
-  @media (max-width: 768px) {
-    font-size: 16px;
-    padding: 10px;
+  @media (max-width: 390px) {
+    font-size: 15px;
+    padding: 8px;
   }
 `;
 
 const StyledButton = styled.button`
   width: 100%;
-  max-width: 400px;
+  max-width: 360px;
   background-color: #5271ff;
-  padding: 10px;
+  padding: 12px;
   border-radius: 5px;
-  font-size: 18px;
+  font-size: 16px;
   color: white;
   border: none;
   cursor: pointer;
-  margin-bottom: 150px;
+  margin-bottom: 80px;
   
   &:hover {
     background-color: #c7ccdf;
     color: black;
   }
 
-  @media (max-width: 768px) {
-    font-size: 16px;
-    padding: 8px;
-    margin-bottom: 100px;
+  @media (max-width: 390px) {
+    font-size: 15px;
+    padding: 10px;
+    margin-bottom: 60px;
   }
 `;
 
@@ -167,16 +163,17 @@ const SavedMoney = styled.div`
   background-color: white;
   color: #5271ff;
   border-radius: 5px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   text-align: center;
   margin-bottom: 15px;
 
-  @media (max-width: 768px) {
-    font-size: 16px;
-    margin-bottom: 10px;
+  @media (max-width: 390px) {
+    font-size: 15px;
+    margin-bottom: 12px;
   }
 `;
+
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -195,8 +192,10 @@ const ModalContent = styled.div`
   padding: 30px 20px;
   border-radius: 10px;
   text-align: center;
+  width: 80%;
+  max-width: 200px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 360px) {
     padding: 20px 15px;
   }
 `;
@@ -209,13 +208,15 @@ const ModalButton = styled.button`
   padding: 10px 20px;
   cursor: pointer;
   margin-top: 20px;
+  font-size: 14px;
 
   &:hover {
     background-color: #405bbd;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 360px) {
     padding: 8px 16px;
+    font-size: 12px;
     margin-top: 15px;
   }
 `;
@@ -311,7 +312,7 @@ const CartPage = () => {
   return (
     <Container>
       <LogoContainer onClick={handleLogoClick}>
-        <LogoImage src="./assets/images/smartcartlogo.png" alt="Logo" />
+        <LogoImage src={logo} alt="Logo" />
       </LogoContainer>
 
       <Title>ON, OFF 한눈에 비교💘</Title>
