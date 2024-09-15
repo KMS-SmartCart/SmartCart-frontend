@@ -91,7 +91,9 @@ const CameraPage = () => {
   useEffect(() => {
     const getCameraStream = async () => {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "environment" }  // 후면 카메라 설정
+        });
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
         }
