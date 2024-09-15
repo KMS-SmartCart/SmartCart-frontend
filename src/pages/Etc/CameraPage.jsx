@@ -4,18 +4,29 @@ import styled from 'styled-components';
 import Apis from "../../apis/Api"; 
 
 const Button = styled.button`
-  width: 15%;
+  width: 70%;
+  max-width: 300px;
   padding: 10px;
   background-color: #5271FF;
   color: white;
   border: none;
   border-radius: 5px;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
 
   &:hover {
     background-color: #C7CCDF;
     color: black;
+  }
+
+  @media (max-width: 390px) {
+    font-size: 15px;
+    padding: 8px;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 14px;
+    padding: 7px;
   }
 `;
 
@@ -23,10 +34,37 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: white;
+  justify-content: flex-start;
   padding: 20px;
+  min-height: 100vh;
+  background-color: white;
+  position: relative; 
+  padding-bottom: 100px;
+  box-sizing: border-box;
+
+  @media (max-width: 390px) {
+    padding: 15px;
+  }
+
+  @media (max-width: 360px) {
+    padding: 10px;
+  }
+`;
+
+const Video = styled.video`
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+
+  @media (max-width: 390px) {
+    width: 75%;
+  }
+
+  @media (max-width: 360px) {
+    width: 70%;
+  }
 `;
 
 // dataURL을 File 객체로 변환하는 함수
@@ -74,7 +112,6 @@ const CameraPage = () => {
   }, []);
 
   const takePicture = async () => {
-    console.log("사진 촬영 버튼 클릭 확인"); 
     const canvas = canvasRef.current;
     const video = videoRef.current;
 
@@ -87,43 +124,31 @@ const CameraPage = () => {
       const imageUrl = canvas.toDataURL('image/png');
       setCapturedImage(imageUrl);
 
-      // dataURL을 File 객체로 변환
       const file = dataURLtoFile(imageUrl, 'photo.png');
 
-      // API 호출하여 이미지 처리
       try {
         const formData = new FormData();
-        formData.append('imageFile', file); 
-        
-        // 파일 확인
-        console.log(formData.get('imageFile'));
+        formData.append('imageFile', file);
 
-        // API 호출 시 토큰을 헤더에 포함
         const response = await Apis.post('/products/image-processing', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         });
 
-        // API 응답 데이터 확인
-        console.log(response.data.data);
-
         const { productName, price, amount } = response.data.data;
-        
-        // ItemInfo 페이지로 상품 정보 전달
+
         navigate('/iteminfo', { state: { productName, price, amount } });
       } catch (error) {
         console.error("Error processing image: ", error);
       }
-    } else {
-      console.log("Canvas or video element가 존재하지 않음");
     }
   };
 
   return (
     <Container>
       <h3>가격표를 찍어주세요.😊</h3>
-      <video ref={videoRef} autoPlay playsInline style={{ width: '50%' }} />
+      <Video ref={videoRef} autoPlay playsInline />
       <Button onClick={takePicture}>사진 촬영</Button>
       <canvas ref={canvasRef} style={{ display: 'none' }} />
     </Container>

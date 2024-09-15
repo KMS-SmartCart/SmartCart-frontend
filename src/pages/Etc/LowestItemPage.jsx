@@ -3,78 +3,85 @@ import styled from 'styled-components';
 import BottomNav from '../../Component/Navigation/BottomNav';
 import { useLocation, useNavigate } from 'react-router-dom'; 
 import Apis from "../../apis/Api";
+import logo from "../../assets/images/smartcartlogo.png"
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 20px;
-  height: 100vh;
+  padding: 15px;
+  min-height: 100vh;
   background-color: white;
   position: relative; 
-  padding-bottom: 100px; /* 하단바 높이만큼 공간 확보 */
+  padding-bottom: 80px;
+  width: 100%;
+  max-width: 390px;
+  margin: 0 auto;
+  box-sizing: border-box;
 
-  @media (max-width: 1024px) {
-    width: 60%; /* 태블릿 크기에서 너비 조정 */
+  @media (max-width: 375px) {
+    padding: 12px;
+    padding-bottom: 70px;
   }
 
-  @media (max-width: 768px) {
-    width: 80%; /* 작은 태블릿 및 큰 스마트폰에서 너비 조정 */
-  }
-
-  @media (max-width: 480px) {
-    width: 100%; 
+  @media (max-width: 360px) {
+    padding: 10px;
+    padding-bottom: 60px;
   }
 `;
 
 const LogoContainer = styled.div`
-  position: absolute;
-  top: 10px;
-  right: 10px;
   cursor: pointer;
-
-  @media (max-width: 768px) {
-    top: 5px;
-    right: 5px;
-  }
+  position: relative;
+  right: -130px;
 `;
 
 const LogoImage = styled.img`
-  width: 80px;
+  width: 70px;
   height: auto;
+  
 
-  @media (max-width: 768px) {
-    width: 60px;
+  @media (max-width: 390px) {
+    width: 100px;
+  }
+
+  @media (max-width: 360px) {
+    width: 80px;
   }
 `;
-
 
 const Title = styled.h3`
   text-align: center;
   width: 100%;
-  font-size: 20px;
+  font-size: 18px;
+  margin-bottom: 20px;
 
-  @media (max-width: 768px) {
-    font-size: 18px;
+  @media (max-width: 360px) {
+    font-size: 16px;
+    margin-bottom: 15px;
   }
 `;
 
 const Option = styled.div`
   background-color: ${(props) => (props.selected ? '#5271FF' : '#f0f0f0')};
   color: ${(props) => (props.selected ? 'white' : 'black')};
-  padding: 10px;
+  padding: 12px;
   margin-bottom: 10px;
   border-radius: 10px;
   width: 100%;
-  max-width: 500px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  max-width: 300px;
 
-  @media (max-width: 768px) {
-    padding: 8px;
-    margin-bottom: 10px;
+  @media (max-width: 375px) {
+    padding: 10px;
+    margin-bottom: 8px;
+    max-width: 280px;
+  }
+    @media (max-width: 360px) {
+    max-width: 260px;
   }
 `;
 
@@ -82,9 +89,18 @@ const OptionLink = styled.a`
   color: ${(props) => (props.selected ? 'white' : '#5271FF')};
   text-decoration: none;
   font-weight: bold;
+  font-size: 14px;
 
   &:hover {
     text-decoration: underline;
+  }
+
+  @media (max-width: 375px) {
+    font-size: 13px;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 12px;
   }
 `;
 
@@ -95,7 +111,7 @@ const ConfirmButton = styled.button`
   border-radius: 10px;
   padding: 15px 35px;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 16px;
   margin-top: 20px;
 
   &:disabled {
@@ -103,9 +119,16 @@ const ConfirmButton = styled.button`
     cursor: not-allowed;
   }
 
-  @media (max-width: 768px) {
-    padding: 12px;
+  @media (max-width: 375px) {
+    padding: 12px 30px;
+    font-size: 14px;
     margin-top: 15px;
+  }
+
+  @media (max-width: 360px) {
+    padding: 9px 25px;
+    font-size: 13px;
+    margin-top: 10px;
   }
 `;
 
@@ -126,8 +149,10 @@ const ModalContent = styled.div`
   padding: 30px 20px;
   border-radius: 10px;
   text-align: center;
+  width: 80%;
+  max-width: 200px;
 
-  @media (max-width: 600px) {
+  @media (max-width: 360px) {
     padding: 20px 15px;
   }
 `;
@@ -140,13 +165,15 @@ const ModalButton = styled.button`
   padding: 10px 20px;
   cursor: pointer;
   margin-top: 20px;
+  font-size: 14px;
 
   &:hover {
     background-color: #405bbd;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 360px) {
     padding: 8px 16px;
+    font-size: 12px;
     margin-top: 15px;
   }
 `;
@@ -243,7 +270,7 @@ const LowestItemPage = () => {
     <>
       <Container>
       <LogoContainer onClick={handleLogoClick}>
-        <LogoImage src="./assets/images/smartcartlogo.png" alt="Logo" />
+        <LogoImage src={logo} alt="Logo" />
       </LogoContainer>
       
         <Title>지금 찍은 상품의 최저가💘</Title>
