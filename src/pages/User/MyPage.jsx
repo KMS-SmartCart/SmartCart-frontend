@@ -5,11 +5,11 @@ import { FaUserAlt } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
 import { FaGoogle } from "react-icons/fa";
 import { IoMdCheckboxOutline } from "react-icons/io";
+import { MdLogout } from "react-icons/md";
 import BottomNav from '../../Component/Navigation/BottomNav';
 import Apis from "../../apis/Api";
 import Modal from '../../Component/Modal/DeleteUser';
-//import logo from "../../assets/images/smartcartlogo.png"
-import logo from "../../assets/images/google.png"
+import logo from "../../assets/images/smartcartlogo.png"
 
 // 스타일 정의
 const Container = styled.div`
@@ -36,26 +36,38 @@ const Container = styled.div`
   }
 `;
 
-const Logo = styled.img`
-  width: 80px;
-  height: auto;
-  align-self: flex-end; /* 오른쪽 상단에 배치 */
-  margin-right: 10px;
+const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  // padding: 10px;
 `;
 
-const Header = styled.text`
-  font-size: 20px;
+const Header = styled.h1`
+  font-size: 22px;
   color: black;
-  text-align: left;
-  margin-top: 10px;
-  width: 100%;
+  margin: 0;
+  font-weight: bold;
+`;
+
+const LogoContainer = styled.div`
+  cursor: pointer;
+`;
+
+const LogoImage = styled.img`
+  width: 150px;
+  height: auto;
+
+  @media (max-width: 768px) {
+    width: 60px;
+  }
 `;
 
 const UserInfoCard = styled.div`
-  background-color: #eef2f6;
+  background-color: #E6EBF1;
   border-radius: 20px;
   padding-top: 60px;
-  margin-top: 40px;
   width: 100%;
   max-width: 350px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -67,6 +79,16 @@ const UserInfoCard = styled.div`
   align-items: center;
 `;
 
+const LogOutButton = styled.button`
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  transform: scaleX(-1);
+`;
 const EditButton = styled.button`
   position: absolute;
   top: 15px;
@@ -89,6 +111,7 @@ const ContentWrapper = styled.div`
 const UserInfoComment = styled.text`
   font-size: 18px;
   margin-bottom: 18px;
+  font-weight: bold;
 `;
 
 const ProfileWrapper = styled.div`
@@ -106,10 +129,15 @@ const GoogleAndLeave = styled.div`
   margin-bottom: 30px;
 `;
 
-const UserName = styled.h2`
+const UserName = styled.text`
   margin: 10px 0;
   font-size: 18px;
   text-align: center;
+  background-color: #C7CCDF; /* 배경색 추가 */
+  padding: 5px 30px; /* 텍스트 양쪽에 패딩 추가 */
+  border-radius: 10px; /* 모서리를 둥글게 */
+  display: inline-block; /* 컨텐츠 크기에 맞춰서 배경길이 조절 */
+  font-weight: bold;
 `;
 
 const UserNameInput = styled.input`
@@ -121,7 +149,7 @@ const UserNameInput = styled.input`
   text-align: center;
   flex-grow: 1;
   outline: none;
-  padding: 0;
+  padding: 5px;
   line-height: 1;
   font-family: inherit;
 `;
@@ -166,7 +194,7 @@ const MyPage = () => {
   
   // 상태 관리
   const [userName, setUserName] = useState('');
-  const [saveMoney, setSaveMoney] = useState(''); // 아낀 금액
+  const [savedMoney, setSavedMoney] = useState(0); // 아낀 금액
   const [isEditing, setIsEditing] = useState(false);
   const [editNickName, setEditNickName] = useState(''); // 수정 중인 이름
   const [showModal, setShowModal] = useState(false); // 모달 상태 관리
@@ -179,8 +207,11 @@ const MyPage = () => {
   async function getUserInfo() {
     try {
       const response = await Apis.get('/users');
+      console.log(response); // 응답 데이터 구조 확인
       setUserName(response.data.data.nickname);
-      setSaveMoney(response.data.data.saveMoney);
+
+      console.log('API에서 받은 금액:', response.data.data.saveMoney);
+      setSavedMoney(response.data.data.savedMoney);
       setEditNickName(response.data.data.nickname);
     } catch (error) {
       console.error(error);
@@ -233,13 +264,24 @@ const MyPage = () => {
     navigate("/main");
   };
 
+  const handleLogout = () => {
+    localStorage.clear();  // 이때는 모두 비워주도록함.
+    navigate("/login");
+  }
+
   return (
     <Container>
-      <Logo onClick={handlelogoClick} src={logo} alt="SmartCart" />
-      <Header>{userName}님💙</Header>
-      <hr style={{border: 'solid 1px black', width: '100%'}}></hr>
-
+      <HeaderContainer>
+        <Header>{userName}님💙</Header>
+        <LogoContainer onClick={handlelogoClick}>
+          <LogoImage src={logo} alt="Logo" />
+        </LogoContainer>
+      </HeaderContainer>
+    
       <UserInfoCard>
+        <LogOutButton onClick={handleLogout}>
+          <MdLogout size={20} />
+        </LogOutButton>
         <EditButton onClick={toggleEdit}>
           {isEditing ? <IoMdCheckboxOutline size={20} /> : <FiEdit size={18}/>}
         </EditButton>
@@ -267,7 +309,8 @@ const MyPage = () => {
 
       <AccumulatedAmount>
         그동안 SMARTCART로 절약한 금액
-        <Amount>SMARTCART로 {saveMoney}원 절약했어요!💸</Amount>
+        <Amount>SMARTCART로 {savedMoney}원 절약했어요!💘</Amount>
+
       </AccumulatedAmount>
 
       <BottomNav />

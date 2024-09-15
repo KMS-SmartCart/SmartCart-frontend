@@ -7,8 +7,7 @@ import { IoMdCheckboxOutline } from "react-icons/io";
 import { CheckToken } from "../../utils/CheckToken";
 import Apis from "../../apis/Api";
 import BottomNav from '../../Component/Navigation/BottomNav';
-//import logo from "../../assets/images/smartcartlogo.png"
-import logo from "../../assets/images/google.png"
+import logo from "../../assets/images/smartcartlogo.png"
 
 // 전체 컨테이너
 const Container = styled.div`
@@ -34,40 +33,52 @@ const Container = styled.div`
     width: 100%; /* 작은 스마트폰에서는 전체 너비로 변경 */
   }
 `;
-// const Container = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   padding: 20px;
-//   width: 30%;
-//   margin: 0 auto;
-//   background-color: white;
-//   border-radius: 10px;
-//   // height: calc(100vh - 60px);  /* 하단 바 높이를 제외한 전체 높이 */
-//   overflow-y: auto;  /* 나머지 콘텐츠가 스크롤되도록 설정 */
 
-//   @media (max-width: 600px) {
-//     max-width: 100%;
-//     padding: 10px;
-//   }
+// // 로고 스타일
+// const LogoImage = styled.img`
+//   width: 150px;
+//   height: auto;
+//   align-self: flex-end; /* 오른쪽 상단에 배치 */
+//   margin-right: 10px;
 // `;
 
-// 로고 스타일
-const LogoImage = styled.img`
-  width: 80px;
-  height: auto;
-  align-self: flex-end; /* 오른쪽 상단에 배치 */
-  margin-right: 10px;
+// // 인사말 텍스트 스타일
+// const Header = styled.text`
+//   font-size: 22px;
+//   color: black;
+//   text-align: left;
+//   margin-top: 10px;
+//   margin-bottom: 20px;
+//   width: 100%;
+//   font-weight: bold;
+// `;
+
+const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  // padding: 10px;
 `;
 
-// 인사말 텍스트 스타일
 const Header = styled.h1`
-  font-size: 24px;
+  font-size: 22px;
   color: black;
-  text-align: left;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  width: 100%;
+  margin: 0;
+  font-weight: bold;
+`;
+
+const LogoContainer = styled.div`
+  cursor: pointer;
+`;
+
+const LogoImage = styled.img`
+  width: 150px;
+  height: auto;
+
+  @media (max-width: 768px) {
+    width: 60px;
+  }
 `;
 
 // 입력창 컨테이너
@@ -308,8 +319,12 @@ function MainPage() {
 
   return (
     <Container>
-      <LogoImage src={logo} alt="Logo" />
-      <Header>Hello, {userName}✋</Header>
+      <HeaderContainer>
+        <Header>Hello, {userName.length > 5 ? <><br/>{userName}</> : userName}✋</Header>
+        <LogoContainer>
+          <LogoImage src={logo} alt="Logo" />
+        </LogoContainer>
+      </HeaderContainer>
 
       <InputContainer>
         <ChecklistWrapper>
