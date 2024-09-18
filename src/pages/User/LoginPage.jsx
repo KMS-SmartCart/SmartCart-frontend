@@ -86,43 +86,45 @@ const ImageSeparator = styled.img`
 `;
 
 const LoginContainer = styled.div`
-    margin:20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    right: 0;
 `;
 
 const LoginMethodText = styled.p`
-    margin: 30px; /* 여백 조정 */
     text-align: center; /* 중앙 정렬 */
+    margin-bottom: 15px; /* 여백 조정 */
     font-size: 20px; /* 글씨 크기 조정 (원하는 크기로 변경) */
-    flex-direction: column;
 
     @media (max-width: 390px) {
       font-size: 16px; /* iPhone SE */
-      margin: 30px; /* 여백 조정 */
     }
 
     @media (max-width: 360px) {
       font-size: 18px; /* Galaxy S8 */
-      margin: 5px; /* 여백 조정 */
     }
 `;
 
 const SocialLoginContainer = styled.div`
-  position: fixed;
-  bottom: 0;
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
   width: 100%;
   max-width: 360px;
   background-color: white;
-  display: flex;
-  justify-content: space-around;
-  padding: 8px 0;
-  margin-bottom: 40px;
   box-sizing: border-box;
 
-  @media (max-width: 390px) {  /* iPhone SE에서 아이콘 크기 조정 */
+  @media (max-width: 390px) {
+    /* iPhone SE에서 아이콘 크기 조정 */
     padding: 6px 0;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8에서 여백 조정 */
+  @media (max-width: 360px) {
+    /* Galaxy S8에서 여백 조정 */
     padding: 5px 0;
   }
 `;
@@ -178,19 +180,22 @@ function LoginPage(props) {
         
             <ImageSeparator src={cartIcon} alt="Separator" />
 
-            <LoginMethodText>로그인 방법 선택</LoginMethodText>
-            <SocialLoginContainer>
-                <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/google`}>
-                    <img src={google} alt="Google" />
-                </SocialButton>
-                <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/naver`}>
-                    <img src={naver} alt="Naver" />
-                </SocialButton>
-                <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/kakao`}>
-                    <img src={kakao} alt="Kakao" />
-                </SocialButton>
-            </SocialLoginContainer>
-
+            <LoginContainer>
+              <LoginMethodText>로그인 방법 선택</LoginMethodText>
+              <SocialLoginContainer>
+                  <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/google`}>
+                      <img src={google} alt="Google" />
+                  </SocialButton>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/naver`}>
+                      <img src={naver} alt="Naver" />
+                  </SocialButton>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/kakao`}>
+                      <img src={kakao} alt="Kakao" />
+                  </SocialButton>
+              </SocialLoginContainer>
+            </LoginContainer>
             
         </Container>
     );
