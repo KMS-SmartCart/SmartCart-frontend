@@ -28,7 +28,13 @@ self.addEventListener('fetch', event => {
     caches.match(event.request)
       .then(response => {
         // 캐시에서 찾으면 반환하고, 그렇지 않으면 네트워크 요청
-        return response || fetch(event.request);
+        return response || fetch(event.request).then(networkResponse => {
+          // 네트워크 응답을 캐시에 저장
+          return caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, networkResponse.clone());
+            return networkResponse;
+          });
+        });
       })
   );
 });
