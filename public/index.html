@@ -17,7 +17,45 @@
       content="This is the SmartCart service."
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/carticon128.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json" /> -->
+    <script>
+        const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+        const manifest = {
+            short_name: "스마트카트",
+            name: "스마트 카트",
+            icons: [
+                {
+                    src: "%PUBLIC_URL%/favicon.ico",
+                    sizes: "64x64 32x32 24x24 16x16",
+                    type: "image/x-icon"
+                },
+                {
+                    src: "%PUBLIC_URL%/carticon192.png",
+                    type: "image/png",
+                    sizes: "192x192"
+                },
+                {
+                    src: "%PUBLIC_URL%/carticon512.png",
+                    type: "image/png",
+                    sizes: "512x512"
+                }
+            ],
+            start_url: "/",
+            display: isIOS ? "browser" : "standalone", // iOS인 경우 browser로 설정
+            theme_color: "#000000",
+            background_color: "#ffffff"
+        };
+
+        // 인라인 manifest 추가
+        const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+        const manifestURL = URL.createObjectURL(manifestBlob);
+        
+        const link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = manifestURL;
+        document.head.appendChild(link);
+    </script>
 
     <meta property="og:image" content="%PUBLIC_URL%/linkthumbnail.png" />
     <meta property="og:title" content="스마트 카트" />
