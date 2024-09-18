@@ -208,7 +208,7 @@ function LoginPage(props) {
         return () => {
             window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
         };
-    }, []);
+    }, [navigate]);
 
     return (
         <Container>
