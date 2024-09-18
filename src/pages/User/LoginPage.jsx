@@ -167,6 +167,7 @@ const AppButton = styled.button`
     font-size: 10.5px;
     font-weight: bold;
     color: #4868fa;
+    cursor: pointer;
     display: ${props => props.show ? 'block' : 'none'};
 `;
 
@@ -174,17 +175,19 @@ function LoginPage(props) {
     const navigate = useNavigate();
 
     const [deferredPrompt, setDeferredPrompt] = useState(null);
+    const [showInstallPrompt, setShowInstallPrompt] = useState(false);
 
     const handleInstallClick = async () => {
         if (deferredPrompt) {
             deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') {
+            const { answer } = await deferredPrompt.userChoice;
+            if (answer === 'accepted') {
                 console.log('홈화면에 앱 설치 완료!');
             } else {
                 console.log('앱 설치를 거부하셨습니다.');
             }
             setDeferredPrompt(null);
+            setShowInstallPrompt(false);
         }
     };
 
@@ -198,6 +201,7 @@ function LoginPage(props) {
         const handleBeforeInstallPrompt = (e) => {
             e.preventDefault();
             setDeferredPrompt(e);
+            setShowInstallPrompt(true);
         };
         window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
         return () => {
@@ -219,7 +223,7 @@ function LoginPage(props) {
               <LoginMethodText>
                 로그인 방법 선택
                 &nbsp;&nbsp;
-                <AppButton onClick={handleInstallClick} $show={!!deferredPrompt}>App ⬇️</AppButton>
+                <AppButton onClick={handleInstallClick} show={showInstallPrompt}>App ⬇️</AppButton>
               </LoginMethodText>
               <SocialLoginContainer>
                   <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/google`}>
