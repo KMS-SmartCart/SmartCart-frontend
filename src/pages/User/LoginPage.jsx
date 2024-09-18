@@ -216,6 +216,10 @@ function LoginPage(props) {
         // return () => {
         //     window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
         // };
+
+        setTimeout(() => {
+            alert("[홈 화면에 추가]로 앱을 설치하세요!");
+        }, 300); // 0.3초 딜레이 후에 안내 alert 생성.
     }, []);
 
     return (
