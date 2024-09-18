@@ -175,22 +175,22 @@ const AppButton = styled.button`
 function LoginPage(props) {
     const navigate = useNavigate();
 
-    const [deferredPrompt, setDeferredPrompt] = useState(null);
-    const [showInstallPrompt, setShowInstallPrompt] = useState(false);
+    // const [deferredPrompt, setDeferredPrompt] = useState(null);
+    // const [showInstallPrompt, setShowInstallPrompt] = useState(false);
 
-    const handleInstallClick = async () => {
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { answer } = await deferredPrompt.userChoice;
-            if (answer === 'accepted') {
-                console.log('홈화면에 앱 설치 완료!');
-            } else {
-                console.log('앱 설치를 거부하셨습니다.');
-            }
-            setDeferredPrompt(null);
-            setShowInstallPrompt(false);
-        }
-    };
+    // const handleInstallClick = async () => {
+    //     if (deferredPrompt) {
+    //         deferredPrompt.prompt();
+    //         const { answer } = await deferredPrompt.userChoice;
+    //         if (answer === 'accepted') {
+    //             console.log('홈화면에 앱 설치 완료!');
+    //         } else {
+    //             console.log('앱 설치를 거부하셨습니다.');
+    //         }
+    //         setDeferredPrompt(null);
+    //         setShowInstallPrompt(false);
+    //     }
+    // };
 
     useEffect(() => {
         const storedAccessToken = localStorage.getItem("accessToken");
@@ -199,23 +199,23 @@ function LoginPage(props) {
             navigate(`/main`);
         }
         
-        const isIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent) && !window.MSStream;
+        // const isIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent) && !window.MSStream;
 
-        const handleBeforeInstallPrompt = (e) => {
-            e.preventDefault();
-            setDeferredPrompt(e);
-            setShowInstallPrompt(true);
-        };
-        window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+        // const handleBeforeInstallPrompt = (e) => {
+        //     e.preventDefault();
+        //     setDeferredPrompt(e);
+        //     setShowInstallPrompt(true);
+        // };
+        // window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
-        setTimeout(() => {
-            if (isIOS) alert("[홈 화면에 추가]로 앱을 설치하세요!");
-            else alert("[App ⬇️] 버튼으로 앱을 설치하세요!");
-        }, 300); // 0.3초 딜레이 후에 안내 alert 생성.
+        // setTimeout(() => {
+        //     if (isIOS) alert("[홈 화면에 추가]로 앱을 설치하세요!");
+        //     else alert("[App ⬇️] 버튼으로 앱을 설치하세요!");
+        // }, 300); // 0.3초 딜레이 후에 안내 alert 생성.
 
-        return () => {
-            window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-        };
+        // return () => {
+        //     window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+        // };
     }, []);
 
     return (
@@ -231,7 +231,7 @@ function LoginPage(props) {
             <LoginContainer>
               <LoginMethodText>
                 로그인 방법 선택
-                <AppButton onClick={handleInstallClick} show={showInstallPrompt}>App ⬇️</AppButton>
+                {/* <AppButton onClick={handleInstallClick} show={showInstallPrompt}>App ⬇️</AppButton> */}
               </LoginMethodText>
               <SocialLoginContainer>
                   <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/google`}>
