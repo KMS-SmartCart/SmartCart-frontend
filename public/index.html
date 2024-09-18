@@ -20,7 +20,7 @@
 
     <!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json" /> -->
     <script>
-        const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+        const isIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent) && !window.MSStream;
         const manifest = {
             short_name: "스마트카트",
             name: "스마트 카트",
