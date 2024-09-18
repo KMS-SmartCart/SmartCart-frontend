@@ -161,6 +161,7 @@ const SocialButton = styled.a`
 `;
 
 const AppButton = styled.button`
+    margin-left: 7.5px;
     padding: 2.2px 4.5px;
     border: solid 0.9px black;
     border-radius: 4px;
@@ -222,7 +223,6 @@ function LoginPage(props) {
             <LoginContainer>
               <LoginMethodText>
                 로그인 방법 선택
-                &nbsp;&nbsp;
                 <AppButton onClick={handleInstallClick} show={showInstallPrompt}>App ⬇️</AppButton>
               </LoginMethodText>
               <SocialLoginContainer>
