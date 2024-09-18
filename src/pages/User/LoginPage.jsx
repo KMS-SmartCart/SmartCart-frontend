@@ -175,7 +175,6 @@ const AppButton = styled.button`
 function LoginPage(props) {
     const navigate = useNavigate();
 
-    const [isIOS, setIsIOS] = useState(false);
     const [deferredPrompt, setDeferredPrompt] = useState(null);
     const [showInstallPrompt, setShowInstallPrompt] = useState(false);
 
@@ -199,9 +198,8 @@ function LoginPage(props) {
         if (storedAccessToken && storedRefreshToken) {
             navigate(`/main`);
         }
-
+        
         const isIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent) && !window.MSStream;
-        setIsIOS(isIOS);
 
         const handleBeforeInstallPrompt = (e) => {
             e.preventDefault();
@@ -233,7 +231,7 @@ function LoginPage(props) {
             <LoginContainer>
               <LoginMethodText>
                 로그인 방법 선택
-                <AppButton onClick={handleInstallClick} show={!isIOS}>App ⬇️</AppButton>
+                <AppButton onClick={handleInstallClick} show={showInstallPrompt}>App ⬇️</AppButton>
               </LoginMethodText>
               <SocialLoginContainer>
                   <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/google`}>
