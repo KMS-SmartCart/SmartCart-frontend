@@ -96,16 +96,18 @@ const LoginContainer = styled.div`
 `;
 
 const LoginMethodText = styled.p`
-    text-align: center; /* 중앙 정렬 */
-    margin-bottom: 15px; /* 여백 조정 */
-    font-size: 20px; /* 글씨 크기 조정 (원하는 크기로 변경) */
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    margin-bottom: 8.5px; /* 여백 조정 */
+    font-size: 19px; /* 글씨 크기 조정 (원하는 크기로 변경) */
 
     @media (max-width: 390px) {
-      font-size: 16px; /* iPhone SE */
+      font-size: 15px; /* iPhone SE */
     }
 
     @media (max-width: 360px) {
-      font-size: 18px; /* Galaxy S8 */
+      font-size: 17px; /* Galaxy S8 */
     }
 `;
 
@@ -158,16 +160,49 @@ const SocialButton = styled.a`
     }
 `;
 
+const AppButton = styled.button`
+    padding: 2.2px 4.5px;
+    border: solid 0.9px black;
+    border-radius: 4px;
+    font-size: 10.5px;
+    font-weight: bold;
+    color: #4868fa;
+    display: ${props => props.show ? 'block' : 'none'};
+`;
+
 function LoginPage(props) {
     const navigate = useNavigate();
+
+    const [deferredPrompt, setDeferredPrompt] = useState(null);
+
+    const handleInstallClick = async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                console.log('홈화면에 앱 설치 완료!');
+            } else {
+                console.log('앱 설치를 거부하셨습니다.');
+            }
+            setDeferredPrompt(null);
+        }
+    };
 
     useEffect(() => {
         const storedAccessToken = localStorage.getItem("accessToken");
         const storedRefreshToken = localStorage.getItem("refreshToken");
-
         if (storedAccessToken && storedRefreshToken) {
             navigate(`/main`);
         }
+
+        const handleBeforeInstallPrompt = (e) => {
+            e.preventDefault();
+            setDeferredPrompt(e);
+        };
+        window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+        return () => {
+            window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+        };
     }, []);
 
     return (
@@ -181,7 +216,11 @@ function LoginPage(props) {
             <ImageSeparator src={cartIcon} alt="Separator" />
 
             <LoginContainer>
-              <LoginMethodText>로그인 방법 선택</LoginMethodText>
+              <LoginMethodText>
+                로그인 방법 선택
+                &nbsp;&nbsp;
+                <AppButton onClick={handleInstallClick} $show={!!deferredPrompt}>App ⬇️</AppButton>
+              </LoginMethodText>
               <SocialLoginContainer>
                   <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/google`}>
                       <img src={google} alt="Google" />
