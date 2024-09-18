@@ -22,8 +22,8 @@
     <script>
         const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
         const manifest = {
-            short_name: "SmartCart",
-            name: "Smart Cart",
+            short_name: "스마트카트",
+            name: "스마트 카트",
             icons: [
                 {
                     src: "%PUBLIC_URL%/favicon.ico",
@@ -42,7 +42,7 @@
                 }
             ],
             start_url: ".",
-            display: isIOS ? "standalone" : "browser", // iOS인 경우 browser로 설정
+            display: isIOS ? "browser" : "standalone", // iOS인 경우 browser로 설정
             theme_color: "#000000",
             background_color: "#ffffff"
         };
