@@ -175,6 +175,7 @@ const AppButton = styled.button`
 function LoginPage(props) {
     const navigate = useNavigate();
 
+    const [isIOS, setIsIOS] = useState(false);
     const [deferredPrompt, setDeferredPrompt] = useState(null);
     const [showInstallPrompt, setShowInstallPrompt] = useState(false);
 
@@ -199,12 +200,23 @@ function LoginPage(props) {
             navigate(`/main`);
         }
 
+        const isDeviceIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent) && !window.MSStream;
+        setIsIOS(isDeviceIOS);
+
         const handleBeforeInstallPrompt = (e) => {
             e.preventDefault();
             setDeferredPrompt(e);
             setShowInstallPrompt(true);
         };
         window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+        if (isDeviceIOS) {
+          alert("[홈 화면에 추가]로 앱을 설치하세요!");
+        }
+        else {
+          alert("[App ⬇️] 버튼으로 앱을 설치하세요!");
+        }
+
         return () => {
             window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
         };
