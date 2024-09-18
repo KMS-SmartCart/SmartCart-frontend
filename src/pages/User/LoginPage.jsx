@@ -160,17 +160,17 @@ const SocialButton = styled.a`
     }
 `;
 
-const AppButton = styled.button`
-    margin-left: 7.5px;
-    padding: 2.2px 4.5px;
-    border: solid 0.9px black;
-    border-radius: 4px;
-    font-size: 10.5px;
-    font-weight: bold;
-    color: #4868fa;
-    cursor: pointer;
-    display: ${props => props.show ? 'block' : 'none'};
-`;
+// const AppButton = styled.button`
+//     margin-left: 7.5px;
+//     padding: 2.2px 4.5px;
+//     border: solid 0.9px black;
+//     border-radius: 4px;
+//     font-size: 10.5px;
+//     font-weight: bold;
+//     color: #4868fa;
+//     cursor: pointer;
+//     display: ${props => props.show ? 'block' : 'none'};
+// `;
 
 function LoginPage(props) {
     const navigate = useNavigate();
