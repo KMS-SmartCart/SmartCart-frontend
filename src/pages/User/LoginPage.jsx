@@ -193,22 +193,23 @@ function LoginPage(props) {
     };
 
     useEffect(() => {
-        const storedAccessToken = localStorage.getItem("accessToken");
-        const storedRefreshToken = localStorage.getItem("refreshToken");
-        if (storedAccessToken && storedRefreshToken) {
-            navigate(`/main`);
-        }
-
         const handleBeforeInstallPrompt = (e) => {
             e.preventDefault();
             setDeferredPrompt(e);
             setShowInstallPrompt(true);
         };
         window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+        const storedAccessToken = localStorage.getItem("accessToken");
+        const storedRefreshToken = localStorage.getItem("refreshToken");
+        if (storedAccessToken && storedRefreshToken) {
+            navigate(`/main`);
+        }
+
         return () => {
             window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
         };
-    }, [navigate]);
+    }, []);
 
     return (
         <Container>
