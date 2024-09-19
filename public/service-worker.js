@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-globals */
+
 const CACHE_NAME = 'smartcart-cache-v1';
 const urlsToCache = [
   '/',
@@ -11,7 +13,6 @@ const urlsToCache = [
 ];
 
 // 서비스 워커 설치 및 파일 캐싱
-/* eslint-disable no-restricted-globals */
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -22,22 +23,22 @@ self.addEventListener('install', event => {
   );
 });
 
-// 캐시에서 파일 가져오기
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // 캐시에서 찾으면 반환하고, 그렇지 않으면 네트워크 요청
-        return response || fetch(event.request).then(networkResponse => {
-          // 네트워크 응답을 캐시에 저장
-          return caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, networkResponse.clone());
-            return networkResponse;
-          });
-        });
-      })
-  );
-});
+// // 캐시에서 파일 가져오기
+// self.addEventListener('fetch', event => {
+//   event.respondWith(
+//     caches.match(event.request)
+//       .then(response => {
+//         // 캐시에서 찾으면 반환하고, 그렇지 않으면 네트워크 요청
+//         return response || fetch(event.request).then(networkResponse => {
+//           // 네트워크 응답을 캐시에 저장
+//           return caches.open(CACHE_NAME).then(cache => {
+//             cache.put(event.request, networkResponse.clone());
+//             return networkResponse;
+//           });
+//         });
+//       })
+//   );
+// });
 
 // 오래된 캐시 삭제
 self.addEventListener('activate', event => {
