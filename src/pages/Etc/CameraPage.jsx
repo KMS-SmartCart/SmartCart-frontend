@@ -92,12 +92,19 @@ const CameraPage = () => {
     const getCameraStream = async () => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: "environment" }, // 후면 카메라 설정
-          audio: false
+          video: {
+            facingMode: "environment",  // 후면 카메라 설정
+            width: {
+              max: 350
+            },
+            height: {
+              max: 262.5  // 350 * 0.75
+            }
+          },
+          audio: false,
         });
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
-          // videoRef.current.videoHeight = videoRef.current.videoWidth * 0.75;
         }
       } catch (error) {
         console.error("Error accessing the camera: ", error);
@@ -121,7 +128,7 @@ const CameraPage = () => {
 
     if (canvas && video) {
       canvas.width = video.videoWidth;
-      canvas.height = video.videoWidth * 0.75;
+      canvas.height = video.videoHeight;
       const context = canvas.getContext('2d');
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
