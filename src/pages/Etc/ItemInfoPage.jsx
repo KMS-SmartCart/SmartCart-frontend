@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
-import styled from 'styled-components';
-import { useNavigate, useLocation } from 'react-router-dom';
-import BottomNav from '../../Component/Navigation/BottomNav';
-import logo from "../../assets/images/smartcartlogo.png"
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { useNavigate, useLocation } from "react-router-dom";
+import BottomNav from "../../Component/Navigation/BottomNav";
+import logo from "../../assets/images/smartcartlogo.png";
 
 const Container = styled.div`
   display: flex;
@@ -12,7 +12,7 @@ const Container = styled.div`
   padding: 20px;
   min-height: 100vh;
   background-color: white;
-  position: relative; 
+  position: relative;
   padding-bottom: 100px;
   box-sizing: border-box;
 
@@ -34,7 +34,6 @@ const LogoContainer = styled.div`
 const LogoImage = styled.img`
   width: 65px;
   height: auto;
-  
 
   @media (max-width: 390px) {
     width: 50px;
@@ -122,7 +121,7 @@ const InputField = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  background-color: #E6EBF1;
+  background-color: #e6ebf1;
 
   @media (max-width: 375px) {
     padding: 7px;
@@ -179,19 +178,26 @@ function ItemInfoPage() {
   const [price, setPrice] = useState(0);
   const [amount, setAmount] = useState("");
   const [buttonMargin, setButtonMargin] = useState(0);
-  const bottomNavRef = useRef(null);
 
-  useLayoutEffect(() => {
-    if (bottomNavRef.current) {
-      const bottomNavHeight = bottomNavRef.current.offsetHeight;
-      const computedStyle = getComputedStyle(bottomNavRef.current);
-      const paddingTop = parseInt(computedStyle.paddingTop);
-      const paddingBottom = parseInt(computedStyle.paddingBottom);
+  useEffect(() => {
+    const updateMargin = () => {
+      const bottomNav = document.getElementById("bottomnavid");
+      if (bottomNav) {
+        const bottomNavHeight = bottomNav.offsetHeight;
+        const computedStyle = getComputedStyle(bottomNav);
+        const paddingTop = parseInt(computedStyle.paddingTop);
+        const paddingBottom = parseInt(computedStyle.paddingBottom);
 
-      const marginBottom = bottomNavHeight + paddingTop + paddingBottom + 2;
-      console.log(marginBottom);
-      setButtonMargin(marginBottom);
-    }
+        const marginBottom = bottomNavHeight + paddingTop + paddingBottom + 2;
+        setButtonMargin(marginBottom);
+      }
+    };
+    updateMargin();
+    window.addEventListener("resize", updateMargin);
+
+    return () => {
+      window.removeEventListener("resize", updateMargin);
+    };
   }, []);
 
   useEffect(() => {
@@ -254,7 +260,7 @@ function ItemInfoPage() {
         </SubmitButton>
       </FormContainer>
 
-      <BottomNav ref={bottomNavRef} />
+      <BottomNav id="bottomnavid" />
     </Container>
   );
 }
