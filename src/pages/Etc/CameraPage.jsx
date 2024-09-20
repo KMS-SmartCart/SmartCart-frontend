@@ -94,14 +94,9 @@ const CameraPage = () => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: {
-            facingMode: "environment",  // 후면 카메라 설정
-            aspectRatio: 4 / 3,
-            width: {
-              max: 350
-            },
-            height: {
-              max: 262.5  // 350 * 0.75
-            }
+            facingMode: "environment", // 후면 카메라 설정 (기기에 없으면 전면 카메라 활성화.)
+            width: 1280,
+            height: 720,
           },
           audio: false,
         });
