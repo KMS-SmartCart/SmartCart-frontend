@@ -85,7 +85,6 @@ const dataURLtoFile = (dataURL, filename) => {
 const CameraPage = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  const [capturedImage, setCapturedImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -97,13 +96,8 @@ const CameraPage = () => {
           audio: false
         });
         if (videoRef.current) {
-          // videoRef.current.videoHeight = videoRef.current.videoWidth * 0.75;
-          console.log(1, videoRef.current.videoWidth);
-          console.log(2, videoRef.current.videoHeight);
           videoRef.current.srcObject = stream;
           // videoRef.current.videoHeight = videoRef.current.videoWidth * 0.75;
-          console.log(3, videoRef.current.videoWidth);
-          console.log(4, videoRef.current.videoHeight);
         }
       } catch (error) {
         console.error("Error accessing the camera: ", error);
@@ -132,8 +126,6 @@ const CameraPage = () => {
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
       const imageUrl = canvas.toDataURL('image/png');
-      setCapturedImage(imageUrl);
-
       const file = dataURLtoFile(imageUrl, 'photo.png');
 
       try {
