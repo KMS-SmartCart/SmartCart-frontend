@@ -428,7 +428,7 @@ const MyPage = () => {
 
       <AccumulatedAmount>
         그동안 SMARTCART로 절약한 금액
-        <Amount>SMARTCART로 {savedMoney}원 절약했어요!💘</Amount>
+        <Amount>SMARTCART로 {savedMoney}원 절약했어요! 💵</Amount>
       </AccumulatedAmount>
 
       <BottomNav />
