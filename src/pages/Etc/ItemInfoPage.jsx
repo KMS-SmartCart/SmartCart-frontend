@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import BottomNav from '../../Component/Navigation/BottomNav';
@@ -181,7 +181,7 @@ function ItemInfoPage() {
   const [buttonMargin, setButtonMargin] = useState(0);
   const bottomNavRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (bottomNavRef.current) {
       const bottomNavHeight = bottomNavRef.current.offsetHeight;
       const computedStyle = getComputedStyle(bottomNavRef.current);
@@ -189,10 +189,10 @@ function ItemInfoPage() {
       const paddingBottom = parseInt(computedStyle.paddingBottom);
 
       const marginBottom = bottomNavHeight + paddingTop + paddingBottom + 2;
-      console.log(marginBottom)
+      console.log(marginBottom);
       setButtonMargin(marginBottom);
     }
-  }, [bottomNavRef]);
+  }, []);
 
   useEffect(() => {
     if (initialProductName) setProductName(initialProductName);
