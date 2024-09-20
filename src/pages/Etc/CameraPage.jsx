@@ -53,19 +53,17 @@ const Container = styled.div`
 
 const Video = styled.video`
   width: 100%;
-  height: calc(0.75 * 100%); // width가 100% 일때, height를 75%로 설정
+  aspect-ratio: 4 / 3;  // 가로 세로 비율 4:3으로 설정 (75% 높이)
   max-width: 350px;
   border-radius: 8px;
   margin-bottom: 20px;
 
   @media (max-width: 390px) {
     width: 75%;
-    height: calc(0.75 * 75%);
   }
 
   @media (max-width: 360px) {
     width: 70%;
-    height: calc(0.75 * 70%);
   }
 `;
 
