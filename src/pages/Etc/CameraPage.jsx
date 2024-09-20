@@ -97,7 +97,9 @@ const CameraPage = () => {
           audio: false
         });
         if (videoRef.current) {
-          videoRef.current.videoHeight = videoRef.current.videoWidth * 0.75;
+          // videoRef.current.videoHeight = videoRef.current.videoWidth * 0.75;
+          console.log(videoRef.current.videoWidth);
+          console.log(videoRef.current.videoHeight);
           videoRef.current.srcObject = stream;
         }
       } catch (error) {
@@ -136,6 +138,11 @@ const CameraPage = () => {
         formData.append('imageFile', file);
 
         // 영상처리 결과 로딩중임을 명시
+        if (video && video.srcObject) {  // 촬영상태 정지
+          const stream = video.srcObject;
+          const tracks = stream.getTracks();
+          tracks.forEach((track) => track.stop());
+        }
         setLoading(true); // 로딩 시작
 
         const response = await Apis.post('/products/image-processing', formData, {
@@ -151,12 +158,6 @@ const CameraPage = () => {
         console.error("Error processing image: ", error);
       } finally {
         setLoading(false);
-      }
-
-      if (video && video.srcObject) {
-        const stream = video.srcObject;
-        const tracks = stream.getTracks();
-        tracks.forEach(track => track.stop()); 
       }
     }
   };
