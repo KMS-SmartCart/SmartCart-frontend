@@ -48,8 +48,9 @@ const LogoImage = styled.img`
 const ImageContainer = styled.div`
   text-align: center;
   margin-bottom: 15px;
-  width: 75%;
+  height: 75%;
   max-width: 300px;
+  object-fit: cover;
 
   @media (max-width: 375px) {
     max-width: 280px;
