@@ -7,15 +7,15 @@ const Button = styled.button`
   width: 70%;
   max-width: 300px;
   padding: 10px;
-  background-color: #5271FF;
-  color: white;
+  background-color: ${(props) => (props.disabled ? "#C7CCDF" : "#5271FF")};
+  color: ${(props) => (props.disabled ? "black" : "white")};
   border: none;
   border-radius: 5px;
   font-size: 16px;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
 
   &:hover {
-    background-color: #C7CCDF;
+    background-color: #c7ccdf;
     color: black;
   }
 
@@ -87,6 +87,7 @@ const CameraPage = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [capturedImage, setCapturedImage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -134,6 +135,9 @@ const CameraPage = () => {
         const formData = new FormData();
         formData.append('imageFile', file);
 
+        // 영상처리 결과 로딩중임을 명시
+        setLoading(true); // 로딩 시작
+
         const response = await Apis.post('/products/image-processing', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
@@ -145,6 +149,8 @@ const CameraPage = () => {
         navigate('/iteminfo', { state: { imageUrl, productName, price, amount } });
       } catch (error) {
         console.error("Error processing image: ", error);
+      } finally {
+        setLoading(false);
       }
 
       if (video && video.srcObject) {
@@ -159,8 +165,10 @@ const CameraPage = () => {
     <Container>
       <h3>가격표를 찍어주세요.😊</h3>
       <Video ref={videoRef} autoPlay playsInline muted />
-      <Button onClick={takePicture}>사진 촬영</Button>
-      <canvas ref={canvasRef} style={{ display: 'none' }} />
+      <Button onClick={takePicture} disabled={loading}>
+        {loading ? "로딩 중..." : "사진 촬영"}
+      </Button>
+      <canvas ref={canvasRef} style={{ display: "none" }} />
     </Container>
   );
 };
