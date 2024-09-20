@@ -335,7 +335,7 @@ const CartPage = () => {
         <LogoImage src={logo} alt="Logo" />
       </LogoContainer>
 
-      <Title>ON, OFF 한눈에 비교💘</Title>
+      <Title>ON, OFF 한눈에 비교 🛒</Title>
       <SectionContainer>
         <Section online>
           <SectionTitle>ON</SectionTitle>
@@ -349,7 +349,7 @@ const CartPage = () => {
         </Section>
       </SectionContainer>
       <TotalAmount>총합: {allPriceSum}원</TotalAmount>
-      <SavedMoney>SMARTCART로 절약했어요💘: {savedMoneySum}원</SavedMoney>
+      <SavedMoney>SMARTCART로 절약했어요 💵: {savedMoneySum}원</SavedMoney>
       <StyledButton onClick={handleCheckout}>결제하기</StyledButton>
       <BottomNav />
       <Modal

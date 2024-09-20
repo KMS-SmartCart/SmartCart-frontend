@@ -381,7 +381,7 @@ function MainPage() {
   return (
     <Container>
       <HeaderContainer>
-        <Header>Hello, {userName.length > 5 ? <><br/>{userName}</> : userName}✋</Header>
+        <Header>👤&nbsp;{userName.length > 5 ? <><br/>{userName}</> : userName}</Header>
         <LogoContainer>
           <LogoImage src={logo} alt="Logo" />
         </LogoContainer>
