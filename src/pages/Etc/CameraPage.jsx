@@ -161,7 +161,7 @@ const CameraPage = () => {
 
   return (
     <Container>
-      <h3>가격표를 찍어주세요.😊</h3>
+      <h3>가격표를 찍어주세요 😊</h3>
       <Video ref={videoRef} autoPlay playsInline muted />
       <Button onClick={takePicture} disabled={loading}>
         {loading ? "로딩 중..." : "사진 촬영"}
