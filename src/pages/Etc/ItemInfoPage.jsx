@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import BottomNav from '../../Component/Navigation/BottomNav';
@@ -50,7 +50,7 @@ const ImageContainer = styled.div`
   width: 100%;
   max-width: 300px;
 
-  // 모바일 후면 카메라 촬영 시, 사진이 세로로 출력되어 크기 조절해야함.
+  // 모바일 후면 카메라 촬영 시, 사진이 세로로 출력되어 크기 조절함. (가로로 펴서 찌그러트림)
   // text-align: center;
   // max-height: 225px;
 
@@ -70,7 +70,7 @@ const ProductImage = styled.img`
   height: auto;
   border-radius: 8px;
 
-  // 모바일 후면 카메라 촬영 시, 사진이 세로로 출력되어 크기 조절해야함.
+  // 모바일 후면 카메라 촬영 시, 사진이 세로로 출력되어 크기 조절함. (가로로 펴서 찌그러트림)
   // max-height: 225px;
 `;
 
@@ -168,39 +168,47 @@ const SubmitButton = styled.button`
 function ItemInfoPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { imageUrl, productName: initialProductName, price: initialPrice, amount: initialAmount } = location.state || {};
+  const {
+    imageUrl,
+    productName: initialProductName,
+    price: initialPrice,
+    amount: initialAmount,
+  } = location.state || {};
 
-  const [productName, setProductName] = useState('');
+  const [productName, setProductName] = useState("");
   const [price, setPrice] = useState(0);
-  const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState("");
   const [buttonMargin, setButtonMargin] = useState(0);
+  const bottomNavRef = useRef(null);
+
+  useEffect(() => {
+    if (bottomNavRef.current) {
+      const bottomNavHeight = bottomNavRef.current.offsetHeight;
+      const computedStyle = getComputedStyle(bottomNavRef.current);
+      const paddingTop = parseInt(computedStyle.paddingTop);
+      const paddingBottom = parseInt(computedStyle.paddingBottom);
+
+      const marginBottom = bottomNavHeight + paddingTop + paddingBottom + 2;
+      console.log(marginBottom)
+      setButtonMargin(marginBottom);
+    }
+  }, [bottomNavRef.current]);
 
   useEffect(() => {
     if (initialProductName) setProductName(initialProductName);
     if (initialPrice) setPrice(initialPrice);
     if (initialAmount) setAmount(initialAmount);
-
-    const bottomNav = document.getElementById("bottomnavid");
-    if (bottomNav) {
-      const bottomNavHeight = bottomNav.offsetHeight;
-      const computedStyle = getComputedStyle(bottomNav);
-      const paddingTop = parseInt(computedStyle.paddingTop);
-      const paddingBottom = parseInt(computedStyle.paddingBottom);
-
-      const marginBottom = bottomNavHeight + paddingTop + paddingBottom + 2;
-      setButtonMargin(marginBottom);
-    }
   }, [initialProductName, initialPrice, initialAmount]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/Lowest', {
-      state: { productName, price, amount }
+    navigate("/Lowest", {
+      state: { productName, price, amount },
     });
   };
 
   const handleLogoClick = () => {
-    navigate('/main');
+    navigate("/main");
   };
 
   return (
@@ -210,41 +218,43 @@ function ItemInfoPage() {
       </LogoContainer>
 
       <ImageContainer>
-        <ProductImage src={imageUrl || '#'} alt="Product" />
+        <ProductImage src={imageUrl || "#"} alt="Product" />
       </ImageContainer>
 
       <FormContainer onSubmit={handleSubmit}>
         <InputContainer>
           <InputLabel>상품명:</InputLabel>
-          <InputField 
-            type="text" 
-            value={productName} 
-            onChange={(e) => setProductName(e.target.value)} 
+          <InputField
+            type="text"
+            value={productName}
+            onChange={(e) => setProductName(e.target.value)}
           />
         </InputContainer>
 
         <InputContainer>
           <InputLabel>가격:</InputLabel>
-          <InputField 
-            type="number" 
-            value={price} 
+          <InputField
+            type="number"
+            value={price}
             onChange={(e) => setPrice(Number(e.target.value))}
           />
         </InputContainer>
 
         <InputContainer>
           <InputLabel>용량:</InputLabel>
-          <InputField 
-            type="text" 
-            value={amount} 
-            onChange={(e) => setAmount(e.target.value)} 
+          <InputField
+            type="text"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
           />
         </InputContainer>
 
-        <SubmitButton type="submit" marginBottom={buttonMargin}>확인</SubmitButton>
+        <SubmitButton type="submit" marginBottom={buttonMargin}>
+          확인
+        </SubmitButton>
       </FormContainer>
 
-      <BottomNav id="bottomnavid" />
+      <BottomNav ref={bottomNavRef} />
     </Container>
   );
 }
