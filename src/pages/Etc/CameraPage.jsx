@@ -53,7 +53,6 @@ const Container = styled.div`
 
 const Video = styled.video`
   width: 100%;
-  height: auto;
   max-width: 350px;
   border-radius: 8px;
   margin-bottom: 20px;
