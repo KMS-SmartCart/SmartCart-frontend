@@ -53,17 +53,19 @@ const Container = styled.div`
 
 const Video = styled.video`
   width: 100%;
+  height: calc(0.75 * 100%); // width가 100% 일때, height를 75%로 설정
   max-width: 350px;
-  height: auto;
   border-radius: 8px;
   margin-bottom: 20px;
 
   @media (max-width: 390px) {
     width: 75%;
+    height: calc(0.75 * 75%);
   }
 
   @media (max-width: 360px) {
     width: 70%;
+    height: calc(0.75 * 70%);
   }
 `;
 

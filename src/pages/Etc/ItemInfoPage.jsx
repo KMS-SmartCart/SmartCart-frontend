@@ -63,7 +63,7 @@ const ImageContainer = styled.div`
 
 const ProductImage = styled.img`
   width: 100%;
-  height: auto;
+  height: calc(0.75 * 100%); // width가 100% 일때, height를 75%로 설정
   border-radius: 8px;
 `;
 
