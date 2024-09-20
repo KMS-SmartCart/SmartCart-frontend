@@ -55,6 +55,7 @@ const Video = styled.video`
   width: 100%;
   height: auto;
   max-width: 350px;
+  max-height: 262.5px;  // max-width * 0.75
   border-radius: 8px;
   margin-bottom: 20px;
 
@@ -92,7 +93,8 @@ const CameraPage = () => {
     const getCameraStream = async () => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: "environment" }  // 후면 카메라 설정
+          video: { facingMode: "environment" }, // 후면 카메라 설정
+          audio: false
         });
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
@@ -119,7 +121,7 @@ const CameraPage = () => {
 
     if (canvas && video) {
       canvas.width = video.videoWidth;
-      canvas.height = (video.videoWidth * 3) / 4;
+      canvas.height = video.videoWidth * 0.75;
       const context = canvas.getContext('2d');
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
