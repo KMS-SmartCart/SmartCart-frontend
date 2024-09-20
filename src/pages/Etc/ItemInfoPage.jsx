@@ -192,7 +192,7 @@ function ItemInfoPage() {
       console.log(marginBottom)
       setButtonMargin(marginBottom);
     }
-  }, [bottomNavRef.current]);
+  }, [bottomNavRef]);
 
   useEffect(() => {
     if (initialProductName) setProductName(initialProductName);
