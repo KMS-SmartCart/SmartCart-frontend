@@ -51,8 +51,8 @@ const ImageContainer = styled.div`
   max-width: 300px;
 
   // 모바일 후면 카메라 촬영 시, 사진이 세로로 출력되어 크기 조절해야함.
-  text-align: center;
-  max-height: 225px;
+  // text-align: center;
+  // max-height: 225px;
 
   @media (max-width: 375px) {
     max-width: 280px;
@@ -71,7 +71,7 @@ const ProductImage = styled.img`
   border-radius: 8px;
 
   // 모바일 후면 카메라 촬영 시, 사진이 세로로 출력되어 크기 조절해야함.
-  max-height: 225px;
+  // max-height: 225px;
 `;
 
 const FormContainer = styled.form`
@@ -138,16 +138,17 @@ const InputField = styled.input`
 const SubmitButton = styled.button`
   width: 100%;
   padding: 12px;
-  background-color: #5271FF;
+  background-color: #5271ff;
   color: white;
   border: none;
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
   margin-top: 15px;
+  margin-bottom: ${(props) => props.marginBottom || 0}px;
 
   &:hover {
-    background-color: #C7CCDF;
+    background-color: #c7ccdf;
     color: black;
   }
 
@@ -172,11 +173,23 @@ function ItemInfoPage() {
   const [productName, setProductName] = useState('');
   const [price, setPrice] = useState(0);
   const [amount, setAmount] = useState('');
+  const [buttonMargin, setButtonMargin] = useState(0);
 
   useEffect(() => {
     if (initialProductName) setProductName(initialProductName);
     if (initialPrice) setPrice(initialPrice);
     if (initialAmount) setAmount(initialAmount);
+
+    const bottomNav = document.getElementById("bottomnavid");
+    if (bottomNav) {
+      const bottomNavHeight = bottomNav.offsetHeight;
+      const computedStyle = getComputedStyle(bottomNav);
+      const paddingTop = parseInt(computedStyle.paddingTop);
+      const paddingBottom = parseInt(computedStyle.paddingBottom);
+
+      const marginBottom = bottomNavHeight + paddingTop + paddingBottom + 2;
+      setButtonMargin(marginBottom);
+    }
   }, [initialProductName, initialPrice, initialAmount]);
 
   const handleSubmit = (e) => {
@@ -228,10 +241,10 @@ function ItemInfoPage() {
           />
         </InputContainer>
 
-        <SubmitButton type="submit">확인</SubmitButton>
+        <SubmitButton type="submit" marginBottom={buttonMargin}>확인</SubmitButton>
       </FormContainer>
 
-      <BottomNav />
+      <BottomNav id="bottomnavid" />
     </Container>
   );
 }
