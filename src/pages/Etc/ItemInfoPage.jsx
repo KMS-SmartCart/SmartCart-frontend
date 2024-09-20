@@ -63,7 +63,7 @@ const ImageContainer = styled.div`
 
 const ProductImage = styled.img`
   width: 100%;
-  aspect-ratio: 4 / 3;  // 가로 세로 비율 4:3으로 설정 (75% 높이)
+  height: auto;
   border-radius: 8px;
 `;
 

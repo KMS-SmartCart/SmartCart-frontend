@@ -53,7 +53,7 @@ const Container = styled.div`
 
 const Video = styled.video`
   width: 100%;
-  aspect-ratio: 4 / 3;  // 가로 세로 비율 4:3으로 설정 (75% 높이)
+  height: auto;
   max-width: 350px;
   border-radius: 8px;
   margin-bottom: 20px;
@@ -119,7 +119,7 @@ const CameraPage = () => {
 
     if (canvas && video) {
       canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
+      canvas.height = (video.videoWidth * 3) / 4;
       const context = canvas.getContext('2d');
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
