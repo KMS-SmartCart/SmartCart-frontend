@@ -144,7 +144,7 @@ const SubmitButton = styled.button`
   font-size: 16px;
   cursor: pointer;
   margin-top: 15px;
-  margin-bottom: ${(props) => props.marginBottom || 0}px;
+  margin-bottom: 85px;
 
   &:hover {
     background-color: #c7ccdf;
@@ -177,28 +177,6 @@ function ItemInfoPage() {
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState(0);
   const [amount, setAmount] = useState("");
-  const [buttonMargin, setButtonMargin] = useState(0);
-
-  useEffect(() => {
-    const updateMargin = () => {
-      const bottomNav = document.getElementById("bottomnavid");
-      if (bottomNav) {
-        const bottomNavHeight = bottomNav.offsetHeight;
-        const computedStyle = getComputedStyle(bottomNav);
-        const paddingTop = parseInt(computedStyle.paddingTop);
-        const paddingBottom = parseInt(computedStyle.paddingBottom);
-
-        const marginBottom = bottomNavHeight + paddingTop + paddingBottom + 2;
-        setButtonMargin(marginBottom);
-      }
-    };
-    updateMargin();
-    window.addEventListener("resize", updateMargin);
-
-    return () => {
-      window.removeEventListener("resize", updateMargin);
-    };
-  }, []);
 
   useEffect(() => {
     if (initialProductName) setProductName(initialProductName);
@@ -255,12 +233,12 @@ function ItemInfoPage() {
           />
         </InputContainer>
 
-        <SubmitButton type="submit" marginBottom={buttonMargin}>
+        <SubmitButton type="submit">
           확인
         </SubmitButton>
       </FormContainer>
 
-      <BottomNav id="bottomnavid" />
+      <BottomNav />
     </Container>
   );
 }
