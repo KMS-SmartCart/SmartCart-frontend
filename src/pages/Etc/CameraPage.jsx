@@ -55,7 +55,6 @@ const Video = styled.video`
   width: 100%;
   height: auto;
   max-width: 350px;
-  max-height: 262.5px;  // max-width * 0.75
   border-radius: 8px;
   margin-bottom: 20px;
 
@@ -98,6 +97,7 @@ const CameraPage = () => {
           audio: false
         });
         if (videoRef.current) {
+          videoRef.current.videoHeight = videoRef.current.videoWidth * 0.75;
           videoRef.current.srcObject = stream;
         }
       } catch (error) {
