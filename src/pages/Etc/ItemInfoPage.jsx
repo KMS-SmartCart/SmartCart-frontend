@@ -46,8 +46,9 @@ const LogoImage = styled.img`
 `;
 
 const ImageContainer = styled.div`
+  text-align: center;
   margin-bottom: 15px;
-  width: 100%;
+  width: 75%;
   max-width: 300px;
 
   @media (max-width: 375px) {
