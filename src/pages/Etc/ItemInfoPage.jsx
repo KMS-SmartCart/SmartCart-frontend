@@ -46,10 +46,12 @@ const LogoImage = styled.img`
 `;
 
 const ImageContainer = styled.div`
-  text-align: center;
   margin-bottom: 15px;
-  height: 75%;
+  width: 100%;
   max-width: 300px;
+
+  // 모바일 후면 카메라 촬영 시, 사진이 세로로 출력되어 크기 조절해야함.
+  max-height: 225px;  
   object-fit: cover;
 
   @media (max-width: 375px) {
