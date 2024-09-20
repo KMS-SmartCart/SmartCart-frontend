@@ -98,9 +98,12 @@ const CameraPage = () => {
         });
         if (videoRef.current) {
           // videoRef.current.videoHeight = videoRef.current.videoWidth * 0.75;
-          console.log(videoRef.current.videoWidth);
-          console.log(videoRef.current.videoHeight);
+          console.log(1, videoRef.current.videoWidth);
+          console.log(2, videoRef.current.videoHeight);
           videoRef.current.srcObject = stream;
+          // videoRef.current.videoHeight = videoRef.current.videoWidth * 0.75;
+          console.log(3, videoRef.current.videoWidth);
+          console.log(4, videoRef.current.videoHeight);
         }
       } catch (error) {
         console.error("Error accessing the camera: ", error);
