@@ -53,11 +53,10 @@ const Container = styled.div`
 
 const Video = styled.video`
   width: 100%;
-  // height: auto;
+  height: auto;
   max-width: 350px;
   border-radius: 8px;
   margin-bottom: 20px;
-  object-fit: cover;
 
   @media (max-width: 390px) {
     width: 75%;
@@ -95,8 +94,7 @@ const CameraPage = () => {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: {
             facingMode: "environment", // 후면 카메라 설정 (기기에 없으면 전면 카메라 활성화.)
-            width: 1280,
-            height: 720,
+            aspectRatio: { ideal: 4 / 3 },
           },
           audio: false,
         });
