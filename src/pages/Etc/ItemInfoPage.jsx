@@ -52,7 +52,7 @@ const ImageContainer = styled.div`
 
   // 모바일 후면 카메라 촬영 시, 사진이 세로로 출력되어 크기 조절해야함.
   text-align: center;
-  max-height: 225px;  
+  max-height: 225px;
 
   @media (max-width: 375px) {
     max-width: 280px;
@@ -71,7 +71,7 @@ const ProductImage = styled.img`
   border-radius: 8px;
 
   // 모바일 후면 카메라 촬영 시, 사진이 세로로 출력되어 크기 조절해야함.
-  max-height: 225px;  
+  max-height: 225px;
 `;
 
 const FormContainer = styled.form`
