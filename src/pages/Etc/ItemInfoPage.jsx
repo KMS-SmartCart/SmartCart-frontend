@@ -144,7 +144,8 @@ const SubmitButton = styled.button`
   font-size: 16px;
   cursor: pointer;
   margin-top: 15px;
-  margin-bottom: 85px;
+
+  margin-bottom: 85px;  // 모바일 세로 사진으로 인해, 잘리는 밑의 버튼을 보여주기위한 마진값 부여.
 
   &:hover {
     background-color: #c7ccdf;

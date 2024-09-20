@@ -391,18 +391,18 @@ const MyPage = () => {
   return (
     <Container>
       <HeaderContainer>
-        <Header>{userName}님💙</Header>
+        <Header>👤&nbsp;{userName}님</Header>
         <LogoContainer onClick={handlelogoClick}>
           <LogoImage src={logo} alt="Logo" />
         </LogoContainer>
       </HeaderContainer>
-    
+
       <UserInfoCard>
         <LogOutButton onClick={handleLogout}>
           <MdLogout size={22} />
         </LogOutButton>
         <EditButton onClick={toggleEdit}>
-          {isEditing ? <IoMdCheckboxOutline size={22}/> : <FiEdit size={20}/>}
+          {isEditing ? <IoMdCheckboxOutline size={22} /> : <FiEdit size={20} />}
         </EditButton>
         <ContentWrapper>
           <UserInfoComment>회원 정보</UserInfoComment>
