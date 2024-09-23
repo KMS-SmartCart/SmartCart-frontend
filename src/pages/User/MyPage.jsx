@@ -18,7 +18,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: flex-start;
   padding: 10px;
-  margin: 20px;
+  margin: 35px;
   min-height: 100vh;
   background-color: white;
   position: relative; 
@@ -27,33 +27,30 @@ const Container = styled.div`
 
   @media (max-width: 390px) {
     padding: 10px;
-    margin: 20px;
+    margin: 25px;
   }
 
   @media (max-width: 360px) {
     padding: 10px;
-    margin: 20px;
+    margin: 25px;
   }
 `;
 
-const HeaderContainer = styled.div`
-  position: relative;
-  left: -115px;
+const NavContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
-  @media (max-width: 390px) {
-    left: -110px;
-  }
-
-  @media (max-width: 360px) {
-    left: -110px;
-  }
+  margin-bottom: 23px;
+  max-width: 350px;
+  width: 100%;
 `;
 
 const Header = styled.h1`
-  font-size: 22px;
+  margin: 0px;
   color: black;
-  margin-top: 20px;
-  margin-bottom: -25px;
+  font-size: 22px;
   font-weight: bold;
 
   @media (max-width: 390px) {
@@ -65,30 +62,13 @@ const Header = styled.h1`
   }
 `;
 
-const LogoContainer = styled.div`
-  cursor: pointer;
-  position: relative;
-  right: -130px;
-
-  @media (max-width: 390px) {
-    right: -125px;
-  }
-
-  @media (max-width: 360px) {
-    right: -125px;
-  }
-`;
-
 const LogoImage = styled.img`
-  width: 60px;
+  cursor: pointer;
+  width: 65px;
   height: auto;
 
   @media (max-width: 390px) {
-    width: 50px;
-  }
-
-  @media (max-width: 360px) {
-    width: 50px;
+    width: 60px;
   }
 `;
 
@@ -406,14 +386,11 @@ const MyPage = () => {
 
   return (
     <Container>
-      <HeaderContainer>
+      <NavContainer>
         <Header>👤&nbsp;{userName}님</Header>
-      </HeaderContainer>
-      <LogoContainer onClick={handlelogoClick}>
-        <LogoImage src={logo} alt="Logo" />
-      </LogoContainer>
+        <LogoImage src={logo} alt="Logo" onClick={handlelogoClick} />
+      </NavContainer>
       
-
       <UserInfoCard>
         <LogOutButton onClick={handleLogout}>
           <MdLogout size={22} />
