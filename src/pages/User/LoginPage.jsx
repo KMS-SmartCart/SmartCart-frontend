@@ -28,10 +28,15 @@ const Container = styled.div`
   }
 `;
 
+const HeaderContainer = styled.div`
+  position: relative;
+  left: -20px;
+`;
+
 const Header = styled.h2`
     text-align: left;
     width: 100%;
-    margin: 20px;
+    // margin: 20px;
     font-size: 28px;
 
     @media (max-width: 390px) {
@@ -226,11 +231,13 @@ function LoginPage(props) {
 
     return (
         <Container>
-            <Header>SM<span style={{ color: '#5271FF' }}>ART</span> C<span style={{ color: '#5271FF' }}>ART</span></Header>
-            <Description>
-                이젠, 찍기만 하세요{"\n"}
-                알아서 비교해 드립니다.
-            </Description>
+            <HeaderContainer>
+              <Header>SM<span style={{ color: '#5271FF' }}>ART</span> C<span style={{ color: '#5271FF' }}>ART</span></Header>
+              <Description>
+                  이젠, 찍기만 하세요{"\n"}
+                  알아서 비교해 드립니다.
+              </Description>
+            </HeaderContainer>
         
             <ImageSeparator src={cartIcon} alt="Separator" />
 

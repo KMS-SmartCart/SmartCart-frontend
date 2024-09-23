@@ -34,18 +34,21 @@ const Container = styled.div`
   }
 `;
 
-const HeaderContainer = styled.div`
+const NavContainer = styled.div`
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  margin-bottom: 23px;
+  max-width: 350px;
   width: 100%;
-  margin-bottom: 25px;
 `;
 
 const Header = styled.h1`
-  font-size: 23px;
+  margin: 0px;
   color: black;
-  margin: 0;
+  font-size: 23px;
   font-weight: bold;
 
   @media (max-width: 390px) {
@@ -57,19 +60,12 @@ const Header = styled.h1`
   }
 `;
 
-const LogoContainer = styled.div`
-  cursor: pointer;
-`;
-
 const LogoImage = styled.img`
+  cursor: pointer;
   width: 65px;
   height: auto;
 
   @media (max-width: 390px) {
-    width: 60px;
-  }
-
-  @media (max-width: 360px) {
     width: 60px;
   }
 `;
@@ -380,12 +376,10 @@ function MainPage() {
 
   return (
     <Container>
-      <HeaderContainer>
-        <Header>👤&nbsp;{userName.length > 5 ? <><br/>{userName}</> : userName}</Header>
-        <LogoContainer>
-          <LogoImage src={logo} alt="Logo" />
-        </LogoContainer>
-      </HeaderContainer>
+      <NavContainer>
+        <Header>👤&nbsp;{userName}님</Header>
+        <LogoImage src={logo} alt="Logo" />
+      </NavContainer>
 
       <InputContainer>
         <ChecklistWrapper>
@@ -396,31 +390,48 @@ function MainPage() {
               isEditing={editItemId === item.checkitemId}
             >
               {editItemId === item.checkitemId ? (
-                <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    width: "100%",
+                  }}
+                >
                   <EditInput
                     type="text"
                     value={editItemName}
                     onChange={(e) => setEditItemName(e.target.value)}
                     onBlur={handleEditSubmit}
                   />
-                  <ActionButton onClick={handleEditSubmit}><IoMdCheckboxOutline size={18}/></ActionButton>
+                  <ActionButton onClick={handleEditSubmit}>
+                    <IoMdCheckboxOutline size={18} />
+                  </ActionButton>
                 </div>
               ) : (
-                <div style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    width: "100%",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center" }}>
                     <input
                       type="checkbox"
                       checked={item.isCheck === 1}
                       onChange={() => handleCheckChange(item)}
-                      style={{ marginRight: '10px' }}
+                      style={{ marginRight: "10px" }}
                     />
                     <span>{item.checkitemName}</span>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
                     <ActionButton onClick={() => handleEditClick(item)}>
                       <PiNotePencil size={18} />
                     </ActionButton>
-                    <ActionButton onClick={() => handleDeleteClick(item.checkitemId)}>
+                    <ActionButton
+                      onClick={() => handleDeleteClick(item.checkitemId)}
+                    >
                       <IoTrashOutline size={18} />
                     </ActionButton>
                   </div>
@@ -441,9 +452,13 @@ function MainPage() {
       </InputContainer>
 
       <RecommendedMenu>
-        <h3 style={{ marginTop: 0, marginBottom: 10, fontSize: '16px' }}>추천 메뉴</h3>
-        <p style={{ margin: 0, fontSize: '14px' }}>Chat GPT 사용</p>
-        <p style={{ margin: 5, fontSize: '14px' }}>→ 장바구니에 담긴 메뉴로 추천 레시피</p>
+        <h3 style={{ marginTop: 0, marginBottom: 10, fontSize: "16px" }}>
+          추천 메뉴 (예정)
+        </h3>
+        <p style={{ margin: 0, fontSize: "14px" }}>ChatGPT 사용</p>
+        <p style={{ margin: 5, fontSize: "14px" }}>
+          → 장바구니에 담긴 메뉴로 추천 레시피
+        </p>
       </RecommendedMenu>
       <BottomNav />
     </Container>
