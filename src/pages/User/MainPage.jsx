@@ -35,11 +35,6 @@ const Container = styled.div`
 `;
 
 const HeaderContainer = styled.div`
-  // display: flex;
-  // justify-content: space-between;
-  // align-items: center;
-  // width: 100%;
-  // margin-bottom: 25px;
   position: relative;
   left: -130px;
 
@@ -48,7 +43,7 @@ const HeaderContainer = styled.div`
   }
 
   @media (max-width: 360px) {
-    left: -115px;
+    left: -120px;
   }
 `;
 

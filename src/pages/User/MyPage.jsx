@@ -37,11 +37,6 @@ const Container = styled.div`
 `;
 
 const HeaderContainer = styled.div`
-  // display: flex;
-  // justify-content: space-between;
-  // align-items: center;
-  // width: 100%;
-  // margin-bottom: 20px;
   position: relative;
   left: -115px;
 
@@ -74,6 +69,14 @@ const LogoContainer = styled.div`
   cursor: pointer;
   position: relative;
   right: -130px;
+
+  @media (max-width: 390px) {
+    right: -125px;
+  }
+
+  @media (max-width: 360px) {
+    right: -125px;
+  }
 `;
 
 const LogoImage = styled.img`
