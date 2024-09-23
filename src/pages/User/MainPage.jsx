@@ -35,17 +35,28 @@ const Container = styled.div`
 `;
 
 const HeaderContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 25px;
+  // display: flex;
+  // justify-content: space-between;
+  // align-items: center;
+  // width: 100%;
+  // margin-bottom: 25px;
+  position: relative;
+  left: -130px;
+
+  @media (max-width: 390px) {
+    left: -125px;
+  }
+
+  @media (max-width: 360px) {
+    left: -115px;
+  }
 `;
 
 const Header = styled.h1`
   font-size: 23px;
   color: black;
-  margin: 0;
+  margin-top: 20px;
+  margin-bottom: -28px;
   font-weight: bold;
 
   @media (max-width: 390px) {
@@ -59,6 +70,17 @@ const Header = styled.h1`
 
 const LogoContainer = styled.div`
   cursor: pointer;
+  position: relative;
+  right: -130px;
+  margin-bottom: 15px;
+
+  @media (max-width: 390px) {
+    right: -125px;
+  }
+
+  @media (max-width: 360px) { /* S8 */
+    right: -120px;
+  }
 `;
 
 const LogoImage = styled.img`
@@ -382,10 +404,10 @@ function MainPage() {
     <Container>
       <HeaderContainer>
         <Header>👤&nbsp;{userName.length > 5 ? <><br/>{userName}</> : userName}</Header>
-        <LogoContainer>
-          <LogoImage src={logo} alt="Logo" />
-        </LogoContainer>
       </HeaderContainer>
+      <LogoContainer>
+        <LogoImage src={logo} alt="Logo" />
+      </LogoContainer>
 
       <InputContainer>
         <ChecklistWrapper>

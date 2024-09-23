@@ -37,17 +37,28 @@ const Container = styled.div`
 `;
 
 const HeaderContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 20px;
+  // display: flex;
+  // justify-content: space-between;
+  // align-items: center;
+  // width: 100%;
+  // margin-bottom: 20px;
+  position: relative;
+  left: -115px;
+
+  @media (max-width: 390px) {
+    left: -110px;
+  }
+
+  @media (max-width: 360px) {
+    left: -110px;
+  }
 `;
 
 const Header = styled.h1`
   font-size: 22px;
   color: black;
-  margin: 0;
+  margin-top: 20px;
+  margin-bottom: -25px;
   font-weight: bold;
 
   @media (max-width: 390px) {
@@ -61,6 +72,8 @@ const Header = styled.h1`
 
 const LogoContainer = styled.div`
   cursor: pointer;
+  position: relative;
+  right: -130px;
 `;
 
 const LogoImage = styled.img`
@@ -392,10 +405,11 @@ const MyPage = () => {
     <Container>
       <HeaderContainer>
         <Header>👤&nbsp;{userName}님</Header>
-        <LogoContainer onClick={handlelogoClick}>
-          <LogoImage src={logo} alt="Logo" />
-        </LogoContainer>
       </HeaderContainer>
+      <LogoContainer onClick={handlelogoClick}>
+        <LogoImage src={logo} alt="Logo" />
+      </LogoContainer>
+      
 
       <UserInfoCard>
         <LogOutButton onClick={handleLogout}>
