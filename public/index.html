@@ -18,7 +18,7 @@
     />
     <link rel="apple-touch-icon" href="carticon128.png" />
 
-    <!-- <link rel="manifest" href="manifest.json" /> -->
+    <!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json" /> -->
     <script>
         const isIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent) && !window.MSStream;
         const manifest = {
@@ -36,7 +36,7 @@
                     sizes: "512x512"
                 }
             ],
-            start_url: "http://www.smartcart.kr",
+            start_url: "https://www.smartcart.kr",
             display: isIOS ? "minimal-ui" : "standalone", // iOS인 경우 minimal-ui로 설정
             theme_color: "#000000",
             background_color: "#ffffff"
