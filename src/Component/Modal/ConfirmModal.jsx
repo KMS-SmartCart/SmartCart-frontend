@@ -34,23 +34,22 @@ const ModalButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: ${(props) => props.confirm ? 'red' : '#e0e0e0'};
-  color: ${(props) => props.confirm ? 'white' : '#333'};
+  background-color: #5271FF;
+  color: white;
   font-weight: bold;
 `;
 
-const DeleteUserModal = ({ message, onConfirm, onCancel }) => {
+const ConfirmModal = ({ message, onCancel }) => {
   return (
     <ModalOverlay>
       <ModalContent>
         <p>{message}</p>
         <ModalButtons>
-          <ModalButton confirm onClick={onConfirm}>확인</ModalButton>
-          <ModalButton onClick={onCancel}>취소</ModalButton>
+          <ModalButton onClick={onCancel}>닫기</ModalButton>
         </ModalButtons>
       </ModalContent>
     </ModalOverlay>
   );
 };
 
-export default DeleteUserModal;
+export default ConfirmModal;
