@@ -7,6 +7,7 @@ import cartIcon from "../../assets/images/carticon192.png";
 import google from "../../assets/images/google.png";
 import naver from "../../assets/images/naver.png";
 import kakao from "../../assets/images/kakao.png";
+import ConfirmModal from "../../Component/Modal/ConfirmModal";
 
 const Container = styled.div`
   display: flex;
@@ -182,6 +183,8 @@ function LoginPage(props) {
 
     const [deferredPrompt, setDeferredPrompt] = useState(null);
     const [showInstallPrompt, setShowInstallPrompt] = useState(false);
+    const [showModal, setShowModal] = useState(false);  // 모달 상태 관리
+    const [modalMessage, setModalMessage] = useState("");  // 모달 메세지 관리
 
     const handleInstallClick = async () => {
         if (deferredPrompt) {
@@ -194,6 +197,16 @@ function LoginPage(props) {
             }
             setDeferredPrompt(null);
         }
+    };
+
+    // 모달창 열기
+    const openModal = () => {
+      setShowModal(true);
+    };
+
+    // 모달창 닫기
+    const closeModal = () => {
+      setShowModal(false);
     };
 
     useEffect(() => {
@@ -225,9 +238,15 @@ function LoginPage(props) {
         const isIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent) && !window.MSStream;  // iOS 기기인지 확인
         if (!(storedAccessToken && storedRefreshToken)) {
             setTimeout(() => {
-                if (isIOS) alert("[홈 화면에 추가]로 앱을 설치하세요!");
-                else if (showInstallPrompt) alert("[App ⬇️] 버튼으로 앱을 설치하세요!");
-            }, 300);  // 0.3초 딜레이 후에 안내 alert 생성.
+                if (isIOS) {
+                  setModalMessage("[홈 화면에 추가]로 앱을 설치하세요!");
+                  openModal();
+                }
+                else if (showInstallPrompt) {
+                  setModalMessage("[App ⬇️] 버튼으로 앱을 설치하세요!");
+                  openModal();
+                }
+            }, 300);  // 0.3초 딜레이 후에 앱설치 모달 생성.
         }
     }, [showInstallPrompt]);
 
@@ -262,7 +281,13 @@ function LoginPage(props) {
                   </SocialButton>
               </SocialLoginContainer>
             </LoginContainer>
-            
+
+            {showModal && (
+              <ConfirmModal
+                message={modalMessage}
+                onCancel={closeModal}
+              />
+            )}
         </Container>
     );
 }
