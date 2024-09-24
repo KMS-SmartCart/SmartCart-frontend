@@ -325,7 +325,7 @@ const MyPage = () => {
       console.log(response); // 응답 데이터 구조 확인
       setUserName(response.data.data.nickname);
 
-      console.log('API에서 받은 금액:', response.data.data.saveMoney);
+      console.log('API에서 받은 금액:', response.data.data.savedMoney);
       setSavedMoney(response.data.data.savedMoney);
       setEditNickName(response.data.data.nickname);
     } catch (error) {
