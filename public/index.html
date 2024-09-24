@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="google" content="notranslate">
@@ -16,9 +16,9 @@
       name="description"
       content="This is the SmartCart service."
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/carticon128.png" />
+    <link rel="apple-touch-icon" href="carticon128.png" />
 
-    <!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json" /> -->
+    <!-- <link rel="manifest" href="manifest.json" /> -->
     <script>
         const isIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent) && !window.MSStream;
         const manifest = {
@@ -26,23 +26,18 @@
             name: "스마트 카트",
             icons: [
                 {
-                    src: "%PUBLIC_URL%/favicon.ico",
-                    sizes: "64x64 32x32 24x24 16x16",
-                    type: "image/x-icon"
-                },
-                {
-                    src: "%PUBLIC_URL%/carticon192.png",
+                    src: "carticon192.png",
                     type: "image/png",
                     sizes: "192x192"
                 },
                 {
-                    src: "%PUBLIC_URL%/carticon512.png",
+                    src: "carticon512.png",
                     type: "image/png",
                     sizes: "512x512"
                 }
             ],
-            start_url: "https://www.smartcart.kr",
-            display: isIOS ? "browser" : "standalone", // iOS인 경우 browser로 설정
+            start_url: "https://www.smartcart.kr/",
+            display: isIOS ? "minimal-ui" : "standalone", // iOS인 경우 minimal-ui로 설정
             theme_color: "#000000",
             background_color: "#ffffff"
         };

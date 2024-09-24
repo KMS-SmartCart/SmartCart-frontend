@@ -165,37 +165,36 @@ const SocialButton = styled.a`
     }
 `;
 
-// const AppButton = styled.button`
-//     margin-left: 7.5px;
-//     padding: 2.2px 4.5px;
-//     border: solid 0.9px black;
-//     border-radius: 4px;
-//     font-size: 10.5px;
-//     font-weight: bold;
-//     color: #4868fa;
-//     cursor: pointer;
-//     display: ${props => props.show ? 'block' : 'none'};
-// `;
+const AppButton = styled.button`
+    margin-left: 7.5px;
+    padding: 2.2px 4.5px;
+    border: solid 0.9px black;
+    border-radius: 4px;
+    font-size: 10.5px;
+    font-weight: bold;
+    color: #4868fa;
+    cursor: pointer;
+    display: ${props => props.show ? 'block' : 'none'};
+`;
 
 function LoginPage(props) {
     const navigate = useNavigate();
 
-    // const [deferredPrompt, setDeferredPrompt] = useState(null);
-    // const [showInstallPrompt, setShowInstallPrompt] = useState(false);
+    const [deferredPrompt, setDeferredPrompt] = useState(null);
+    const [showInstallPrompt, setShowInstallPrompt] = useState(false);
 
-    // const handleInstallClick = async () => {
-    //     if (deferredPrompt) {
-    //         deferredPrompt.prompt();
-    //         const { answer } = await deferredPrompt.userChoice;
-    //         if (answer === 'accepted') {
-    //             console.log('홈화면에 앱 설치 완료!');
-    //         } else {
-    //             console.log('앱 설치를 거부하셨습니다.');
-    //         }
-    //         setDeferredPrompt(null);
-    //         setShowInstallPrompt(false);
-    //     }
-    // };
+    const handleInstallClick = async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { answer } = await deferredPrompt.userChoice;
+            if (answer === 'accepted') {
+                console.log('홈화면에 앱 설치 완료!');
+            } else {
+                console.log('앱 설치를 거부하셨습니다.');
+            }
+            setDeferredPrompt(null);
+        }
+    };
 
     useEffect(() => {
         const storedAccessToken = localStorage.getItem("accessToken");
@@ -204,31 +203,25 @@ function LoginPage(props) {
             navigate(`/main`);
         }
         
-        // const isIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent) && !window.MSStream;
+        const isIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent) && !window.MSStream;
 
-        // const handleBeforeInstallPrompt = (e) => {
-        //     e.preventDefault();
-        //     setDeferredPrompt(e);
-        //     setShowInstallPrompt(true);
-        // };
-        // window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-        // if (!(storedAccessToken && storedRefreshToken)) {
-        //     setTimeout(() => {
-        //         if (isIOS) alert("[홈 화면에 추가]로 앱을 설치하세요!");
-        //         else alert("[App ⬇️] 버튼으로 앱을 설치하세요!");
-        //     }, 300); // 0.3초 딜레이 후에 안내 alert 생성.
-        // }
-
-        // return () => {
-        //     window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-        // };
+        const handleBeforeInstallPrompt = (e) => {
+            e.preventDefault();
+            setDeferredPrompt(e);
+            setShowInstallPrompt(true);
+        };
+        window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
         if (!(storedAccessToken && storedRefreshToken)) {
             setTimeout(() => {
-                alert("[홈 화면에 추가]로 앱을 설치하세요!");
+                if (isIOS) alert("[홈 화면에 추가]로 앱을 설치하세요!");
+                else alert("[App ⬇️] 버튼으로 앱을 설치하세요!");
             }, 300); // 0.3초 딜레이 후에 안내 alert 생성.
         }
+
+        return () => {
+            window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+        };
     }, []);
 
     return (
@@ -246,7 +239,7 @@ function LoginPage(props) {
             <LoginContainer>
               <LoginMethodText>
                 로그인 방법 선택
-                {/* <AppButton onClick={handleInstallClick} show={showInstallPrompt}>App ⬇️</AppButton> */}
+                <AppButton onClick={handleInstallClick} show={showInstallPrompt}>App ⬇️</AppButton>
               </LoginMethodText>
               <SocialLoginContainer>
                   <SocialButton href={`${process.env.REACT_APP_DB_HOST}/oauth2/authorization/google`}>
