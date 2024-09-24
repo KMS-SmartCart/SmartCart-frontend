@@ -6,9 +6,9 @@ import { FiEdit } from 'react-icons/fi';
 import { FaGoogle } from "react-icons/fa";
 import { IoMdCheckboxOutline } from "react-icons/io";
 import { MdLogout } from "react-icons/md";
-import BottomNav from '../../Component/Navigation/BottomNav';
+import BottomNav from '../../components/Navigation/BottomNav';
 import Apis from "../../apis/Api";
-import DeleteUserModal from "../../Component/Modal/DeleteUserModal";
+import DeleteUserModal from "../../components/Modal/DeleteUserModal";
 import logo from "../../assets/images/smartcartlogo.png"
 
 // 스타일 정의

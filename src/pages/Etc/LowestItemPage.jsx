@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import BottomNav from '../../Component/Navigation/BottomNav';
+import BottomNav from '../../components/Navigation/BottomNav';
 import { useLocation, useNavigate } from 'react-router-dom'; 
 import Apis from "../../apis/Api";
 import logo from "../../assets/images/smartcartlogo.png"
