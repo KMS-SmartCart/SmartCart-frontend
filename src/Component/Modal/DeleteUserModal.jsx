@@ -16,10 +16,12 @@ const ModalOverlay = styled.div`
 
 const ModalContent = styled.div`
   background: white;
+  border: solid 1.7px #545353;
   border-radius: 10px;
   padding: 20px;
   text-align: center;
-  width: 300px;
+  width: 253px;
+  height: 98px;
 `;
 
 const ModalButtons = styled.div`
@@ -33,12 +35,12 @@ const ModalButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: ${(props) => props.confirm ? '#5271FF' : '#e0e0e0'};
+  background-color: ${(props) => props.confirm ? 'red' : '#e0e0e0'};
   color: ${(props) => props.confirm ? 'white' : '#333'};
   font-weight: bold;
 `;
 
-const Modal = ({ message, onConfirm, onCancel }) => {
+const DeleteUserModal = ({ message, onConfirm, onCancel }) => {
   return (
     <ModalOverlay>
       <ModalContent>
@@ -52,4 +54,4 @@ const Modal = ({ message, onConfirm, onCancel }) => {
   );
 };
 
-export default Modal;
+export default DeleteUserModal;

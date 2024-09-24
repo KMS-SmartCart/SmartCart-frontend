@@ -8,7 +8,7 @@ import { IoMdCheckboxOutline } from "react-icons/io";
 import { MdLogout } from "react-icons/md";
 import BottomNav from '../../Component/Navigation/BottomNav';
 import Apis from "../../apis/Api";
-import Modal from '../../Component/Modal/DeleteUser';
+import DeleteUserModal from "../../Component/Modal/DeleteUserModal";
 import logo from "../../assets/images/smartcartlogo.png"
 
 // 스타일 정의
@@ -390,7 +390,7 @@ const MyPage = () => {
         <Header>👤&nbsp;{userName}님</Header>
         <LogoImage src={logo} alt="Logo" onClick={handlelogoClick} />
       </NavContainer>
-      
+
       <UserInfoCard>
         <LogOutButton onClick={handleLogout}>
           <MdLogout size={22} />
@@ -428,7 +428,7 @@ const MyPage = () => {
       <BottomNav />
 
       {showModal && (
-        <Modal
+        <DeleteUserModal
           message="회원 탈퇴 하시겠습니까?"
           onConfirm={handleDeleteUser}
           onCancel={closeModal}
