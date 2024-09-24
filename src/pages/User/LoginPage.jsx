@@ -218,6 +218,9 @@ function LoginPage(props) {
     useEffect(() => {
         const storedAccessToken = localStorage.getItem("accessToken");
         const storedRefreshToken = localStorage.getItem("refreshToken");
+        if (storedAccessToken && storedRefreshToken) {
+            navigate(`/main`);
+        }
 
         const isIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent) && !window.MSStream;  // iOS 기기인지 확인
         if (!(storedAccessToken && storedRefreshToken)) {
