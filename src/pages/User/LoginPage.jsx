@@ -7,7 +7,7 @@ import cartIcon from "../../assets/images/carticon192.png";
 import google from "../../assets/images/google.png";
 import naver from "../../assets/images/naver.png";
 import kakao from "../../assets/images/kakao.png";
-import ConfirmModal from "../../Component/Modal/ConfirmModal";
+import ConfirmModal from "../../components/Modal/ConfirmModal";
 
 const Container = styled.div`
   display: flex;

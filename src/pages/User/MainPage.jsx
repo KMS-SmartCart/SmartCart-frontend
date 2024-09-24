@@ -6,7 +6,7 @@ import { PiNotePencil } from "react-icons/pi";
 import { IoMdCheckboxOutline } from "react-icons/io";
 import { CheckToken } from "../../utils/CheckToken";
 import Apis from "../../apis/Api";
-import BottomNav from '../../Component/Navigation/BottomNav';
+import BottomNav from '../../components/Navigation/BottomNav';
 import logo from "../../assets/images/smartcartlogo.png"
 
 // 스타일 정의

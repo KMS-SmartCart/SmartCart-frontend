@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
-import BottomNav from "../../Component/Navigation/BottomNav";
+import BottomNav from "../../components/Navigation/BottomNav";
 import logo from "../../assets/images/smartcartlogo.png";
 
 const Container = styled.div`

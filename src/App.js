@@ -4,7 +4,7 @@ import styled from "styled-components";
 import "./App.css";
 import LoginPage from "./pages/User/LoginPage";
 import ItemInfoPage from "./pages/Etc/ItemInfoPage"
-import BottomNav from "./Component/Navigation/BottomNav";
+import BottomNav from "./components/Navigation/BottomNav";
 import CameraPage from "./pages/Etc/CameraPage";
 import CartPage from "./pages/Etc/CartPage.jsx";
 import MyPage from "./pages/User/MyPage.jsx"
