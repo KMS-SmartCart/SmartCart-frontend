@@ -222,27 +222,13 @@ function LoginPage(props) {
             navigate(`/main`);
         }
 
-        // Test
-        if(window.matchMedia('(display-mode: standalone)').matches) {
-            alert("standalone");
+        const isIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent) && !window.MSStream;  // iOS 기기인지 확인
+        if (!(storedAccessToken && storedRefreshToken)) {
+            setTimeout(() => {
+                if (isIOS) alert("[홈 화면에 추가]로 앱을 설치하세요!");
+                else if (showInstallPrompt) alert("[App ⬇️] 버튼으로 앱을 설치하세요!");
+            }, 300);  // 0.3초 딜레이 후에 안내 alert 생성.
         }
-        else if(window.matchMedia('(display-mode: minimal-ui)').matches) {
-            alert("minimal-ui");
-        }
-        else if(window.matchMedia('(display-mode: browser)').matches) {
-            alert("browser");
-        }
-        else {
-            alert("!!! Other Display !!!");
-        }
-
-        // const isIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent) && !window.MSStream;  // iOS 기기인지 확인
-        // if (!(storedAccessToken && storedRefreshToken)) {
-        //     setTimeout(() => {
-        //         if (isIOS) alert("[홈 화면에 추가]로 앱을 설치하세요!");
-        //         else if (showInstallPrompt) alert("[App ⬇️] 버튼으로 앱을 설치하세요!");
-        //     }, 300);  // 0.3초 딜레이 후에 안내 alert 생성.
-        // }
     }, [showInstallPrompt]);
 
     return (
