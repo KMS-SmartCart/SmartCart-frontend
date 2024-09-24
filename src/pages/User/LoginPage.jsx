@@ -210,38 +210,23 @@ function LoginPage(props) {
         };
         window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
-        const isIOS =  // iOS 기기인지 확인
-            /iPad|iPhone|iPod/.test(window.navigator.userAgent) &&
-            !window.MSStream;
-        const isAppInstalled =  // PWA 앱이 설치되어 있는지 확인
-            window.matchMedia('(display-mode: standalone)').matches ||
-            window.matchMedia('(display-mode: minimal-ui)').matches;
-
-        // Test
-        if(window.matchMedia('(display-mode: standalone)').matches) {
-            alert("standalone");
-        }
-        else if(window.matchMedia('(display-mode: minimal-ui)').matches) {
-            alert("minimal-ui");
-        }
-        else if(window.matchMedia('(display-mode: browser)').matches) {
-            alert("browser");
-        }
-        else {
-            alert("!!! Other Display !!!");
-        }
-
-        // if (!(storedAccessToken && storedRefreshToken) && !isAppInstalled) {
-        //     setTimeout(() => {
-        //         if (isIOS) alert("[홈 화면에 추가]로 앱을 설치하세요!");
-        //         else alert("[App ⬇️] 버튼으로 앱을 설치하세요!");
-        //     }, 300); // 0.3초 딜레이 후에 안내 alert 생성.
-        // }
-
         return () => {
             window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
         };
     }, []);
+
+    useEffect(() => {
+        const storedAccessToken = localStorage.getItem("accessToken");
+        const storedRefreshToken = localStorage.getItem("refreshToken");
+
+        const isIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent) && !window.MSStream;  // iOS 기기인지 확인
+        if (!(storedAccessToken && storedRefreshToken)) {
+            setTimeout(() => {
+                if (isIOS) alert("[홈 화면에 추가]로 앱을 설치하세요!");
+                else if (showInstallPrompt) alert("[App ⬇️] 버튼으로 앱을 설치하세요!");
+            }, 300);  // 0.3초 딜레이 후에 안내 alert 생성.
+        }
+    }, [showInstallPrompt]);
 
     return (
         <Container>
