@@ -180,35 +180,14 @@ const ModalButton = styled.button`
 const LowestItemPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { productName, amount, price } = location.state || {};
+  const { productName, amount, price, options } = location.state || {};
 
-  const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleLogoClick = () => {
     navigate('/main');
   };
-
-  useEffect(() => {
-    const fetchLowestPrices = async () => {
-      try {
-        const response = await Apis.post('/products/lowest-price', {
-          productName,
-          amount
-        });
-
-        const { data } = response.data;
-        setOptions(data);
-      } catch (error) {
-        console.error("최저가 데이터를 가져오는 중 오류 발생: ", error);
-      }
-    };
-
-    if (productName && amount) {
-      fetchLowestPrices();
-    }
-  }, [productName, amount]);
 
   const offlineOption = { 
     mallName: '오프라인', 
