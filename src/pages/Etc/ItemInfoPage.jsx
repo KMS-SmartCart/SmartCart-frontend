@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import BottomNav from "../../components/Navigation/BottomNav";
+import Apis from "../../apis/Api";
 import logo from "../../assets/images/smartcartlogo.png";
 
 const Container = styled.div`
@@ -137,15 +138,15 @@ const InputField = styled.input`
 const SubmitButton = styled.button`
   width: 100%;
   padding: 12px;
-  background-color: #5271ff;
-  color: white;
+  background-color: ${(props) => (props.disabled ? "#C7CCDF" : "#5271FF")};
+  color: ${(props) => (props.disabled ? "black" : "white")};
   border: none;
   border-radius: 4px;
   font-size: 16px;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   margin-top: 15px;
 
-  margin-bottom: 85px;  // 모바일 세로 사진으로 인해, 잘리는 밑의 버튼을 보여주기위한 마진값 부여.
+  margin-bottom: 85px; // 모바일 세로 사진으로 인해, 잘리는 밑의 버튼을 보여주기위한 마진값 부여.
 
   &:hover {
     background-color: #c7ccdf;
@@ -178,6 +179,7 @@ function ItemInfoPage() {
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState(0);
   const [amount, setAmount] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (initialProductName) setProductName(initialProductName);
@@ -185,11 +187,25 @@ function ItemInfoPage() {
     if (initialAmount) setAmount(initialAmount);
   }, [initialProductName, initialPrice, initialAmount]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate("/Lowest", {
-      state: { productName, price, amount },
-    });
+    setLoading(true); // 로딩 시작
+
+    try {
+      const response = await Apis.post("/products/lowest-price", {
+        productName,
+        amount,
+      });
+      const options = response.data.data;
+
+      navigate("/Lowest", {
+        state: { productName, price, amount, options },
+      });
+    } catch (error) {
+      console.error("최저가 데이터를 가져오는 중 오류 발생: ", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleLogoClick = () => {
@@ -234,8 +250,8 @@ function ItemInfoPage() {
           />
         </InputContainer>
 
-        <SubmitButton type="submit">
-          확인
+        <SubmitButton type="submit" disabled={loading}>
+          {loading ? "로딩 중..." : "확인"}
         </SubmitButton>
       </FormContainer>
 
