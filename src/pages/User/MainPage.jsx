@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { IoTrashOutline } from "react-icons/io5";
 import { PiNotePencil } from "react-icons/pi";
 import { IoMdCheckboxOutline } from "react-icons/io";
@@ -8,6 +8,7 @@ import { CheckToken } from "../../utils/CheckToken";
 import Apis from "../../apis/Api";
 import BottomNav from '../../components/Navigation/BottomNav';
 import logo from "../../assets/images/smartcartlogo.png"
+import { FaUserCircle } from "react-icons/fa";
 
 // 스타일 정의
 const Container = styled.div`
@@ -23,12 +24,12 @@ const Container = styled.div`
   padding-bottom: 100px;
   box-sizing: border-box;
 
-  @media (max-width: 390px) {
+  @media (max-width: 390px) { /* IPhone SE */
     padding: 10px;
     margin: 25px;
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 360px) { /* Galaxy S8 */
     padding: 10px;
     margin: 25px;
   }
@@ -48,15 +49,15 @@ const NavContainer = styled.div`
 const Header = styled.h1`
   margin: 0px;
   color: black;
-  font-size: 23px;
+  font-size: 20px;
   font-weight: bold;
 
-  @media (max-width: 390px) {
-    font-size: 20px;
+  @media (max-width: 390px) { /* IPhone SE */
+    font-size: 18px;
   }
 
-  @media (max-width: 360px) {
-    font-size: 20px;
+  @media (max-width: 360px) { /* Galaxy S8 */
+    font-size: 18px;
   }
 `;
 
@@ -65,7 +66,11 @@ const LogoImage = styled.img`
   width: 65px;
   height: auto;
 
-  @media (max-width: 390px) {
+  @media (max-width: 390px) { /* IPhone SE */
+    width: 60px;
+  }
+
+  @media (max-width: 360px) { /* Galaxy S8 */
     width: 60px;
   }
 `;
@@ -74,23 +79,74 @@ const InputContainer = styled.div`
   background-color: #E8E6F0;
   border-radius: 20px;
   padding: 20px;
-  width: 100%;
+  width: 98%;
   max-width: 350px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   position: relative;
-  height: 50vh; /* 화면 높이의 2/3 */
+  height: 69vh;
   overflow-y: auto;
 
-  @media (max-width: 390px) {
+  @media (max-width: 390px) { /* IPhone SE */
     padding: 12px;
-    height: 45vh; /* 작은 화면에서는 조금 더 줄여서 */
+    height: 65vh; 
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 360px) { /* Galaxy S8 */
     padding: 10px;
-    height: 53vh;
+    height: 72vh;
+  }
+`;
+
+const ChecklistHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+
+  @media (max-width: 390px) { /* IPhone SE */
+    margin-bottom: 3px;
+  }
+
+  @media (max-width: 360px) { /* Galaxy S8 */
+    margin-bottom: 3px;
+  }
+`;
+
+const Title = styled.h2`
+  font-size: 20px;
+  font-weight: bold;
+  color: #4B4B4B;
+  margin: 8px;
+
+  @media (max-width: 390px) { /* IPhone SE */
+    font-size: 18px;
+    margin: 10px;
+  }
+
+  @media (max-width: 360px) { /* Galaxy S8 */
+    font-size: 18px;
+    margin: 13px;
+  }
+`;
+
+const DeleteAllButton = styled.button`
+  background: none;
+  border: none;
+  color: #5271FF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px;
+
+  @media (max-width: 390px) { /* IPhone SE */
+    padding: 12px;
+  }
+
+  @media (max-width: 360px) { /* Galaxy S8 */
+    padding: 12px;
   }
 `;
 
@@ -99,11 +155,11 @@ const ChecklistWrapper = styled.div`
   overflow-y: auto;
   margin-bottom: 50px;
 
-  @media (max-width: 390px) {
+  @media (max-width: 390px) { /* IPhone SE */
     margin-bottom: 40px;
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 360px) { /* Galaxy S8 */
     margin-bottom: 50px;
   }
 `;
@@ -115,22 +171,26 @@ const ChecklistItem = styled.div`
   background-color: none;
   padding: 2px;
   border-radius: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   font-size: 18px;
   text-decoration: ${({ isChecked, isEditing }) => (isEditing ? 'none' : isChecked ? 'line-through' : 'none')};
 
-  @media (max-width: 390px) {
-    font-size: 13px;
+  @media (max-width: 390px) { /* IPhone SE */
+    padding: 2px;
+    margin: 5px;
+    font-size: 15px;
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 360px) { /* Galaxy S8 */
+    padding: 2px;
+    margin: 5px;
     font-size: 16px;
   }
 `;
 
 const InputWrapper = styled.div`
   position: absolute;
-  bottom: 10px;
+  bottom: 15px;
   left: 15px;
   right: 15px;
   display: flex;
@@ -139,14 +199,14 @@ const InputWrapper = styled.div`
   background-color: #CDD3EE;
   border-radius: 20px;
 
-  @media (max-width: 390px) {
-    bottom: 8px;
+  @media (max-width: 390px) { /* IPhone SE */
+    bottom: 12px;
     left: 14px;
     right: 12px;
   }
 
-  @media (max-width: 360px) {
-    bottom: 6px;
+  @media (max-width: 360px) { /* Galaxy S8 */
+    bottom: 13px;
     left: 13px;
     right: 10px;
   }
@@ -160,12 +220,12 @@ const Input = styled.input`
   outline: none;
   padding: 15px;
 
-  @media (max-width: 390px) {
+  @media (max-width: 390px) { /* IPhone SE */
     font-size: 12px;
     padding: 11px;
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 360px) { /* Galaxy S8 */
     font-size: 14px;
     padding: 13px;
   }
@@ -181,12 +241,12 @@ const InputButton = styled.button`
   font-size: 12px;
   margin-right: 10px;
 
-  @media (max-width: 390px) {
+  @media (max-width: 390px) { /* IPhone SE */
     font-size: 10px;
     padding: 4px 8px;
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 360px) { /* Galaxy S8 */
     font-size: 11px;
     padding: 5px 11px;
   }
@@ -203,12 +263,12 @@ const EditInput = styled.input`
   font-family: inherit;
   margin-left: 27px;
 
-  @media (max-width: 390px) {
+  @media (max-width: 390px) { /* IPhone SE */
     font-size: 13px;
     margin-left: 22px;
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 360px) { /* Galaxy S8 */
     font-size: 12px;
     margin-left: 18px;
   }
@@ -220,36 +280,12 @@ const ActionButton = styled.button`
   cursor: pointer;
   padding: 5px;
 
-  @media (max-width: 390px) { /* iPhone SE */
+  @media (max-width: 390px) { /* IPhone SE */
     padding: 5px;
   }
 
-  @media (max-width: 360px) { /* S8  */
+  @media (max-width: 360px) { /* Galaxy S8 */
     padding: 5px;
-  }
-`;
-
-const RecommendedMenu = styled.div`
-  background-color: #E6EBF1;
-  border-radius: 20px;
-  padding: 20px;
-  width: 100%;
-  max-width: 350px;
-  text-align: center;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-  height: 13vh;
-
-  @media (max-width: 390px) { /* iPhone SE */
-    padding: 12px;
-    margin-top: 20px;
-    height: 13vh;
-  }
-
-  @media (max-width: 360px) { /* S8  */
-    padding: 10px;
-    margin-top: 20px;
-    height: 13vh;
   }
 `;
 
@@ -309,6 +345,17 @@ function MainPage() {
     await Apis.delete(`/checkitems/${id}`)
       .then((response) => {
         // 백엔드 DB 내 항목 삭제 완료.
+        getCheckList(); // 프론트엔드 체크리스트 재로딩
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
+  };
+
+  //체크리스트 모든 항목 삭제 API
+  const handleAllDelete = async ( ) => {
+    await Apis.delete(`/checkitems`)
+      .then((response) => {
         getCheckList(); // 프론트엔드 체크리스트 재로딩
       })
       .catch((error) => {
@@ -377,11 +424,18 @@ function MainPage() {
   return (
     <Container>
       <NavContainer>
-        <Header>👤&nbsp;{userName}님</Header>
+        <Header><FaUserCircle />&nbsp;{userName}님</Header>
         <LogoImage src={logo} alt="Logo" />
       </NavContainer>
 
       <InputContainer>
+        <ChecklistHeader>
+          <Title>체크리스트</Title>
+          <DeleteAllButton onClick={handleAllDelete}>
+            <IoTrashOutline size={18} />
+          </DeleteAllButton>
+        </ChecklistHeader>
+
         <ChecklistWrapper>
           {items.map((item) => (
             <ChecklistItem
@@ -440,6 +494,7 @@ function MainPage() {
             </ChecklistItem>
           ))}
         </ChecklistWrapper>
+
         <InputWrapper>
           <Input
             type="text"
@@ -449,18 +504,11 @@ function MainPage() {
           />
           <InputButton onClick={handleAddClick}>추가</InputButton>
         </InputWrapper>
+
       </InputContainer>
 
-      <RecommendedMenu>
-        <h3 style={{ marginTop: 0, marginBottom: 10, fontSize: "16px" }}>
-          추천 메뉴 (예정)
-        </h3>
-        <p style={{ margin: 0, fontSize: "14px" }}>ChatGPT 사용</p>
-        <p style={{ margin: 5, fontSize: "14px" }}>
-          → 장바구니에 담긴 메뉴로 추천 레시피
-        </p>
-      </RecommendedMenu>
       <BottomNav />
+
     </Container>
   );
 }
