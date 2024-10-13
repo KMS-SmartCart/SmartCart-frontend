@@ -13,6 +13,7 @@ import Apis from "../../apis/Api";
 import DeleteUserModal from "../../components/Modal/DeleteUserModal";
 import logo from "../../assets/images/smartcartlogo.png"
 import { FaUserCircle } from "react-icons/fa";
+import { BsArrowLeftShort } from "react-icons/bs";
 
 // 스타일 정의
 const Container = styled.div`
@@ -37,6 +38,25 @@ const Container = styled.div`
     padding: 10px;
     margin: 25px;
   }
+`;
+
+const TopBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 110%;
+  margin-bottom: 20px;
+`;
+const BackButton = styled.button`
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+`;
+const LogoContainer = styled.div`
+  cursor: pointer;
 `;
 
 const NavContainer = styled.div`
@@ -84,30 +104,29 @@ const UserCircleIcon = styled(FaUserCircle)`
 `;
 
 const UserInfoCard = styled.div`
-  background-color: #E6EBF1;
+  // background-color: #E6EBF1;
+  background-color: #F4F4F4;
   border-radius: 20px;
-  padding-top: 60px;
-  margin: 8px;
-  width: 100%;
+  padding-top: 50px;
+  margin: 0px;
+  width: 105%;
   max-width: 360px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   position: relative;
-  height: 52vh;
+  height: 50vh;
   overflow-y: auto;
   align-items: center;
 
   @media (max-width: 390px) { /* IPhone SE */
-    height: 45vh;
-    padding-top: 50px;
-    margin: 5px;
+    height: 43vh;
+    padding-top: 40px;
   }
 
   @media (max-width: 360px) { /* Galaxy S8 */
-    height: 53vh;
-    padding-top: 52px;
-    margin: 5px;
+    height: 49vh;
+    padding-top: 48px;
   }
 `;
 
@@ -162,7 +181,7 @@ const ContentWrapper = styled.div`
 
 const UserInfoComment = styled.text`
   font-size: 22px;
-  margin: 20px;
+  margin: 17px;
   font-weight: bold;
  
   @media (max-width: 390px) { /* IPhone SE */
@@ -172,7 +191,7 @@ const UserInfoComment = styled.text`
 
   @media (max-width: 360px) { /* Galaxy S8 */
     font-size: 20px;
-    margin: 15px;
+    margin: 10px;
   }
 `;
 
@@ -206,6 +225,52 @@ const UserIcon = styled(FiUser)`
   }
 `;
 
+const UserName = styled.text`
+  margin: 15px 0;
+  font-size: 18px;
+  text-align: center;
+  background-color: #E7E7E7;
+  padding: 5px 30px;
+  border-radius: 10px;
+  display: inline-block;
+
+  @media (max-width: 390px) { /* IPhone SE */
+    font-size: 15px;
+    padding: 5px 30px;
+    margin: 10px 0;
+  }
+
+  @media (max-width: 360px) { /* Galaxy S8 */
+    font-size: 16px;
+    padding: 5px 30px;
+    margin: 13px 0;
+  }
+`;
+
+const UserNameInput = styled.input`
+  margin: 15px 0;
+  border: none;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  font-size: 18px;
+  text-align: center;
+  flex-grow: 1;
+  outline: none;
+  padding: 5px;
+  line-height: 1;
+  font-family: inherit;
+
+  @media (max-width: 390px) { /* IPhone SE */
+    font-size: 15px;
+    margin: 10px 0;
+  }
+
+  @media (max-width: 360px) { /* Galaxy S8 */
+    font-size: 16px;
+    margin: 13px 0;
+  }
+`;
+
 const SocialIconWrapper = styled.div`
   margin-top: -20px;
   margin-bottom: -30px;
@@ -216,7 +281,7 @@ const SocialIconWrapper = styled.div`
   }
 
   @media (max-width: 360px) { /* Galaxy S8 */
-    margin-top: -20px;
+    margin-top: -30px;
     margin-bottom: -25px;
   }
 `;
@@ -287,59 +352,13 @@ const GoogleAndLeave = styled.div`
   }
 `;
 
-const UserName = styled.text`
-  margin: 15px 0;
-  font-size: 19px;
-  text-align: center;
-  background-color: #C7CCDF;
-  padding: 5px 30px;
-  border-radius: 10px;
-  display: inline-block;
-
-  @media (max-width: 390px) { /* IPhone SE */
-    font-size: 16px;
-    padding: 5px 30px;
-    margin: 10px 0;
-  }
-
-  @media (max-width: 360px) { /* Galaxy S8 */
-    font-size: 16px;
-    padding: 5px 30px;
-    margin: 15px 0;
-  }
-`;
-
-const UserNameInput = styled.input`
-  margin: 15px 0;
-  border: none;
-  border-radius: 10px;
-  background-color: #F5F5F5;
-  font-size: 19px;
-  text-align: center;
-  flex-grow: 1;
-  outline: none;
-  padding: 5px;
-  line-height: 1;
-  font-family: inherit;
-
-  @media (max-width: 390px) { /* IPhone SE */
-    font-size: 16px;
-    margin: 10px 0;
-  }
-
-  @media (max-width: 360px) { /* Galaxy S8 */
-    font-size: 16px;
-    margin: 15px 0;
-  }
-`;
-
 const LeaveButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 20px auto 0;
   padding: 8px 16px;
-  background-color: #7582B0;
+  background-color: #5271FF;
   color: white;
   border: none;
   border-radius: 10px;
@@ -470,6 +489,10 @@ const MyPage = () => {
     setShowModal(false);
   };
   
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   const handlelogoClick = () => {
     navigate("/main");
   };
@@ -481,9 +504,17 @@ const MyPage = () => {
 
   return (
     <Container>
+      <TopBar>
+        <BackButton onClick={handleBack}>
+          <BsArrowLeftShort />
+        </BackButton>
+        <LogoContainer onClick={handlelogoClick}>
+          <LogoImage src={logo} alt="Logo" />
+        </LogoContainer>
+      </TopBar>
+
       <NavContainer>
         <Header><UserCircleIcon />&nbsp;{userName}님</Header>
-        <LogoImage src={logo} alt="Logo" onClick={handlelogoClick} />
       </NavContainer>
 
       <UserInfoCard>

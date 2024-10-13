@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { IoTrashOutline } from "react-icons/io5";
 import { PiNotePencil } from "react-icons/pi";
@@ -9,6 +10,7 @@ import Apis from "../../apis/Api";
 import BottomNav from '../../components/Navigation/BottomNav';
 import logo from "../../assets/images/smartcartlogo.png"
 import { FaUserCircle } from "react-icons/fa";
+import { BsArrowLeftShort } from "react-icons/bs";
 
 // 스타일 정의
 const Container = styled.div`
@@ -32,6 +34,40 @@ const Container = styled.div`
   @media (max-width: 360px) { /* Galaxy S8 */
     padding: 10px;
     margin: 25px;
+  }
+`;
+
+const TopBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 110%;
+  margin-bottom: 20px;
+`;
+const BackButton = styled.button`
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+`;
+
+const LogoContainer = styled.div`
+  cursor: pointer;
+`;
+
+const LogoImage = styled.img`
+  cursor: pointer;
+  width: 65px;
+  height: auto;
+
+  @media (max-width: 390px) { /* IPhone SE */
+    width: 60px;
+  }
+
+  @media (max-width: 390px) { /* Galaxy S8 */
+    width: 60px;
   }
 `;
 
@@ -61,41 +97,32 @@ const Header = styled.h1`
   }
 `;
 
-const LogoImage = styled.img`
-  cursor: pointer;
-  width: 65px;
-  height: auto;
-
-  @media (max-width: 390px) { /* IPhone SE */
-    width: 60px;
-  }
-
-  @media (max-width: 360px) { /* Galaxy S8 */
-    width: 60px;
-  }
-`;
-
 const InputContainer = styled.div`
-  background-color: #E8E6F0;
+  // background-color: #E8E6F0;
+  background-color: #E2E8FF;
   border-radius: 20px;
   padding: 20px;
   width: 98%;
   max-width: 350px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   position: relative;
-  height: 69vh;
+  height: 65vh;
+  margin-top: -5px;
   overflow-y: auto;
 
   @media (max-width: 390px) { /* IPhone SE */
     padding: 12px;
-    height: 65vh; 
+    height: 60vh; 
+    margin-top: -5px;
+    width: 100%;
   }
 
   @media (max-width: 360px) { /* Galaxy S8 */
     padding: 10px;
-    height: 72vh;
+    height: 67vh;
+    margin-top: -5px;
+    width: 100%;
   }
 `;
 
@@ -149,6 +176,20 @@ const DeleteAllButton = styled.button`
     padding: 12px;
   }
 `;
+const AllTrashIcon = styled(IoTrashOutline)`
+  width: 22px;
+  height: auto;
+
+  @media (max-width: 390px) { /* IPhone SE */
+    width: 18px;
+    height: auto;
+  }
+
+  @media (max-width: 360px) { /* Galaxy S8 */
+    width: 20px;
+    height: auto;
+  }
+`;
 
 const ChecklistWrapper = styled.div`
   flex-grow: 1;
@@ -188,6 +229,51 @@ const ChecklistItem = styled.div`
   }
 `;
 
+const CheckBox = styled(IoMdCheckboxOutline)`
+  width: 22px;
+  height: auto;
+
+  @media (max-width: 390px) { /* IPhone SE */
+    width: 18px;
+  height: auto;
+  }
+
+  @media (max-width: 360px) { /* Galaxy S8 */
+    width: 20px;
+  height: auto;
+  }
+`;
+
+const PencilIcon = styled(PiNotePencil)`
+  width: 22px;
+  height: auto;
+
+  @media (max-width: 390px) { /* IPhone SE */
+    width: 18px;
+    height: auto;
+  }
+
+  @media (max-width: 360px) { /* Galaxy S8 */
+    width: 20px;
+    height: auto;
+  }
+`;
+
+const TrashIcon = styled(IoTrashOutline)`
+  width: 22px;
+  height: auto;
+
+  @media (max-width: 390px) { /* IPhone SE */
+    width: 18px;
+    height: auto;
+  }
+
+  @media (max-width: 360px) { /* Galaxy S8 */
+    width: 20px;
+    height: auto;
+  }
+`;
+
 const InputWrapper = styled.div`
   position: absolute;
   bottom: 15px;
@@ -196,7 +282,8 @@ const InputWrapper = styled.div`
   display: flex;
   align-items: center;
   width: calc(100% - 30px);
-  background-color: #CDD3EE;
+  // background-color: #F3EDF7;
+  background-color: #F9FAFF;
   border-radius: 20px;
 
   @media (max-width: 390px) { /* IPhone SE */
@@ -232,30 +319,31 @@ const Input = styled.input`
 `;
 
 const InputButton = styled.button`
-  background-color: #7582B0;
-  color: white;
+  // background-color: #E8DEF8;
+  background-color: #5271FF;
+  color: #FFFFFF;
   border: none;
-  padding: 6px 12px;
+  padding: 0px 12px;
   border-radius: 11px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 25px;
   margin-right: 10px;
 
   @media (max-width: 390px) { /* IPhone SE */
-    font-size: 10px;
-    padding: 4px 8px;
+    font-size: 20px;
+    padding: 0px 10px;
   }
 
   @media (max-width: 360px) { /* Galaxy S8 */
-    font-size: 11px;
-    padding: 5px 11px;
+    font-size: 23px;
+    padding: 0px 11px;
   }
 `;
 
 const EditInput = styled.input`
   border: none;
   background-color: transparent;
-  font-size: 14px;
+  font-size: 18px;
   flex-grow: 1;
   outline: none;
   padding: 0;
@@ -264,13 +352,13 @@ const EditInput = styled.input`
   margin-left: 27px;
 
   @media (max-width: 390px) { /* IPhone SE */
-    font-size: 13px;
-    margin-left: 22px;
+    font-size: 15px;
+    margin-left: 27px;
   }
 
   @media (max-width: 360px) { /* Galaxy S8 */
-    font-size: 12px;
-    margin-left: 18px;
+    font-size: 16px;
+    margin-left: 27px;
   }
 `;
 
@@ -291,6 +379,7 @@ const ActionButton = styled.button`
 
 
 function MainPage() {
+  const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
@@ -406,6 +495,13 @@ function MainPage() {
     });
   };
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
+  const handleLogoClick = () => {
+    navigate('/main');
+  };
 
   useEffect(() => {
     const accessToken = searchParams.get("accessToken");
@@ -423,16 +519,25 @@ function MainPage() {
 
   return (
     <Container>
+      <TopBar>
+        <BackButton onClick={handleBack}>
+          <BsArrowLeftShort />
+        </BackButton>
+        <LogoContainer onClick={handleLogoClick}>
+          <LogoImage src={logo} alt="Logo" />
+        </LogoContainer>
+      </TopBar>
+
       <NavContainer>
         <Header><FaUserCircle />&nbsp;{userName}님</Header>
-        <LogoImage src={logo} alt="Logo" />
+        {/* <LogoImage src={logo} alt="Logo" /> */}
       </NavContainer>
 
       <InputContainer>
         <ChecklistHeader>
           <Title>체크리스트</Title>
           <DeleteAllButton onClick={handleAllDelete}>
-            <IoTrashOutline size={18} />
+            <AllTrashIcon />
           </DeleteAllButton>
         </ChecklistHeader>
 
@@ -458,7 +563,7 @@ function MainPage() {
                     onBlur={handleEditSubmit}
                   />
                   <ActionButton onClick={handleEditSubmit}>
-                    <IoMdCheckboxOutline size={18} />
+                    <CheckBox />
                   </ActionButton>
                 </div>
               ) : (
@@ -481,12 +586,12 @@ function MainPage() {
                   </div>
                   <div style={{ display: "flex", alignItems: "center" }}>
                     <ActionButton onClick={() => handleEditClick(item)}>
-                      <PiNotePencil size={18} />
+                      <PencilIcon />
                     </ActionButton>
                     <ActionButton
                       onClick={() => handleDeleteClick(item.checkitemId)}
                     >
-                      <IoTrashOutline size={18} />
+                      <TrashIcon size={18} />
                     </ActionButton>
                   </div>
                 </div>
@@ -502,7 +607,7 @@ function MainPage() {
             value={newItem}
             onChange={(e) => setNewItem(e.target.value)}
           />
-          <InputButton onClick={handleAddClick}>추가</InputButton>
+          <InputButton onClick={handleAddClick}>+</InputButton>
         </InputWrapper>
 
       </InputContainer>
