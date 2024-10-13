@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import BottomNav from '../../components/Navigation/BottomNav';
 import { useLocation, useNavigate } from 'react-router-dom'; 
 import Apis from "../../apis/Api";
 import logo from "../../assets/images/smartcartlogo.png"
+import { BsArrowLeftShort } from "react-icons/bs";
 
 const Container = styled.div`
   display: flex;
@@ -31,16 +32,30 @@ const Container = styled.div`
   }
 `;
 
+const TopBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+`;
+
+const BackButton = styled.button`
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+`;
+
 const LogoContainer = styled.div`
   cursor: pointer;
-  position: relative;
-  right: -130px;
 `;
 
 const LogoImage = styled.img`
   width: 65px;
   height: auto;
-  
 
   @media (max-width: 390px) {
     width: 50px;
@@ -80,7 +95,7 @@ const Option = styled.div`
     margin-bottom: 8px;
     max-width: 280px;
   }
-    @media (max-width: 360px) {
+  @media (max-width: 360px) {
     max-width: 260px;
   }
 `;
@@ -113,7 +128,6 @@ const ConfirmButton = styled.button`
   padding: 15px 35px;
   cursor: pointer;
   font-size: 16px;
-  // margin-top: 20px;
 
   &:disabled {
     background-color: #ccc;
@@ -189,12 +203,16 @@ const LowestItemPage = () => {
     navigate('/main');
   };
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   const offlineOption = { 
     mallName: '오프라인', 
     productName: productName || '상품명 없음', 
     amount: amount || '용량 없음', 
-    price: Number(price) || 0 ,
-    printName: productName+amount || '상품명 없음'
+    price: Number(price) || 0,
+    printName: productName + amount || '상품명 없음'
   };
 
   const updatedOptionsWithOffline = [...options, offlineOption];
@@ -211,10 +229,8 @@ const LowestItemPage = () => {
       const selectType = isSelectedOffline ? 0 : 1;
       
       try {
-        // 오프라인 상품
         const offlineProduct = offlineOption;
 
-        // 온라인 상품 (선택된 상품 또는 최저가 상품)
         const onlineProduct = isSelectedOffline
           ? options.reduce((min, option) => option.price < min.price ? option : min)
           : selectedProduct;
@@ -248,10 +264,15 @@ const LowestItemPage = () => {
   return (
     <>
       <Container>
-      <LogoContainer onClick={handleLogoClick}>
-        <LogoImage src={logo} alt="Logo" />
-      </LogoContainer>
-      
+        <TopBar>
+          <BackButton onClick={handleBack}>
+            <BsArrowLeftShort />
+          </BackButton>
+          <LogoContainer onClick={handleLogoClick}>
+            <LogoImage src={logo} alt="Logo" />
+          </LogoContainer>
+        </TopBar>
+        
         <Title>지금 찍은 상품의 최저가 💵</Title>
         {updatedOptionsWithOffline.map((option, index) => (
           <Option 
@@ -268,7 +289,6 @@ const LowestItemPage = () => {
               </OptionLink>
             )}
           </Option>
-          
         ))}
         <ConfirmButton onClick={handleConfirm} disabled={selectedOption === null}>
           확인
