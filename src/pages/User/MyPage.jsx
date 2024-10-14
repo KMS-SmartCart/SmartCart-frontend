@@ -84,16 +84,16 @@ const UserInfoCard = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
-  height: 55vh;
+  height: 61vh;
   overflow-y: auto;
 
   @media (max-width: 390px) {
-    height: 52vh;
+    height: 58vh;
     margin: 10px;
   }
 
   @media (max-width: 360px) {
-    height: 45vh;
+    height: 51vh;
     margin: 15px;
   }
 `;

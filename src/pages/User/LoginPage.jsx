@@ -23,10 +23,6 @@ const Container = styled.div`
   @media (max-width: 390px) { /* SE */
     padding: 30px;
   }
-
-  @media (max-width: 360px) { /* S8 */
-    padding: 30px;
-  }
 `;
 
 const HeaderContainer = styled.div`

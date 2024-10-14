@@ -1,59 +1,59 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { useLocation, useNavigate } from "react-router-dom";
+import { FaUserCircle as UserCircleIcon } from "react-icons/fa";
 import { IoTrashOutline } from "react-icons/io5";
 import { PiNotePencil } from "react-icons/pi";
 import { IoMdCheckboxOutline } from "react-icons/io";
 import { CheckToken } from "../../utils/CheckToken";
 import Apis from "../../apis/Api";
-import BottomNav from '../../components/Navigation/BottomNav';
-import logo from "../../assets/images/smartcartlogo.png"
-import { FaUserCircle } from "react-icons/fa";
-import { BsArrowLeftShort } from "react-icons/bs";
+import BottomNav from "../../components/Navigation/BottomNav";
+import logo from "../../assets/images/smartcartlogo.png";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 10px;
+  padding: 5px;
   margin: 35px;
   min-height: 100vh;
   background-color: white;
-  position: relative; 
+  position: relative;
   padding-bottom: 100px;
   box-sizing: border-box;
 
-  @media (max-width: 390px) { /* IPhone SE */
-    padding: 10px;
-    margin: 25px;
-  }
-
-  @media (max-width: 360px) { /* Galaxy S8 */
-    padding: 10px;
+  @media (max-width: 390px) {
     margin: 25px;
   }
 `;
 
 const TopBar = styled.div`
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 110%;
-  margin-bottom: 20px;
-`;
-const BackButton = styled.button`
-  background: none;
-  border: none;
-  font-size: 30px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
+
+  margin-bottom: 38px;
+  max-width: 350px;
+  width: 100%;
 `;
 
-const LogoContainer = styled.div`
-  cursor: pointer;
+const Header = styled.h1`
+  display: flex;
+  align-items: center;
+  margin: 0px;
+  color: black;
+  font-size: 22px;
+  font-weight: bold;
+
+  @media (max-width: 390px) {
+    font-size: 20px;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 18px;
+  }
 `;
 
 const LogoImage = styled.img`
@@ -61,66 +61,33 @@ const LogoImage = styled.img`
   width: 65px;
   height: auto;
 
-  @media (max-width: 390px) { /* IPhone SE */
+  @media (max-width: 390px) {
     width: 60px;
-  }
-
-  @media (max-width: 390px) { /* Galaxy S8 */
-    width: 60px;
-  }
-`;
-
-const NavContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-
-  margin-bottom: 23px;
-  max-width: 350px;
-  width: 100%;
-`;
-
-const Header = styled.h1`
-  margin: 0px;
-  color: black;
-  font-size: 20px;
-  font-weight: bold;
-
-  @media (max-width: 390px) { /* IPhone SE */
-    font-size: 18px;
-  }
-
-  @media (max-width: 360px) { /* Galaxy S8 */
-    font-size: 18px;
   }
 `;
 
 const InputContainer = styled.div`
-  // background-color: #E8E6F0;
-  background-color: #E2E8FF;
+  background-color: #e2e8ff;
   border-radius: 20px;
   padding: 20px;
   width: 98%;
-  max-width: 350px;
+  max-width: 310px;
   display: flex;
   flex-direction: column;
   position: relative;
-  height: 65vh;
+  height: 70vh;
   margin-top: -5px;
   overflow-y: auto;
 
-  @media (max-width: 390px) { /* IPhone SE */
+  @media (max-width: 390px) {
     padding: 12px;
-    height: 60vh; 
-    margin-top: -5px;
+    height: 65vh;
     width: 100%;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 360px) {
     padding: 10px;
-    height: 67vh;
-    margin-top: -5px;
+    height: 72vh;
     width: 100%;
   }
 `;
@@ -131,11 +98,7 @@ const ChecklistHeader = styled.div`
   align-items: center;
   margin-bottom: 18px;
 
-  @media (max-width: 390px) { /* IPhone SE */
-    margin-bottom: 3px;
-  }
-
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 390px) {
     margin-bottom: 3px;
   }
 `;
@@ -143,15 +106,15 @@ const ChecklistHeader = styled.div`
 const Title = styled.h2`
   font-size: 20px;
   font-weight: bold;
-  color: #4B4B4B;
+  color: #4b4b4b;
   margin: 8px;
 
-  @media (max-width: 390px) { /* IPhone SE */
+  @media (max-width: 390px) {
     font-size: 18px;
     margin: 10px;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 360px) {
     font-size: 18px;
     margin: 13px;
   }
@@ -160,46 +123,41 @@ const Title = styled.h2`
 const DeleteAllButton = styled.button`
   background: none;
   border: none;
-  color: #5271FF;
+  color: #5271ff;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 7px;
 
-  @media (max-width: 390px) { /* IPhone SE */
-    padding: 12px;
-  }
-
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 390px) {
     padding: 12px;
   }
 `;
+
 const AllTrashIcon = styled(IoTrashOutline)`
   width: 22px;
   height: auto;
 
-  @media (max-width: 390px) { /* IPhone SE */
+  @media (max-width: 390px) {
     width: 18px;
-    height: auto;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 360px) {
     width: 20px;
-    height: auto;
   }
 `;
 
 const ChecklistWrapper = styled.div`
   flex-grow: 1;
-  overflow-y: auto;
   margin-bottom: 50px;
+  overflow-y: auto;
 
-  @media (max-width: 390px) { /* IPhone SE */
+  @media (max-width: 390px) {
     margin-bottom: 40px;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 360px) {
     margin-bottom: 50px;
   }
 `;
@@ -213,16 +171,15 @@ const ChecklistItem = styled.div`
   border-radius: 10px;
   margin-bottom: 10px;
   font-size: 18px;
-  text-decoration: ${({ isChecked, isEditing }) => (isEditing ? 'none' : isChecked ? 'line-through' : 'none')};
+  text-decoration: ${({ isChecked, isEditing }) =>
+    isEditing ? "none" : isChecked ? "line-through" : "none"};
 
-  @media (max-width: 390px) { /* IPhone SE */
-    padding: 2px;
+  @media (max-width: 390px) {
     margin: 5px;
     font-size: 15px;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
-    padding: 2px;
+  @media (max-width: 360px) {
     margin: 5px;
     font-size: 16px;
   }
@@ -232,14 +189,12 @@ const CheckBox = styled(IoMdCheckboxOutline)`
   width: 22px;
   height: auto;
 
-  @media (max-width: 390px) { /* IPhone SE */
+  @media (max-width: 390px) {
     width: 18px;
-  height: auto;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 360px) {
     width: 20px;
-  height: auto;
   }
 `;
 
@@ -247,14 +202,12 @@ const PencilIcon = styled(PiNotePencil)`
   width: 22px;
   height: auto;
 
-  @media (max-width: 390px) { /* IPhone SE */
+  @media (max-width: 390px) {
     width: 18px;
-    height: auto;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 360px) {
     width: 20px;
-    height: auto;
   }
 `;
 
@@ -262,14 +215,12 @@ const TrashIcon = styled(IoTrashOutline)`
   width: 22px;
   height: auto;
 
-  @media (max-width: 390px) { /* IPhone SE */
+  @media (max-width: 390px) {
     width: 18px;
-    height: auto;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 360px) {
     width: 20px;
-    height: auto;
   }
 `;
 
@@ -281,17 +232,16 @@ const InputWrapper = styled.div`
   display: flex;
   align-items: center;
   width: calc(100% - 30px);
-  // background-color: #F3EDF7;
-  background-color: #F9FAFF;
+  background-color: #f9faff;
   border-radius: 20px;
 
-  @media (max-width: 390px) { /* IPhone SE */
+  @media (max-width: 390px) {
     bottom: 12px;
     left: 14px;
     right: 12px;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 360px) {
     bottom: 13px;
     left: 13px;
     right: 10px;
@@ -306,21 +256,20 @@ const Input = styled.input`
   outline: none;
   padding: 15px;
 
-  @media (max-width: 390px) { /* IPhone SE */
+  @media (max-width: 390px) {
     font-size: 12px;
     padding: 11px;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 360px) {
     font-size: 14px;
     padding: 13px;
   }
 `;
 
 const InputButton = styled.button`
-  // background-color: #E8DEF8;
-  background-color: #5271FF;
-  color: #FFFFFF;
+  background-color: #5271ff;
+  color: #ffffff;
   border: none;
   padding: 0px 12px;
   border-radius: 11px;
@@ -328,12 +277,12 @@ const InputButton = styled.button`
   font-size: 25px;
   margin-right: 10px;
 
-  @media (max-width: 390px) { /* IPhone SE */
+  @media (max-width: 390px) {
     font-size: 20px;
     padding: 0px 10px;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 360px) {
     font-size: 23px;
     padding: 0px 11px;
   }
@@ -350,14 +299,12 @@ const EditInput = styled.input`
   font-family: inherit;
   margin-left: 27px;
 
-  @media (max-width: 390px) { /* IPhone SE */
+  @media (max-width: 390px) {
     font-size: 15px;
-    margin-left: 27px;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 360px) {
     font-size: 16px;
-    margin-left: 27px;
   }
 `;
 
@@ -367,26 +314,25 @@ const ActionButton = styled.button`
   cursor: pointer;
   padding: 5px;
 
-  @media (max-width: 390px) { /* IPhone SE */
-    padding: 5px;
-  }
-
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 390px) {
     padding: 5px;
   }
 `;
-
 
 function MainPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState("");
   const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState("");
   const [editItemId, setEditItemId] = useState(null); // 수정 중인 아이템의 ID
-  const [editItemName, setEditItemName] = useState(''); // 수정 중인 이름
+  const [editItemName, setEditItemName] = useState(""); // 수정 중인 이름
+
+  const handlelogoClick = () => {
+    navigate("/main");
+  };
 
   // 사용자 조회 API
   useEffect(() => {
@@ -395,7 +341,7 @@ function MainPage() {
 
   async function getUserInfo() {
     try {
-      const response = await Apis.get('/users');
+      const response = await Apis.get("/users");
       setUserName(response.data.data.nickname);
     } catch (error) {
       console.error(error);
@@ -441,7 +387,7 @@ function MainPage() {
   };
 
   //체크리스트 모든 항목 삭제 API
-  const handleAllDelete = async ( ) => {
+  const handleAllDelete = async () => {
     await Apis.delete(`/checkitems`)
       .then((response) => {
         // 백엔드 DB 내 항목 전체 삭제 완료.
@@ -458,14 +404,14 @@ function MainPage() {
 
     await Apis.put(`/checkitems/${item.checkitemId}`, {
       checkitemName: null,
-      isCheck: updatedCheckState
+      isCheck: updatedCheckState,
     })
-    .then((response) => {
-      getCheckList(); // 프론트엔드 체크리스트 재로딩
-    })
-    .catch((error) => {
-      // console.log(error)
-    });
+      .then((response) => {
+        getCheckList(); // 프론트엔드 체크리스트 재로딩
+      })
+      .catch((error) => {
+        // console.log(error)
+      });
   };
 
   // 항목 이름 수정 모드로 변경
@@ -474,10 +420,9 @@ function MainPage() {
     setEditItemName(item.checkitemName);
   };
 
-  
   // 수정 완료 처리
   const handleEditSubmit = async () => {
-    if (editItemName.trim() === '') {
+    if (editItemName.trim() === "") {
       // 빈 이름을 방지
       alert("항목 이름을 입력하세요.");
       return;
@@ -486,21 +431,15 @@ function MainPage() {
     await Apis.put(`/checkitems/${editItemId}`, {
       checkitemName: editItemName,
       isCheck: null,
-    }).then(() => {
-      setEditItemId(null); // 수정 모드 종료
-      setEditItemName(''); // 입력 필드 초기화
-      getCheckList();
-    }).catch((error) => {
-      console.error(error);
-    });
-  };
-
-  const handleBack = () => {
-    navigate(-1);
-  };
-
-  const handleLogoClick = () => {
-    navigate('/main');
+    })
+      .then(() => {
+        setEditItemId(null); // 수정 모드 종료
+        setEditItemName(""); // 입력 필드 초기화
+        getCheckList();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   useEffect(() => {
@@ -520,18 +459,12 @@ function MainPage() {
   return (
     <Container>
       <TopBar>
-        <BackButton onClick={handleBack}>
-          <BsArrowLeftShort />
-        </BackButton>
-        <LogoContainer onClick={handleLogoClick}>
-          <LogoImage src={logo} alt="Logo" />
-        </LogoContainer>
+        <Header>
+          <UserCircleIcon style={{ marginRight: "3px", marginBottom: "1px" }} />
+          &nbsp;{userName}님
+        </Header>
+        <LogoImage src={logo} alt="Logo" onClick={handlelogoClick} />
       </TopBar>
-
-      <NavContainer>
-        <Header><FaUserCircle />&nbsp;{userName}님</Header>
-        {/* <LogoImage src={logo} alt="Logo" /> */}
-      </NavContainer>
 
       <InputContainer>
         <ChecklistHeader>
@@ -609,11 +542,9 @@ function MainPage() {
           />
           <InputButton onClick={handleAddClick}>+</InputButton>
         </InputWrapper>
-
       </InputContainer>
 
       <BottomNav />
-
     </Container>
   );
 }
