@@ -150,7 +150,7 @@ const TotalAmount = styled.div`
 
 const StyledButton = styled.button`
   width: 100%;
-  max-width: 360px;
+  max-width: 335px;
   background-color: #5271ff;
   padding: 12px;
   border-radius: 5px;
