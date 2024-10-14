@@ -12,7 +12,6 @@ import logo from "../../assets/images/smartcartlogo.png"
 import { FaUserCircle } from "react-icons/fa";
 import { BsArrowLeftShort } from "react-icons/bs";
 
-// 스타일 정의
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -445,6 +444,7 @@ function MainPage() {
   const handleAllDelete = async ( ) => {
     await Apis.delete(`/checkitems`)
       .then((response) => {
+        // 백엔드 DB 내 항목 전체 삭제 완료.
         getCheckList(); // 프론트엔드 체크리스트 재로딩
       })
       .catch((error) => {

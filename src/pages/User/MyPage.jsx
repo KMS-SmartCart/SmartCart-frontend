@@ -1,65 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from 'styled-components';
-import { FiUser } from "react-icons/fi";
-import { FiEdit } from 'react-icons/fi';
-import { FaGoogle } from "react-icons/fa";
-import { SiKakao } from "react-icons/si";
-import { SiNaver } from "react-icons/si";
+import styled from "styled-components";
+import { FaUserCircle as UserCircleIcon } from "react-icons/fa";
+import { FiUser as UserIcon } from "react-icons/fi";
+import { FiEdit } from "react-icons/fi";
+import { FaGoogle as GoogleIcon } from "react-icons/fa";
+import { SiKakao as KakaoIcon } from "react-icons/si";
+import { SiNaver as NaverIcon } from "react-icons/si";
 import { IoMdCheckboxOutline } from "react-icons/io";
 import { MdLogout } from "react-icons/md";
-import BottomNav from '../../components/Navigation/BottomNav';
+import BottomNav from "../../components/Navigation/BottomNav";
 import Apis from "../../apis/Api";
 import DeleteUserModal from "../../components/Modal/DeleteUserModal";
-import logo from "../../assets/images/smartcartlogo.png"
-import { FaUserCircle } from "react-icons/fa";
-import { BsArrowLeftShort } from "react-icons/bs";
+import logo from "../../assets/images/smartcartlogo.png";
 
-// 스타일 정의
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 10px;
+  padding: 5px;
   margin: 35px;
   min-height: 100vh;
   background-color: white;
-  position: relative; 
+  position: relative;
   padding-bottom: 100px;
   box-sizing: border-box;
 
-  @media (max-width: 390px) { /* IPhone SE */
-    padding: 10px; 
-    margin: 25px;
-  }
-
-  @media (max-width: 360px) { /* Galaxy S8 */
-    padding: 10px;
+  @media (max-width: 390px) {
     margin: 25px;
   }
 `;
 
 const TopBar = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 110%;
-  margin-bottom: 20px;
-`;
-const BackButton = styled.button`
-  background: none;
-  border: none;
-  font-size: 30px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-`;
-const LogoContainer = styled.div`
-  cursor: pointer;
-`;
-
-const NavContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -71,16 +44,18 @@ const NavContainer = styled.div`
 `;
 
 const Header = styled.h1`
+  display: flex;
+  align-items: center;
   margin: 0px;
   color: black;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: bold;
 
-  @media (max-width: 390px) { /* IPhone SE */
-    font-size: 18px;
+  @media (max-width: 390px) {
+    font-size: 20px;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 360px) {
     font-size: 18px;
   }
 `;
@@ -90,43 +65,36 @@ const LogoImage = styled.img`
   width: 65px;
   height: auto;
 
-  @media (max-width: 390px) { /* IPhone SE */
+  @media (max-width: 390px) {
     width: 60px;
   }
-
-  @media (max-width: 390px) { /* Galaxy S8 */
-    width: 60px;
-  }
-`;
-
-const UserCircleIcon = styled(FaUserCircle)`
-
 `;
 
 const UserInfoCard = styled.div`
-  // background-color: #E6EBF1;
-  background-color: #F4F4F4;
+  background-color: #e6ebf1;
+  /* background-color: #ecebeb; */
   border-radius: 20px;
-  padding-top: 50px;
-  margin: 0px;
-  width: 105%;
-  max-width: 360px;
+  margin: 15px;
+  padding: 5px 0px;
+  width: 100%;
+  max-width: 350px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  position: relative;
-  height: 50vh;
-  overflow-y: auto;
   align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 55vh;
+  overflow-y: auto;
 
-  @media (max-width: 390px) { /* IPhone SE */
-    height: 43vh;
-    padding-top: 40px;
+  @media (max-width: 390px) {
+    height: 52vh;
+    margin: 10px;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
-    height: 49vh;
-    padding-top: 48px;
+  @media (max-width: 360px) {
+    height: 45vh;
+    margin: 15px;
   }
 `;
 
@@ -140,12 +108,12 @@ const LogOutButton = styled.button`
   color: #333;
   transform: scaleX(-1);
 
-  @media (max-width: 390px) { /* IPhone SE */
+  @media (max-width: 390px) {
     top: 18px;
     left: 15px;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 360px) {
     top: 20px;
     left: 15px;
   }
@@ -160,12 +128,12 @@ const EditButton = styled.button`
   cursor: pointer;
   color: #333;
 
-  @media (max-width: 390px) { /* IPhone SE */
+  @media (max-width: 390px) {
     top: 18px;
     right: 15px;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 360px) {
     top: 20px;
     right: 15px;
   }
@@ -181,17 +149,17 @@ const ContentWrapper = styled.div`
 
 const UserInfoComment = styled.text`
   font-size: 22px;
-  margin: 17px;
+  margin: 20px;
   font-weight: bold;
- 
-  @media (max-width: 390px) { /* IPhone SE */
-    font-size: 19px;
+
+  @media (max-width: 390px) {
+    font-size: 18px;
     margin: 5px;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 360px) {
     font-size: 20px;
-    margin: 10px;
+    margin: 20px;
   }
 `;
 
@@ -200,59 +168,58 @@ const ProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
- 
-  @media (max-width: 390px) { /* IPhone SE */
+
+  @media (max-width: 390px) {
     margin: 20px 0;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 360px) {
     margin: 30px 0;
   }
 `;
 
-const UserIcon = styled(FiUser)`
-  width: 55px;
-  height: auto;
+const SocialAndLeave = styled.div`
+  margin: 30px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-  @media (max-width: 390px) { /* iPhone SE */
-    width: 45px;
-    height: auto;
+  @media (max-width: 390px) {
+    margin: 5px;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
-    width: 50px;
-    height: auto;
+  @media (max-width: 360px) {
+    margin: 25px;
   }
 `;
 
 const UserName = styled.text`
-  margin: 15px 0;
-  font-size: 18px;
+  margin: 12px 0;
+  font-size: 16px;
   text-align: center;
-  background-color: #E7E7E7;
+  background-color: #c7ccdf;
+  /* background-color: #d9d9d9; */
   padding: 5px 30px;
   border-radius: 10px;
   display: inline-block;
 
-  @media (max-width: 390px) { /* IPhone SE */
-    font-size: 15px;
-    padding: 5px 30px;
-    margin: 10px 0;
+  @media (max-width: 390px) {
+    font-size: 19px;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 360px) {
     font-size: 16px;
-    padding: 5px 30px;
-    margin: 13px 0;
   }
 `;
 
 const UserNameInput = styled.input`
-  margin: 15px 0;
+  max-width: 100px;
+  margin: 12px 0;
   border: none;
   border-radius: 10px;
-  background-color: #FFFFFF;
-  font-size: 18px;
+  /* background-color: white; */
+  background-color: #ffffff;
+  font-size: 22px;
   text-align: center;
   flex-grow: 1;
   outline: none;
@@ -260,95 +227,12 @@ const UserNameInput = styled.input`
   line-height: 1;
   font-family: inherit;
 
-  @media (max-width: 390px) { /* IPhone SE */
-    font-size: 15px;
-    margin: 10px 0;
+  @media (max-width: 390px) {
+    font-size: 19px;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
+  @media (max-width: 360px) {
     font-size: 16px;
-    margin: 13px 0;
-  }
-`;
-
-const SocialIconWrapper = styled.div`
-  margin-top: -20px;
-  margin-bottom: -30px;
-
-  @media (max-width: 390px) { /* iPhone SE */
-    margin-top: -15px;
-    margin-bottom: -20px;
-  }
-
-  @media (max-width: 360px) { /* Galaxy S8 */
-    margin-top: -30px;
-    margin-bottom: -25px;
-  }
-`;
-
-const GoogleIcon = styled(FaGoogle)`
-  width: 30px;
-  height: auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
-
-  @media (max-width: 390px) { /* iPhone SE */
-    width: 24px;
-    margin-top: 25px;
-    margin-bottom: 18px;
-  }
-
-  @media (max-width: 360px) { /* Galaxy S8 */
-    width: 28px;
-    margin-top: 25px;
-    margin-bottom: 18px;
-  }
-`;
-
-const KakaoIcon = styled(SiKakao)`
-  width: 70px;
-  height: auto;
-
-  @media (max-width: 390px) { /* iPhone SE */
-    width: 55px;
-  }
-
-  @media (max-width: 360px) { /* Galaxy S8 */
-    width: 65px;
-  }
-`;
-
-const NaverIcon = styled(SiNaver)`
-  width: 26px;
-  height: auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
-
-  @media (max-width: 390px) { /* iPhone SE */
-    width: 20px;
-    margin-top: 25px;
-    margin-bottom: 18px;
-  }
-
-  @media (max-width: 360px) { /* Galaxy S8 */
-    width: 24px;
-    margin-top: 20px;
-    margin-bottom: 18px;
-  }
-`;
-
-const GoogleAndLeave = styled.div`
-  margin: 30px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  @media (max-width: 390px) { /* IPhone SE */
-    margin: 5px;
-  }
-
-  @media (max-width: 360px) { /* Galaxy S8 */
-    margin: 25px;
   }
 `;
 
@@ -356,74 +240,71 @@ const LeaveButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 20px auto 0;
-  padding: 8px 16px;
-  background-color: #5271FF;
+  margin: 12px 0;
+  padding: 7px 15px;
+  /* background-color: #7582b0; */
+  background-color: #5271ff;
   color: white;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   width: fit-content;
-  font-size: 15px;
+  font-size: 17px;
 
   svg {
     margin-right: 10px;
   }
 
-  @media (max-width: 390px) { /* IPhone SE */
-    padding: 7px 15px;
-    font-size: 12px;
-    margin: 10px auto 0;
+  @media (max-width: 390px) {
+    font-size: 15px;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
-    padding: 7px 15px;
-    font-size: 14px;
-    margin: 20px auto 0;  
+  @media (max-width: 360px) {
+    font-size: 11px;
   }
 `;
 
 const AccumulatedAmount = styled.div`
   margin-top: 45px;
-  font-size: 18px;
+  font-size: 20px;
   color: #555;
   text-align: center;
 
-  @media (max-width: 390px) { /* IPhone SE */
-    font-size: 18px;
+  @media (max-width: 390px) {
+    font-size: 16px;
     margin-top: 35px;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
-    font-size: 17px;
-    margin-top: 38px;
+  @media (max-width: 360px) {
+    font-size: 18px;
+    margin-top: 25px;
   }
 `;
 
 const Amount = styled.p`
-  font-size: 17px;
+  font-size: 18px;
   color: #007aff;
   margin-top: 5px;
   text-align: center;
 
-  @media (max-width: 390px) { /* IPhone SE */
-    font-size: 16px;
+  @media (max-width: 390px) {
+    font-size: 15px;
   }
 
-  @media (max-width: 360px) { /* Galaxy S8 */
-    font-size: 15px;
+  @media (max-width: 360px) {
+    font-size: 16px;
   }
 `;
 
 const MyPage = () => {
   const navigate = useNavigate();
-  
+
   // 상태 관리
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState("");
   const [savedMoney, setSavedMoney] = useState(0); // 아낀 금액
   const [socialType, setSocialType] = useState(0); // 소셜로그인 타입
   const [isEditing, setIsEditing] = useState(false);
-  const [editNickName, setEditNickName] = useState(''); // 수정 중인 이름
+  const [editNickName, setEditNickName] = useState(""); // 수정 중인 이름
   const [showModal, setShowModal] = useState(false); // 모달 상태 관리
 
   // 사용자 조회 API
@@ -433,12 +314,11 @@ const MyPage = () => {
 
   async function getUserInfo() {
     try {
-      const response = await Apis.get('/users');
+      const response = await Apis.get("/users");
       console.log(response); // 응답 데이터 구조 확인
       setUserName(response.data.data.nickname);
 
-      console.log('API에서 받은 금액:', response.data.data.savedMoney);
-      
+      console.log("API에서 받은 금액:", response.data.data.savedMoney);
       setSavedMoney(response.data.data.savedMoney);
       setEditNickName(response.data.data.nickname);
       setSocialType(response.data.data.socialType);
@@ -450,7 +330,7 @@ const MyPage = () => {
   // 사용자 닉네임 업데이트 API
   const handleNickName = async () => {
     try {
-      await Apis.put('/users', { nickname: editNickName });
+      await Apis.put("/users", { nickname: editNickName });
       getUserInfo(); // 재로딩
       setIsEditing(false);
     } catch (error) {
@@ -461,7 +341,7 @@ const MyPage = () => {
   // Toggle edit mode
   const toggleEdit = () => {
     if (isEditing) {
-      handleNickName(); 
+      handleNickName();
     } else {
       setIsEditing(true);
     }
@@ -471,14 +351,14 @@ const MyPage = () => {
   const handleDeleteUser = async () => {
     await Apis.delete(`/users`)
       .then((response) => {
-        localStorage.clear();  // 이때는 모두 비워주도록함.
-        navigate("/login");  // 로그인 페이지로 이동
+        localStorage.clear(); // 이때는 모두 비워주도록함.
+        navigate("/login"); // 로그인 페이지로 이동
       })
       .catch((error) => {
         // console.log(error)
       });
   };
- 
+
   // 모달창 열기
   const openModal = () => {
     setShowModal(true);
@@ -488,34 +368,22 @@ const MyPage = () => {
   const closeModal = () => {
     setShowModal(false);
   };
-  
-  const handleBack = () => {
-    navigate(-1);
-  };
 
   const handlelogoClick = () => {
     navigate("/main");
   };
 
   const handleLogout = () => {
-    localStorage.clear();  // 이때는 모두 비워주도록함.
+    localStorage.clear(); // 이때는 모두 비워주도록함.
     navigate("/login");
-  }
+  };
 
   return (
     <Container>
       <TopBar>
-        <BackButton onClick={handleBack}>
-          <BsArrowLeftShort />
-        </BackButton>
-        <LogoContainer onClick={handlelogoClick}>
-          <LogoImage src={logo} alt="Logo" />
-        </LogoContainer>
+        <Header><UserCircleIcon style={{ marginRight: '3px', marginBottom: '1px' }} />&nbsp;{userName}님</Header>
+        <LogoImage src={logo} alt="Logo" onClick={handlelogoClick} />
       </TopBar>
-
-      <NavContainer>
-        <Header><UserCircleIcon />&nbsp;{userName}님</Header>
-      </NavContainer>
 
       <UserInfoCard>
         <LogOutButton onClick={handleLogout}>
@@ -527,7 +395,7 @@ const MyPage = () => {
         <ContentWrapper>
           <UserInfoComment>회원 정보</UserInfoComment>
           <ProfileWrapper>
-            <UserIcon />
+            <UserIcon size={55} />
             {isEditing ? (
               <UserNameInput
                 type="text"
@@ -539,14 +407,12 @@ const MyPage = () => {
             )}
           </ProfileWrapper>
 
-          <GoogleAndLeave>
-            <SocialIconWrapper>
-              {socialType === "GOOGLE" && <GoogleIcon />}
-              {socialType === "KAKAO" && <KakaoIcon />}
-              {socialType === "NAVER" && <NaverIcon />}
-            </SocialIconWrapper>
+          <SocialAndLeave>
+            {socialType === "GOOGLE" && <GoogleIcon size={28} />}
+            {socialType === "KAKAO" && <KakaoIcon size={50} />}
+            {socialType === "NAVER" && <NaverIcon size={26} />}
             <LeaveButton onClick={openModal}>회원탈퇴</LeaveButton>
-          </GoogleAndLeave>
+          </SocialAndLeave>
         </ContentWrapper>
       </UserInfoCard>
 
