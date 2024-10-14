@@ -34,35 +34,39 @@ const Container = styled.div`
 
 const TopBar = styled.div`
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  margin-bottom: 23px;
+  max-width: 312px;
   width: 100%;
-  margin-bottom: 20px;
+
+  @media (max-width: 375px) {
+    max-width: 290px;
+  }
+  @media (max-width: 360px) {
+    max-width: 270px;
+  }
 `;
 
 const BackButton = styled.button`
+  display: flex;
+  align-items: center;
+  padding: 0px;
   background: none;
   border: none;
   font-size: 30px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-`;
-
-const LogoContainer = styled.div`
-  cursor: pointer;
 `;
 
 const LogoImage = styled.img`
+  cursor: pointer;
   width: 65px;
   height: auto;
 
-  @media (max-width: 390px) {
-    width: 50px;
-  }
-
-  @media (max-width: 360px) {
-    width: 45px;
+  @media (max-width: 375px) {
+    width: 60px;
   }
 `;
 
@@ -121,13 +125,14 @@ const OptionLink = styled.a`
 `;
 
 const ConfirmButton = styled.button`
-  background-color: #5271FF;
-  color: white;
+  background-color: #5271ff;
   border: none;
   border-radius: 10px;
+  margin-top: 5px;
   padding: 15px 35px;
-  cursor: pointer;
   font-size: 16px;
+  color: white;
+  cursor: pointer;
 
   &:disabled {
     background-color: #ccc;
@@ -268,15 +273,13 @@ const LowestItemPage = () => {
           <BackButton onClick={handleBack}>
             <BsArrowLeftShort />
           </BackButton>
-          <LogoContainer onClick={handleLogoClick}>
-            <LogoImage src={logo} alt="Logo" />
-          </LogoContainer>
+          <LogoImage src={logo} alt="Logo" onClick={handleLogoClick} />
         </TopBar>
-        
+
         <Title>지금 찍은 상품의 최저가 💵</Title>
         {updatedOptionsWithOffline.map((option, index) => (
-          <Option 
-            key={index} 
+          <Option
+            key={index}
             selected={selectedOption === index}
             onClick={() => handleOptionClick(index)}
           >
@@ -284,13 +287,20 @@ const LowestItemPage = () => {
             <div>{option.printName}</div>
             <div>{option.price}원</div>
             {option.link && (
-              <OptionLink href={option.link} target="_blank" selected={selectedOption === index}>
+              <OptionLink
+                href={option.link}
+                target="_blank"
+                selected={selectedOption === index}
+              >
                 상세보기
               </OptionLink>
             )}
           </Option>
         ))}
-        <ConfirmButton onClick={handleConfirm} disabled={selectedOption === null}>
+        <ConfirmButton
+          onClick={handleConfirm}
+          disabled={selectedOption === null}
+        >
           확인
         </ConfirmButton>
         <BottomNav />

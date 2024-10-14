@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Apis from "../../apis/Api"; 
+import Apis from "../../apis/Api";
+import logo from "../../assets/images/smartcartlogo.png";
 import { BsArrowLeftShort } from "react-icons/bs";
 
 const Container = styled.div`
@@ -19,7 +20,7 @@ const Container = styled.div`
   max-width: 390px;
   margin: 0 auto;
 
-  @media (max-width: 375px) {
+  @media (max-width: 390px) {
     padding: 12px;
   }
 
@@ -30,20 +31,41 @@ const Container = styled.div`
 
 const TopBar = styled.div`
   display: flex;
-  justify-content: flex-start;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
+
+  margin-bottom: 23px;
+  max-width: 350px;
   width: 100%;
-  margin-bottom: 20px;
+
+  @media (max-width: 390px) {
+    width: 75%;
+  }
+
+  @media (max-width: 360px) {
+    width: 70%;
+  }
 `;
 
 const BackButton = styled.button`
+  display: flex;
+  align-items: center;
+  padding: 0px;
   background: none;
   border: none;
   font-size: 30px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  padding: 0;
+`;
+
+const LogoImage = styled.img`
+  cursor: pointer;
+  width: 65px;
+  height: auto;
+
+  @media (max-width: 390px) {
+    width: 60px;
+  }
 `;
 
 const Video = styled.video`
@@ -109,6 +131,10 @@ const CameraPage = () => {
   const canvasRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const handleLogoClick = () => {
+    navigate("/main");
+  };
 
   const stopCameraStream = () => {
     if (videoRef.current && videoRef.current.srcObject) {
@@ -192,7 +218,10 @@ const CameraPage = () => {
         <BackButton onClick={handleBack}>
           <BsArrowLeftShort />
         </BackButton>
+        <LogoImage src={logo} alt="Logo" onClick={handleLogoClick} />
       </TopBar>
+      
+      <div style={{ height: "0.5em" }}></div>
       <h3>가격표를 찍어주세요 😊</h3>
       <Video ref={videoRef} autoPlay playsInline muted />
       <Button onClick={takePicture} disabled={loading}>
