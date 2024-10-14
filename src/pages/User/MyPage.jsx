@@ -1,42 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from 'styled-components';
-import { FiUser } from "react-icons/fi";
-import { FiEdit } from 'react-icons/fi';
-import { FaGoogle } from "react-icons/fa";
+import styled from "styled-components";
+import { FaUserCircle as UserCircleIcon } from "react-icons/fa";
+import { FiUser as UserIcon } from "react-icons/fi";
+import { FiEdit } from "react-icons/fi";
+import { FaGoogle as GoogleIcon } from "react-icons/fa";
+import { SiKakao as KakaoIcon } from "react-icons/si";
+import { SiNaver as NaverIcon } from "react-icons/si";
 import { IoMdCheckboxOutline } from "react-icons/io";
 import { MdLogout } from "react-icons/md";
-import BottomNav from '../../components/Navigation/BottomNav';
+import BottomNav from "../../components/Navigation/BottomNav";
 import Apis from "../../apis/Api";
 import DeleteUserModal from "../../components/Modal/DeleteUserModal";
-import logo from "../../assets/images/smartcartlogo.png"
+import logo from "../../assets/images/smartcartlogo.png";
 
-// 스타일 정의
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 10px;
+  padding: 5px;
   margin: 35px;
   min-height: 100vh;
   background-color: white;
-  position: relative; 
+  position: relative;
   padding-bottom: 100px;
   box-sizing: border-box;
 
   @media (max-width: 390px) {
-    padding: 10px;
-    margin: 25px;
-  }
-
-  @media (max-width: 360px) {
-    padding: 10px;
     margin: 25px;
   }
 `;
 
-const NavContainer = styled.div`
+const TopBar = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -48,6 +44,8 @@ const NavContainer = styled.div`
 `;
 
 const Header = styled.h1`
+  display: flex;
+  align-items: center;
   margin: 0px;
   color: black;
   font-size: 22px;
@@ -73,29 +71,29 @@ const LogoImage = styled.img`
 `;
 
 const UserInfoCard = styled.div`
-  background-color: #E6EBF1;
+  background-color: #e6ebf1;
+  /* background-color: #ecebeb; */
   border-radius: 20px;
-  padding-top: 60px;
   margin: 15px;
+  padding: 5px 0px;
   width: 100%;
   max-width: 350px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  position: relative;
-  height: 52vh;
-  overflow-y: auto;
   align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 61vh;
+  overflow-y: auto;
 
   @media (max-width: 390px) {
-    height: 45vh;
-    padding-top: 50px;
+    height: 58vh;
     margin: 10px;
   }
 
   @media (max-width: 360px) {
-    height: 55vh;
-    padding-top: 40px;
+    height: 51vh;
     margin: 15px;
   }
 `;
@@ -180,7 +178,7 @@ const ProfileWrapper = styled.div`
   }
 `;
 
-const GoogleAndLeave = styled.div`
+const SocialAndLeave = styled.div`
   margin: 30px 0;
   display: flex;
   flex-direction: column;
@@ -196,32 +194,31 @@ const GoogleAndLeave = styled.div`
 `;
 
 const UserName = styled.text`
-  margin: 15px 0;
-  font-size: 22px;
+  margin: 12px 0;
+  font-size: 16px;
   text-align: center;
-  background-color: #C7CCDF;
+  background-color: #c7ccdf;
+  /* background-color: #d9d9d9; */
   padding: 5px 30px;
   border-radius: 10px;
   display: inline-block;
 
   @media (max-width: 390px) {
-    font-size: 16px;
-    padding: 5px 30px;
-    margin: 10px 0;
+    font-size: 19px;
   }
 
   @media (max-width: 360px) {
-    font-size: 19px;
-    padding: 5px 30px;
-    margin: 15px 0;
+    font-size: 16px;
   }
 `;
 
 const UserNameInput = styled.input`
-  margin: 15px 0;
+  max-width: 100px;
+  margin: 12px 0;
   border: none;
   border-radius: 10px;
-  background-color: white;
+  /* background-color: white; */
+  background-color: #ffffff;
   font-size: 22px;
   text-align: center;
   flex-grow: 1;
@@ -231,13 +228,11 @@ const UserNameInput = styled.input`
   font-family: inherit;
 
   @media (max-width: 390px) {
-    font-size: 16px;
-    margin: 10px 0;
+    font-size: 19px;
   }
 
   @media (max-width: 360px) {
-    font-size: 19px;
-    margin: 15px 0;
+    font-size: 16px;
   }
 `;
 
@@ -245,30 +240,27 @@ const LeaveButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 20px auto 0;
-  padding: 8px 16px;
-  background-color: #7582B0;
+  margin: 12px 0;
+  padding: 7px 15px;
+  /* background-color: #7582b0; */
+  background-color: #5271ff;
   color: white;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   width: fit-content;
-  font-size: 16px;
+  font-size: 17px;
 
   svg {
     margin-right: 10px;
   }
 
   @media (max-width: 390px) {
-    padding: 7px 15px;
-    font-size: 12px;
-    margin: 10px auto 0;
+    font-size: 15px;
   }
 
   @media (max-width: 360px) {
-    padding: 7px 15px;
-    font-size: 16px;
-    margin: 20px auto 0;  
+    font-size: 11px;
   }
 `;
 
@@ -306,12 +298,13 @@ const Amount = styled.p`
 
 const MyPage = () => {
   const navigate = useNavigate();
-  
+
   // 상태 관리
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState("");
   const [savedMoney, setSavedMoney] = useState(0); // 아낀 금액
+  const [socialType, setSocialType] = useState(0); // 소셜로그인 타입
   const [isEditing, setIsEditing] = useState(false);
-  const [editNickName, setEditNickName] = useState(''); // 수정 중인 이름
+  const [editNickName, setEditNickName] = useState(""); // 수정 중인 이름
   const [showModal, setShowModal] = useState(false); // 모달 상태 관리
 
   // 사용자 조회 API
@@ -321,13 +314,14 @@ const MyPage = () => {
 
   async function getUserInfo() {
     try {
-      const response = await Apis.get('/users');
+      const response = await Apis.get("/users");
       console.log(response); // 응답 데이터 구조 확인
       setUserName(response.data.data.nickname);
 
-      console.log('API에서 받은 금액:', response.data.data.savedMoney);
+      console.log("API에서 받은 금액:", response.data.data.savedMoney);
       setSavedMoney(response.data.data.savedMoney);
       setEditNickName(response.data.data.nickname);
+      setSocialType(response.data.data.socialType);
     } catch (error) {
       console.error(error);
     }
@@ -336,7 +330,7 @@ const MyPage = () => {
   // 사용자 닉네임 업데이트 API
   const handleNickName = async () => {
     try {
-      await Apis.put('/users', { nickname: editNickName });
+      await Apis.put("/users", { nickname: editNickName });
       getUserInfo(); // 재로딩
       setIsEditing(false);
     } catch (error) {
@@ -347,7 +341,7 @@ const MyPage = () => {
   // Toggle edit mode
   const toggleEdit = () => {
     if (isEditing) {
-      handleNickName(); 
+      handleNickName();
     } else {
       setIsEditing(true);
     }
@@ -357,14 +351,14 @@ const MyPage = () => {
   const handleDeleteUser = async () => {
     await Apis.delete(`/users`)
       .then((response) => {
-        localStorage.clear();  // 이때는 모두 비워주도록함.
-        navigate("/login");  // 로그인 페이지로 이동
+        localStorage.clear(); // 이때는 모두 비워주도록함.
+        navigate("/login"); // 로그인 페이지로 이동
       })
       .catch((error) => {
         // console.log(error)
       });
   };
- 
+
   // 모달창 열기
   const openModal = () => {
     setShowModal(true);
@@ -374,22 +368,22 @@ const MyPage = () => {
   const closeModal = () => {
     setShowModal(false);
   };
-  
+
   const handlelogoClick = () => {
     navigate("/main");
   };
 
   const handleLogout = () => {
-    localStorage.clear();  // 이때는 모두 비워주도록함.
+    localStorage.clear(); // 이때는 모두 비워주도록함.
     navigate("/login");
-  }
+  };
 
   return (
     <Container>
-      <NavContainer>
-        <Header>👤&nbsp;{userName}님</Header>
+      <TopBar>
+        <Header><UserCircleIcon style={{ marginRight: '3px', marginBottom: '1px' }} />&nbsp;{userName}님</Header>
         <LogoImage src={logo} alt="Logo" onClick={handlelogoClick} />
-      </NavContainer>
+      </TopBar>
 
       <UserInfoCard>
         <LogOutButton onClick={handleLogout}>
@@ -401,7 +395,7 @@ const MyPage = () => {
         <ContentWrapper>
           <UserInfoComment>회원 정보</UserInfoComment>
           <ProfileWrapper>
-            <FiUser size={55} />
+            <UserIcon size={55} />
             {isEditing ? (
               <UserNameInput
                 type="text"
@@ -413,10 +407,12 @@ const MyPage = () => {
             )}
           </ProfileWrapper>
 
-          <GoogleAndLeave>
-            <FaGoogle size={26} />
+          <SocialAndLeave>
+            {socialType === "GOOGLE" && <GoogleIcon size={28} />}
+            {socialType === "KAKAO" && <KakaoIcon size={50} />}
+            {socialType === "NAVER" && <NaverIcon size={26} />}
             <LeaveButton onClick={openModal}>회원탈퇴</LeaveButton>
-          </GoogleAndLeave>
+          </SocialAndLeave>
         </ContentWrapper>
       </UserInfoCard>
 
