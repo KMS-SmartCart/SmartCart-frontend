@@ -71,6 +71,11 @@ const LogoImage = styled.img`
 `;
 
 const UserInfoCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
   background-color: #e6ebf1;
   /* background-color: #ecebeb; */
   border-radius: 20px;
@@ -78,22 +83,17 @@ const UserInfoCard = styled.div`
   padding: 5px 0px;
   width: 100%;
   max-width: 350px;
+  height: auto;
+  min-height: 55vh;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  height: 61vh;
-  overflow-y: auto;
 
   @media (max-width: 390px) {
-    height: 58vh;
+    min-height: 58vh;
     margin: 10px;
   }
 
   @media (max-width: 360px) {
-    height: 51vh;
+    min-height: 55vh;
     margin: 15px;
   }
 `;
@@ -179,17 +179,18 @@ const ProfileWrapper = styled.div`
 `;
 
 const SocialAndLeave = styled.div`
-  margin: 30px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 30px;
+  margin-bottom: 5px;
 
   @media (max-width: 390px) {
-    margin: 5px;
+    margin-top: 5px;
   }
 
   @media (max-width: 360px) {
-    margin: 25px;
+    margin-top: 25px;
   }
 `;
 
@@ -265,7 +266,7 @@ const LeaveButton = styled.button`
 `;
 
 const AccumulatedAmount = styled.div`
-  margin-top: 45px;
+  margin-top: 27px;
   font-size: 20px;
   color: #555;
   text-align: center;
