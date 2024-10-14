@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Apis from "../../apis/Api";
 import '../../App.css';
-import cartIcon from "../../assets/images/carticon192.png";
+import cartIcon from "../../assets/images/mainicon.png";
 import google from "../../assets/images/google.png";
 import naver from "../../assets/images/naver.png";
 import kakao from "../../assets/images/kakao.png";

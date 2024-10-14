@@ -35,14 +35,9 @@ const LogoContainer = styled.div`
 const LogoImage = styled.img`
   width: 65px;
   height: auto;
-  
 
   @media (max-width: 390px) {
-    width: 50px;
-  }
-
-  @media (max-width: 360px) {
-    width: 45px;
+    width: 60px;
   }
 `;
 
@@ -50,17 +45,17 @@ const SectionContainer = styled.div`
   display: flex;
   gap: 10px;
   max-width: 360px;
-  height: calc(100vh - 370px);
+  height: calc(100vh - 375px);
   margin-bottom: 20px;
 
   @media (max-width: 390px) {
-    height: calc(100vh - 330px);
+    height: calc(100vh - 335px);
     gap: 8px;
   }
 
-   @media (max-width: 360px) {
-     height: calc(100vh - 300px);
-     gap: 8px;
+  @media (max-width: 360px) {
+    height: calc(100vh - 305px);
+    gap: 8px;
   }
 `;
 
@@ -163,7 +158,7 @@ const StyledButton = styled.button`
   color: white;
   border: none;
   cursor: pointer;
-  margin-bottom: 80px;
+  margin-bottom: 85px;
   
   &:hover {
     background-color: #c7ccdf;

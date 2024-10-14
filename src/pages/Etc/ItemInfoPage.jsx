@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import BottomNav from "../../components/Navigation/BottomNav";
 import Apis from "../../apis/Api";
 import logo from "../../assets/images/smartcartlogo.png";
+import { BsArrowLeftShort } from "react-icons/bs";
 
 const Container = styled.div`
   display: flex;
@@ -17,7 +18,7 @@ const Container = styled.div`
   padding-bottom: 100px;
   box-sizing: border-box;
 
-  @media (max-width: 390px) {
+  @media (max-width: 375px) {
     padding: 15px;
   }
 
@@ -26,22 +27,41 @@ const Container = styled.div`
   }
 `;
 
-const LogoContainer = styled.div`
+const TopBar = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 23px;
+  max-width: 300px;
+  width: 100%;
+
+  @media (max-width: 375px) {
+    max-width: 280px;
+  }
+  @media (max-width: 360px) {
+    max-width: 260px;
+  }
+`;
+
+const BackButton = styled.button`
+  display: flex;
+  align-items: center;
+  padding: 0px;
+  background: none;
+  border: none;
+  font-size: 30px;
   cursor: pointer;
-  position: relative;
-  right: -130px;
 `;
 
 const LogoImage = styled.img`
+  cursor: pointer;
   width: 65px;
   height: auto;
 
-  @media (max-width: 390px) {
-    width: 50px;
-  }
-
-  @media (max-width: 360px) {
-    width: 45px;
+  @media (max-width: 375px) {
+    width: 60px;
   }
 `;
 
@@ -146,7 +166,7 @@ const SubmitButton = styled.button`
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   margin-top: 15px;
 
-  margin-bottom: 85px; // 모바일 세로 사진으로 인해, 잘리는 밑의 버튼을 보여주기위한 마진값 부여.
+  margin-bottom: 90px; // 모바일 세로 사진으로 인해, 잘리는 밑의 버튼을 보여주기위한 마진값 부여.
 
   &:hover {
     background-color: #c7ccdf;
@@ -212,11 +232,18 @@ function ItemInfoPage() {
     navigate("/main");
   };
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   return (
     <Container>
-      <LogoContainer onClick={handleLogoClick}>
-        <LogoImage src={logo} alt="Logo" />
-      </LogoContainer>
+      <TopBar>
+        <BackButton onClick={handleBack}>
+          <BsArrowLeftShort />
+        </BackButton>
+        <LogoImage src={logo} alt="Logo" onClick={handleLogoClick} />
+      </TopBar>
 
       <ImageContainer>
         <ProductImage src={imageUrl || "#"} alt="Product" />

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import BottomNav from '../../components/Navigation/BottomNav';
 import { useLocation, useNavigate } from 'react-router-dom'; 
 import Apis from "../../apis/Api";
 import logo from "../../assets/images/smartcartlogo.png"
+import { BsArrowLeftShort } from "react-icons/bs";
 
 const Container = styled.div`
   display: flex;
@@ -31,23 +32,41 @@ const Container = styled.div`
   }
 `;
 
-const LogoContainer = styled.div`
+const TopBar = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 23px;
+  max-width: 312px;
+  width: 100%;
+
+  @media (max-width: 375px) {
+    max-width: 290px;
+  }
+  @media (max-width: 360px) {
+    max-width: 270px;
+  }
+`;
+
+const BackButton = styled.button`
+  display: flex;
+  align-items: center;
+  padding: 0px;
+  background: none;
+  border: none;
+  font-size: 30px;
   cursor: pointer;
-  position: relative;
-  right: -130px;
 `;
 
 const LogoImage = styled.img`
+  cursor: pointer;
   width: 65px;
   height: auto;
-  
 
-  @media (max-width: 390px) {
-    width: 50px;
-  }
-
-  @media (max-width: 360px) {
-    width: 45px;
+  @media (max-width: 375px) {
+    width: 60px;
   }
 `;
 
@@ -80,7 +99,7 @@ const Option = styled.div`
     margin-bottom: 8px;
     max-width: 280px;
   }
-    @media (max-width: 360px) {
+  @media (max-width: 360px) {
     max-width: 260px;
   }
 `;
@@ -106,14 +125,14 @@ const OptionLink = styled.a`
 `;
 
 const ConfirmButton = styled.button`
-  background-color: #5271FF;
-  color: white;
+  background-color: #5271ff;
   border: none;
   border-radius: 10px;
+  margin-top: 5px;
   padding: 15px 35px;
-  cursor: pointer;
   font-size: 16px;
-  // margin-top: 20px;
+  color: white;
+  cursor: pointer;
 
   &:disabled {
     background-color: #ccc;
@@ -189,12 +208,16 @@ const LowestItemPage = () => {
     navigate('/main');
   };
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   const offlineOption = { 
     mallName: '오프라인', 
     productName: productName || '상품명 없음', 
     amount: amount || '용량 없음', 
-    price: Number(price) || 0 ,
-    printName: productName+amount || '상품명 없음'
+    price: Number(price) || 0,
+    printName: productName + amount || '상품명 없음'
   };
 
   const updatedOptionsWithOffline = [...options, offlineOption];
@@ -211,10 +234,8 @@ const LowestItemPage = () => {
       const selectType = isSelectedOffline ? 0 : 1;
       
       try {
-        // 오프라인 상품
         const offlineProduct = offlineOption;
 
-        // 온라인 상품 (선택된 상품 또는 최저가 상품)
         const onlineProduct = isSelectedOffline
           ? options.reduce((min, option) => option.price < min.price ? option : min)
           : selectedProduct;
@@ -248,14 +269,17 @@ const LowestItemPage = () => {
   return (
     <>
       <Container>
-      <LogoContainer onClick={handleLogoClick}>
-        <LogoImage src={logo} alt="Logo" />
-      </LogoContainer>
-      
+        <TopBar>
+          <BackButton onClick={handleBack}>
+            <BsArrowLeftShort />
+          </BackButton>
+          <LogoImage src={logo} alt="Logo" onClick={handleLogoClick} />
+        </TopBar>
+
         <Title>지금 찍은 상품의 최저가 💵</Title>
         {updatedOptionsWithOffline.map((option, index) => (
-          <Option 
-            key={index} 
+          <Option
+            key={index}
             selected={selectedOption === index}
             onClick={() => handleOptionClick(index)}
           >
@@ -263,14 +287,20 @@ const LowestItemPage = () => {
             <div>{option.printName}</div>
             <div>{option.price}원</div>
             {option.link && (
-              <OptionLink href={option.link} target="_blank" selected={selectedOption === index}>
+              <OptionLink
+                href={option.link}
+                target="_blank"
+                selected={selectedOption === index}
+              >
                 상세보기
               </OptionLink>
             )}
           </Option>
-          
         ))}
-        <ConfirmButton onClick={handleConfirm} disabled={selectedOption === null}>
+        <ConfirmButton
+          onClick={handleConfirm}
+          disabled={selectedOption === null}
+        >
           확인
         </ConfirmButton>
         <BottomNav />
