@@ -20,7 +20,7 @@ const Container = styled.div`
   position: relative; 
   box-sizing: border-box;
 
-  @media (max-width: 390px) { /* SE */
+  @media (max-width: 390px) {
     padding: 30px;
   }
 `;
@@ -74,16 +74,15 @@ const ImageSeparator = styled.img`
     max-width: 360px;      /* 최대 너비를 제한 */
     width: 100%;           /* 부모 컨테이너 너비를 기준으로 크기 조정 */
     height: auto;          /* 이미지 비율 유지 */
-    margin: 50px 0;        /* 위아래 여백 추가 */
+    margin-top: 20px;
+    margin-bottom: 150px;
 
     @media (max-width: 390px) {
-      max-width: 280px;    /* iPhone SE에서 이미지 크기 축소 */
-      margin: 15px 0;        /* 위아래 여백 추가 */
+      max-width: 280px;
     }
 
     @media (max-width: 360px) {
-      max-width: 330px;    /* Galaxy S8에서 이미지 크기 축소 */
-      margin: 50px 0;        /* 위아래 여백 추가 */
+      max-width: 330px;
     }
 `;
 
@@ -105,11 +104,11 @@ const LoginMethodText = styled.p`
     font-size: 19px; /* 글씨 크기 조정 (원하는 크기로 변경) */
 
     @media (max-width: 390px) {
-      font-size: 15px; /* iPhone SE */
+      font-size: 15px;
     }
 
     @media (max-width: 360px) {
-      font-size: 17px; /* Galaxy S8 */
+      font-size: 17px;
     }
 `;
 

@@ -72,22 +72,24 @@ const InputContainer = styled.div`
   padding: 20px;
   width: 98%;
   max-width: 310px;
+  height: auto;
+  min-height: 62vh;
+
   display: flex;
   flex-direction: column;
   position: relative;
-  height: 70vh;
   margin-top: -5px;
   overflow-y: auto;
 
   @media (max-width: 390px) {
     padding: 12px;
-    height: 65vh;
+    min-height: 62vh;
     width: 100%;
   }
 
   @media (max-width: 360px) {
     padding: 10px;
-    height: 72vh;
+    min-height: 69vh;
     width: 100%;
   }
 `;

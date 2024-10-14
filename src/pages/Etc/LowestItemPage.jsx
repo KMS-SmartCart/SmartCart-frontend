@@ -74,6 +74,7 @@ const Title = styled.h3`
   text-align: center;
   width: 100%;
   font-size: 18px;
+  margin-top: 11px;
   margin-bottom: 20px;
 
   @media (max-width: 360px) {
@@ -142,11 +143,6 @@ const ConfirmButton = styled.button`
   @media (max-width: 375px) {
     padding: 12px 30px;
     font-size: 14px;
-  }
-
-  @media (max-width: 360px) {
-    padding: 9px 25px;
-    font-size: 13px;
   }
 `;
 
