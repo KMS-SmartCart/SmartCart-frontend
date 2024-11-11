@@ -5,10 +5,25 @@
   <img src="https://github.com/user-attachments/assets/8d7b601b-3f10-4bdd-85ab-f2e08e56193b" width="200" height="200" />
   <h3 align="center">Smart Cart&nbsp;&nbsp;🛒</h3>
   <p align="center">
-    마트 가격 비교 서비스<br>
+    온/오프라인 마트 최저가 비교 서비스<br>
     <a href="https://github.com/KMS-SmartCart"><strong>Explore the team »</strong></a>
   </p>
 </div>
+<br>
+
+<details open>
+  <summary><strong>&nbsp;📖&nbsp;목차</strong></summary>
+
+1. &nbsp;&nbsp;[🔍 Introduction](#-introduction)
+2. &nbsp;&nbsp;[📹 Demo](#-demo)
+4. &nbsp;&nbsp;[💻 Architecture](#-architecture)
+5. &nbsp;&nbsp;[💡 Tech Stack](#-tech-stack)
+6. &nbsp;&nbsp;[🗂️ Database](#%EF%B8%8F-database)
+7. &nbsp;&nbsp;[📗 API](#-api)
+8. &nbsp;&nbsp;[🤝 Git Convention](#-git-convention)
+9. &nbsp;&nbsp;[📂 Package Convention](#-package-convention)
+10. &nbsp;&nbsp;[👨‍👩‍👧‍👧 Team](#-team)
+</details>
 <br>
 
 
@@ -20,6 +35,7 @@
 스마트카트가 오프라인과 온라인의 가격을 실시간으로 비교해 현명한 소비를 도와드립니다.
 
 ### Main Feature
+- PWA 지원&nbsp;:&nbsp;&nbsp;웹 내에서 간편하게 앱을 설치할 수 있도록 안내
 - 소셜 로그인&nbsp;:&nbsp;&nbsp;Google, Naver, Kakao 계정으로 간편하게 로그인
 - 체크리스트&nbsp;:&nbsp;&nbsp;장 볼 항목을 손쉽게 관리
 - 스마트 렌즈&nbsp;:&nbsp;&nbsp;오프라인 매장의 가격표 촬영 후, 온라인 최저가와 비교 확인
@@ -28,6 +44,33 @@
   - 3단계&nbsp;:&nbsp;&nbsp;ChatGPT Text API - 최저가 목록의 불필요한 내용을 깔끔히 정리
 - 장바구니&nbsp;:&nbsp;&nbsp;원하는 상품을 선택하여 담고, 총 결제 금액 및 절약 금액을 확인
 - 내 정보&nbsp;:&nbsp;&nbsp;스마트카트로 아낀 누적 절약 금액 확인
+<br>
+
+
+## 📹 Demo
+사진 준비 중...
+
+**PWA 지원**|**소셜 로그인**|**체크리스트**
+-----|-----|-----
+<img src="https://github.com/user-attachments/assets/991ff17e-b3a8-4ec1-ad9d-dda8f268e679" width="100%">|<img src="https://github.com/user-attachments/assets/991ff17e-b3a8-4ec1-ad9d-dda8f268e679" width="100%">|<img src="https://github.com/user-attachments/assets/991ff17e-b3a8-4ec1-ad9d-dda8f268e679" width="100%">
+PWA 웹앱 설치|구글, 네이버, 카카오 계정|장 볼 항목 관리
+
+**스마트 렌즈**|**장바구니**|**내 정보**
+-----|-----|-----
+<img src="https://github.com/user-attachments/assets/991ff17e-b3a8-4ec1-ad9d-dda8f268e679" width="100%">|<img src="https://github.com/user-attachments/assets/991ff17e-b3a8-4ec1-ad9d-dda8f268e679" width="100%">|<img src="https://github.com/user-attachments/assets/991ff17e-b3a8-4ec1-ad9d-dda8f268e679" width="100%">
+가격표 촬영 & 최저가 비교|결제 금액 & 절약 금액|프로필 관리 & 누적 절약 금액
+
+<br>
+
+
+## 💻 Architecture
+
+### System
+![smartcart_architecture drawio](https://github.com/user-attachments/assets/92fe928c-42a9-4f15-b213-6ce955db42a9)
+
+### Network
+![smartcart_network_architecture drawio](https://github.com/user-attachments/assets/a4faeb21-c58f-477a-86ff-910c570f78ea)
+
 <br>
 
 
@@ -45,15 +88,14 @@ Frontend|Backend|Security&nbsp;&nbsp;&&nbsp;&nbsp;DB|Deployment|Other|
 <br>
 
 
-## 💻 Architecture
+## 🗂️ Database
+<img width="750" alt="smartcart_database" src="https://github.com/user-attachments/assets/135b09b6-9af7-4a5d-a656-efb10f652eb8">
+<br><br>
 
-### System
-![smartcart_architecture drawio](https://github.com/user-attachments/assets/341e7206-9ada-4a61-9478-4557f2959235)
 
-### Network
-![smartcart_network_architecture drawio](https://github.com/user-attachments/assets/a4faeb21-c58f-477a-86ff-910c570f78ea)
-
-<br>
+## 📗 API
+<img width="750" alt="smartcart_swagger_api" src="https://github.com/user-attachments/assets/2e028957-04b5-4b0a-a9a5-bdbb988cc97c">
+<br><br>
 
 
 ## 🤝 Git Convention
@@ -105,6 +147,82 @@ ex-3) [#34] Fix: 로그인 연동 API Path 수정
 [#Issue_번호] Issue_종류: 이슈내용
 ex) [#32] Feat: 로그인 페이지 UI 구현
 ```
+<br>
+
+
+## 📂 Package Convention
+
+### Structure
+```
+├── .github : Issue 및 PR 템플릿
+├── public : PWA 구성 파일
+└── src
+    ├── apis : Axios 인터셉터
+    ├── assets : 이미지 파일
+    ├── components
+    │   ├── Modal : 모달
+    │   └── Navigation : 네비바
+    ├── pages
+    │   ├── Etc : 상품 페이지
+    │   └── User : 사용자 페이지
+    └── utils
+```
+<details>
+  <summary>&nbsp;<strong>Detailed Structure</strong>&nbsp;:&nbsp;Open!</summary>
+  <br>
+
+```
+├── .github
+│   ├── ISSUE_TEMPLATE
+│   │   ├── custom.md
+│   │   ├── feature.md
+│   │   ├── fix.md
+│   │   └── refactor.md
+│   └── PULL_REQUEST_TEMPLATE.md
+├── package.json
+├── public
+│   ├── carticon128.png
+│   ├── carticon192.png
+│   ├── carticon512.png
+│   ├── favicon.ico
+│   ├── index.html
+│   ├── linkthumbnail.png
+│   ├── manifest.json
+│   └── service-worker.js
+└── src
+    ├── App.css
+    ├── App.js
+    ├── index.css
+    ├── index.js
+    ├── apis
+    │   └── Api.jsx
+    ├── assets
+    │   └── images
+    │       ├── google.png
+    │       ├── kakao.png
+    │       ├── mainicon.png
+    │       ├── naver.png
+    │       └── smartcartlogo.png
+    ├── components
+    │   ├── Modal
+    │   │   ├── ConfirmModal.jsx
+    │   │   └── DeleteUserModal.jsx
+    │   └── Navigation
+    │       └── BottomNav.jsx
+    ├── pages
+    │   ├── Etc
+    │   │   ├── CameraPage.jsx
+    │   │   ├── CartPage.jsx
+    │   │   ├── ItemInfoPage.jsx
+    │   │   └── LowestItemPage.jsx
+    │   └── User
+    │       ├── LoginPage.jsx
+    │       ├── MainPage.jsx
+    │       └── MyPage.jsx
+    └── utils
+        └── CheckToken.js
+```
+</details>
 <br>
 
 
