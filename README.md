@@ -210,7 +210,7 @@ ex) [#32] Feat: 로그인 페이지 UI 구현
     │   └── Navigation
     │       └── BottomNav.jsx
     ├── pages
-    │   ├── Etc
+    │   ├── Product
     │   │   ├── CameraPage.jsx
     │   │   ├── CartPage.jsx
     │   │   ├── ItemInfoPage.jsx
