@@ -3,12 +3,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import "./App.css";
 import LoginPage from "./pages/User/LoginPage";
-import ItemInfoPage from "./pages/Etc/ItemInfoPage"
+import ItemInfoPage from "./pages/Product/ItemInfoPage"
 import BottomNav from "./components/Navigation/BottomNav";
-import CameraPage from "./pages/Etc/CameraPage";
-import CartPage from "./pages/Etc/CartPage.jsx";
+import CameraPage from "./pages/Product/CameraPage";
+import CartPage from "./pages/Product/CartPage.jsx";
 import MyPage from "./pages/User/MyPage.jsx"
-import LowestItemPage from "./pages/Etc/LowestItemPage.jsx";
+import LowestItemPage from "./pages/Product/LowestItemPage.jsx";
 import MainPage from './pages/User/MainPage';
 
 function App(props) {

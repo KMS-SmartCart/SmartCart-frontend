@@ -163,7 +163,7 @@ ex) [#32] Feat: 로그인 페이지 UI 구현
     │   ├── Modal : 모달
     │   └── Navigation : 네비바
     ├── pages
-    │   ├── Etc : 상품 페이지
+    │   ├── Product : 상품 페이지
     │   └── User : 사용자 페이지
     └── utils
 ```
